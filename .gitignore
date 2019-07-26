@@ -1,4 +1,5 @@
 bin/
 src/
 pkg/
+__pycache__/
 .*.sw?
