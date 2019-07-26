@@ -6,7 +6,11 @@ class FizzBuzz:
                 fb_list.append("FizzBuzz")
             elif i % 5 == 0:
                 fb_list.append("Buzz")
+            elif i % 3 == 0:
+                fb_list.append("Fizz")
             else:
                 fb_list.append(str(i))
+        print(*fb_list, sep='\n')
         return fb_list
+
 

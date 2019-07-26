@@ -11,5 +11,9 @@ class FizzBuzzSetup(unittest.TestCase):
         fb_list = fb.replace_numbers()
         self.assertEqual(fb_list[4], "Buzz")
 
+    def test_for_Fizz_replacement(self):
+        fb_list = fb.replace_numbers()
+        self.assertEqual(fb_list[2], "Fizz")
+
 if __name__ == '__main__':
     unittest.main()
