@@ -1,4 +1,10 @@
 class FizzBuzz:
-    def build_fb_range(lower_limit=1, upper_limit=101):
-        return range(lower_limit, upper_limit)
+    def replace_numbers(upper_limit=1, lower_limit=101):
+        fb_list = []
+        for i in range(upper_limit, lower_limit):
+            if i % 15 == 0:
+                fb_list.append("FizzBuzz")
+            else:
+                fb_list.append(str(i))
+        return fb_list
 
