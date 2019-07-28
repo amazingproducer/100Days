@@ -8,6 +8,7 @@
 # Revision 3: Allow user input of upper and lower limits, support negative
 #    integers
 # Revision 4: Actually use the prescribed strings ("Fizz" vs "fizz")
+# Revision 5: eliminiate mod15 check
 
 user_lower_limit = input("Fizzbuzz - Enter lower limit: ")
 try:
@@ -28,12 +29,12 @@ if lower_limit >= upper_limit:
     exit()
 
 for i in range(lower_limit, upper_limit):
-    if i % 15 == 0:
-        print("FizzBuzz")
-    elif i % 5 == 0:
-        print("Buzz")
-    elif i % 3 == 0:
-        print("Fizz")
+    j = ""
+    if i % 3 == 0:
+        j = "Fizz"
+    if i % 5 == 0:
+        j += "Buzz"
     else:
-        print(i)
+        j = i
+    print(j)
 
