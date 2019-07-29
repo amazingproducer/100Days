@@ -41,7 +41,3 @@ class StarFigure:
                   ((half_width) - (i * 4)))
             i += 1
 
-
-
-StarFigure.draw()
-
