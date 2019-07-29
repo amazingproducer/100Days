@@ -26,4 +26,22 @@
 # First line is always slashes
 # Final line is always asterisks
 
+# How the hell do I make these slashes?
+
+# I think I should make some kind of function to determine how many asterisks
+# to draw and give that to the for loop
+
 class StarFigure:
+    def draw(height: int=5):
+        width = int(height - 1) * 8
+        half_width = int(width / 2)
+        i = 0
+        while i < height:
+            print("/" * ((half_width) - (i * 4)) + "*" * (i * 8) + "\\" *
+                  ((half_width) - (i * 4)))
+            i += 1
+
+
+
+StarFigure.draw()
+
