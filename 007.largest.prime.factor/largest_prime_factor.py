@@ -40,3 +40,12 @@ class NaivePrimeChecking:
             return True
         return False
 
+    def is_prime(n):
+        if NaivePrimeChecking.factor_2(n) == False and NaivePrimeChecking.factor_3(n) == False and NaivePrimeChecking.factor_5(n) == False:
+            return True
+        return False
+
+
+print(NaivePrimeChecking.factor_3(3366339))
+print(NaivePrimeChecking.is_prime(600851475143))
+
