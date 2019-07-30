@@ -77,7 +77,7 @@ class NaivePrimeChecking:
 
 
 
-print(NaivePrimeChecking.get_prime_factor(600851475143))
+print(NaivePrimeChecking.get_prime_factor(78489451515156854985146547854351))
 #print(NaivePrimeChecking.generate_nth_prime(6))
 #print(NaivePrimeChecking.factor_3(3366339))
 #print(NaivePrimeChecking.end_check(600851475143))
