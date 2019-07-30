@@ -18,4 +18,25 @@
 # the target number are factors of the target number? Or should I start from
 # the furthest ones?
 
+# If our earlier rules can be trusted, it's possible that our target number is
+# prime, perhaps we should start by checking for this possibility.
+
+class NaivePrimeChecking:
+    def factor_2(n):
+        if n % 2 == 0:
+            return True
+        return False
+
+    def factor_3(n):
+        i = 0
+        while n:
+            i, n = i + n % 10, n // 10
+        if i % 3 == 0:
+            return True
+        return False
+
+    def factor_5(n):
+        if n % 10 == 5:
+            return True
+        return False
 
