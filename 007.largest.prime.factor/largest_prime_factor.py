@@ -40,12 +40,45 @@ class NaivePrimeChecking:
             return True
         return False
 
+    def end_check(n):
+        if n % 10 in (1, 3, 7, 9):
+            return True
+        return False
+
     def is_prime(n):
         if NaivePrimeChecking.factor_2(n) == False and NaivePrimeChecking.factor_3(n) == False and NaivePrimeChecking.factor_5(n) == False:
             return True
         return False
 
+    def generate_nth_prime(n):
+        j = [2]
+        i = 3
+        while len(j) < n:
+            for k in j: # because naming stuff is hard
+                if i % k == 0:
+                    break
+            else:
+                j.append(i)
+            i += 2 # because incrementing by one would include even numbers. Wasteful!
+        return j[-1]
 
-print(NaivePrimeChecking.factor_3(3366339))
-print(NaivePrimeChecking.is_prime(600851475143))
+    def get_prime_factor(n):
+        r = n
+        d = 2
+        factors = []
+        while r > 1:
+            while r % d == 0:
+                factors.append(d)
+                r /= d
+            d += 1
+        return factors[-1]
+
+
+
+
+
+print(NaivePrimeChecking.get_prime_factor(600851475143))
+#print(NaivePrimeChecking.generate_nth_prime(6))
+#print(NaivePrimeChecking.factor_3(3366339))
+#print(NaivePrimeChecking.end_check(600851475143))
 
