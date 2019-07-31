@@ -62,7 +62,7 @@ class NaivePrimeChecking:
             i += 2 # because incrementing by one would include even numbers. Wasteful!
         return j[-1]
 
-    def get_prime_factor(n):
+    def get_prime_factor(n=600851475143):
         r = n
         d = 2
         factors = []
@@ -77,7 +77,11 @@ class NaivePrimeChecking:
 
 
 
-print(NaivePrimeChecking.get_prime_factor(78489451515156854985146547854351))
+print(NaivePrimeChecking.get_prime_factor())
+
+#import sys
+#print(NaivePrimeChecking.get_prime_factor(sys.maxsize))
+print(NaivePrimeChecking.get_prime_factor(2147483646))
 #print(NaivePrimeChecking.generate_nth_prime(6))
 #print(NaivePrimeChecking.factor_3(3366339))
 #print(NaivePrimeChecking.end_check(600851475143))
