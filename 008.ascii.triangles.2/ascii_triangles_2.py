@@ -12,6 +12,8 @@
 #  ***   ***
 # ***** *****
 
+
+
 class triforce:
     def left_pad(line, height):
         return (2 * height) - line
@@ -24,9 +26,13 @@ class triforce:
     def point_count(line, height):
         return ((2 * line) - 1) - triforce.center_pad(line, height)
 
-    def draw(height):
+    def abstract(height):
         line_count = 1
-        while line_count < height:
-            print("I'm not done yet")
+        while line_count <= height:
+            print(line_count, triforce.left_pad(line_count, height), triforce.point_count(line_count, height))
+            line_count += 1
+        while line_count <= (2 * height) and line_count > height:
+            print(line_count, triforce.left_pad(line_count, height), triforce.point_count(line_count, height), triforce.center_pad(line_count, height))
             line_count += 1
 
+triforce.abstract(3)
