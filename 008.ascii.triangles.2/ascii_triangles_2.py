@@ -35,4 +35,53 @@ class triforce:
             print(line_count, triforce.left_pad(line_count, height), triforce.point_count(line_count, height), triforce.center_pad(line_count, height))
             line_count += 1
 
-triforce.abstract(3)
+    def draw(height=3): # Could this be a good place to use lambdas?
+        line_count = 1
+        while line_count <= height:
+            print((" " * triforce.left_pad(line_count, height)) + ("*" * triforce.point_count(line_count, height)))
+            line_count += 1
+        while line_count <= (2 * height) and line_count > height:
+            print((" " * triforce.left_pad(line_count, height)) + ("*" * int(triforce.point_count(line_count, height) / 2)) + (" " * triforce.center_pad(line_count, height)) + ("*" * int(triforce.point_count(line_count, height) / 2)))
+            line_count += 1
+
+# The following calls will print the subsequently displayed triforces:
+# triforce.draw()
+# triforce.draw(6)
+# triforce.draw(9)
+#     *
+#    ***
+#   *****
+#  *     *
+# ***   ***
+#***** *****
+#           *
+#          ***
+#         *****
+#        *******
+#       *********
+#      ***********
+#     *           *
+#    ***         ***
+#   *****       *****
+#  *******     *******
+# *********   *********
+#*********** ***********
+#                 *
+#                ***
+#               *****
+#              *******
+#             *********
+#            ***********
+#           *************
+#          ***************
+#         *****************
+#        *                 *
+#       ***               ***
+#      *****             *****
+#     *******           *******
+#    *********         *********
+#   ***********       ***********
+#  *************     *************
+# ***************   ***************
+#***************** *****************
+
