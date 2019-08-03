@@ -65,3 +65,10 @@
 # This brings our total to 3+1+1+1=6
 
 # I think I understand why this exercise is categorized as 'hard'
+elevation_map = [0,1,0,2,1,0,1,3,2,1,2,1]
+
+for i in elevation_map:
+    print("i have no idea what i'm doing")
+    i += 1
+
+
