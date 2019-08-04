@@ -30,6 +30,14 @@
 
 # This should give us 232792560
 
+# For each prime number, divide each number in the sequence by the prime
+# number, replacing that number in the sequence from the quotient if it is a
+# whole number. If the sequence is completely unchanged, use the next prime
+# number. If each item in the sequence is now 1, stop.
+
+# ** Maintain a list of of each prime number when it is used as a divisor. The
+# product of the elements of this list is the solution
+
 class SmallestMultiple:
     exercise_set = range(2,21) # I think using this makes it not work right
     def generate_nth_prime(n): # I thought bringing this in would help
@@ -54,7 +62,8 @@ class SmallestMultiple:
                 if i % item != 0:
                     break
             else:
-                j = i
-        return j
+                return j # Oh boy does this take forever to get there
+# I think doing it the long way with the tables would have been quicker than
+# this way. Running it took about an hour to complete!
 
 print(SmallestMultiple.get_from_set())
