@@ -81,9 +81,6 @@ print(test_solve())
 import datetime
 print("Attempting to solve exercise: Highly Divisible Triangular Number...")
 start_time = datetime.datetime.utcnow()
-print("Start time: " + str(start_time))
-print(solve(500))
+print("Solution found: " + str(solve(500)))
 finish_time = datetime.datetime.utcnow()
-print("Finish time: " + str(finish_time))
-# lol
 print("Elapsed time:  "  + str(finish_time - start_time))
