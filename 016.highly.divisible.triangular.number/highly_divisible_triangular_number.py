@@ -35,13 +35,22 @@ print(test_nth_triangular_number())
 
 # Now let's try the divisor thing
 def get_divisors(n):
-    divisors = []
+    # now my stupid array is mixed up so i will build and concatenate two
+    divisor_set1 = []
+    divisor_set2 = []
     i = 1
-    while i <= n:
+    # We learned that a divisor shouldn't be greater than the sqrt
+    while i <= n**.5:
         if n % i == 0:
-            divisors.append(i)
+            if n / i == i:
+                divisor_set1.append(i)
+            else:
+                divisor_set1.append(i)
+                divisor_set2.append(int(n / i))
         i += 1
-    return divisors
+    # now the list is backwards!
+    # also, l.reverse() doesn't make a list object
+    return divisor_set1 + divisor_set2[::-1]
 
 def test_divisors():
     checklist = [ 1, 2, 4, 7, 14, 28 ]
@@ -69,6 +78,11 @@ def test_solve():
 
 print(test_solve())
 
+import datetime
 print("Attempting to solve exercise: Highly Divisible Triangular Number...")
+start_time = datetime.datetime.utcnow()
+print("Start time: " + str(start_time))
 print(solve(500))
-
+finish_time = datetime.datetime.utcnow()
+print("Finish time: " + str(finish_time))
+print("Elapsed time:  "  + str(start_time - finish_time))
