@@ -22,34 +22,13 @@
 # prime, perhaps we should start by checking for this possibility.
 
 class NaivePrimeChecking:
-    def factor_2(n):
-        if n % 2 == 0:
-            return True
-        return False
-
-    def factor_3(n):
-        i = 0
-        while n:
-            i, n = i + n % 10, n // 10
-        if i % 3 == 0:
-            return True
-        return False
-
-    def factor_5(n):
-        if n % 10 == 5:
-            return True
-        return False
-
-    def end_check(n):
-        if n % 10 in (1, 3, 7, 9):
-            return True
-        return False
-
+# TODO: This needs to be remade
     def is_prime(n):
         if NaivePrimeChecking.factor_2(n) == False and NaivePrimeChecking.factor_3(n) == False and NaivePrimeChecking.factor_5(n) == False:
             return True
         return False
 
+# TODO: Optimize this and maybe change its output to yield
     def generate_nth_prime(n):
         j = [2]
         i = 3
@@ -62,27 +41,29 @@ class NaivePrimeChecking:
             i += 2 # because incrementing by one would include even numbers. Wasteful!
         return j[-1]
 
+# Let's try to make this faster using rules we learned
+# After 2, primes are odd numbers
+# The largest prime factor will be no more than sqrt(n)
+
     def get_prime_factor(n=600851475143):
-        r = n
-        d = 2
+        r = n # i think i can do this with just n now
         factors = []
-        while r > 1:
-            while r % d == 0:
-                factors.append(d)
-                r /= d
-            d += 1
-        return factors[-1]
+        # manage the case of even numbers
+        # manage the special case where r is 2
+        while r % 2 == 0:
+            factors.append(2)
+            r /= 2
+        # manage the case where r is prime, which should be odd
+        # we can use the fancy range parameter to ensure this
+        # instead of i += 2
+        for i in range(3, int(r**.5) + 1, 2):
+            while r % i == 0:
+                factors.append(int(r))
+                r /= i
+        # manage the case of a prime number as n
+        if r > 2:
+            factors.append(int(r))
+        return factors
 
-
-
-
-
-print(NaivePrimeChecking.get_prime_factor())
-
-#import sys
-#print(NaivePrimeChecking.get_prime_factor(sys.maxsize))
-print(NaivePrimeChecking.get_prime_factor(2147483646))
-#print(NaivePrimeChecking.generate_nth_prime(6))
-#print(NaivePrimeChecking.factor_3(3366339))
-#print(NaivePrimeChecking.end_check(600851475143))
-
+print("Testing for prime input (should output [13]): ", NaivePrimeChecking.get_prime_factor(13))
+print("Solution: ", NaivePrimeChecking.get_prime_factor()[-1])
