@@ -22,23 +22,33 @@
 # prime, perhaps we should start by checking for this possibility.
 
 class NaivePrimeChecking:
-# TODO: This needs to be remade
+    # Let's reapply this elsewhere - if it works!
     def is_prime(n):
-        if NaivePrimeChecking.factor_2(n) == False and NaivePrimeChecking.factor_3(n) == False and NaivePrimeChecking.factor_5(n) == False:
+        # Let's apply what we've learned about primality
+        # The case against negatives, zero, and one
+        if n <= 1:
+            return False
+        # The pesky case of having 2 show up twice
+        elif n <= 2:
             return True
-        return False
+        # Aside from 2, primes are not even
+        elif n % 2 == 0:
+            return False
+        else:
+            # I hope this works the way I think it does
+            for i in range(3, int(n**.5) + 1, 2):
+                if n % i == 0:
+                    return False
+            return True
 
-# TODO: Optimize this and maybe change its output to yield
-    def generate_nth_prime(n):
+    def get_nth_prime(n):
         j = [2]
         i = 3
         while len(j) < n:
-            for k in j: # because naming stuff is hard
-                if i % k == 0:
-                    break
-            else:
+            # Let's apply our new primality checker
+            if NaivePrimeChecking.is_prime(i):
                 j.append(i)
-            i += 2 # because incrementing by one would include even numbers. Wasteful!
+            i += 2
         return j[-1]
 
 # Let's try to make this faster using rules we learned
@@ -65,5 +75,8 @@ class NaivePrimeChecking:
             factors.append(int(r))
         return factors
 
+for i in range(1, 11):
+    print("n-th prime testing, n=" + str(i) + ":", NaivePrimeChecking.get_nth_prime(i))
+    print("Testing for primality of " + str(i) + ":", NaivePrimeChecking.is_prime(i))
 print("Testing for prime input (should output [13]): ", NaivePrimeChecking.get_prime_factor(13))
 print("Solution: ", NaivePrimeChecking.get_prime_factor()[-1])
