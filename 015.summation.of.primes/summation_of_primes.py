@@ -4,6 +4,12 @@
 # Let's borrow some code from an earlier prime number exercise!
 
 class PrimeToys:
+    # TODO: apply optimized primal functions to this class
+    # TODO: create generator: generate_next_prime(n)
+    # Accepts n (the n-th prime number) as starting value
+    # as input and yields a list containing all primes up to the nth.
+    # calling next() on it will yield a list containing all primes
+    # up to the nth+1 prime, etc
     def generate_nth_prime(n): # Borrowed from Day 7
         j = [2]
         i = 3
