@@ -22,9 +22,36 @@ def generate():
             yield [j, j[-1]]
         i += 2
 
+def factorize(n):
+    if n <= 1:
+        return ValueError("Integer must be greater than 1")
+    r = n
+    factors = []
+    while r % 2 == 0:
+        factors.append(2)
+        r /= 2
+    for i in range(3, int(r**.5) + 1, 2):
+        while r % i == 0:
+            factors.append(int(i))
+            r /= i
+    if r > 2:
+        factors.append(int(r))
+    return factors
+
+def get_nth(n):
+    if n < 1:
+        return ValueError("Input must be a positive integer.")
+    j = [2]
+    i = 3
+    while len(j) < n:
+        if is_prime(i):
+            j.append(i)
+        i += 2
+    return j[-1]
+
 def get_neighbors(n):
     if n < 3:
-        return ValueError("Integer must be greater than 3")
+        return ValueError("Integer must be greater than 3.")
     p = generate()
     q = []
     l = 0
@@ -40,16 +67,19 @@ def get_neighbors(n):
             l = q[0][-3]
     return l, g
 
+# TODO: optimize the building of r to minimize generator calls
 def get_nearest(n, y=1):
     if n < 1:
         # Integer must be positive - using 1 instead
         n = 1
     p = generate()
     r = []
-    s = y + 1
+    s = y
     g = 0
     c = y
     z = []
+    # Just grabbing up the y additional primes that are greater than n is
+    # probably not the smartest approach
     while s > 0:
         q = next(p)
         r.append((q[-1], abs(q[-1] - n)))
