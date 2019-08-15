@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # All the stuff is here, but it doesn't exactly make it a module yet
 
 def is_prime(n):
@@ -95,3 +96,28 @@ def get_nearest(n, y=1):
             z.append(prime)
             c -= 1
     return sorted(z)
+
+if __name__ == "__main__":
+    import argparse
+    desc = "PrimeTools Python Module - a part of 2019 100 Days of Coding"
+    parser = argparse.ArgumentParser(description=desc)
+    parser.add_argument("-p", type=int, help="determine primality (default)")
+    parser.add_argument("-n", type=int,  help="calculate n-th prime number")
+    parser.add_argument("--nearest", type=int, help="calculate nearest prime number")
+    parser.add_argument("--neighbors", type=int, help="calculate neighboring prime numbers")
+    parser.add_argument("-f", "--factorize", type=int, help="calculate prime factors")
+    args = parser.parse_args()
+    if args.n:
+        print("Calculating n-th prime where n=" + str(args.n) +":", get_nth(args.n))
+    if args.neighbors:
+        print("Primes neighboring "+str(args.neighbors)+":", get_neighbors(args.neighbors))
+    if args.factorize:
+        print("Prime factors of "+str(args.factorize)+":", factorize(args.factorize))
+    if args.nearest:
+        print("Primes nearest "+str(args.nearest)+":", get_nearest(args.nearest))
+    if args.p:
+        if is_prime(args.p):
+            print(str(args.p), "is a prime number.")
+        else:
+            print(str(args.p), "is not a prime number.")
+
