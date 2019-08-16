@@ -1,4 +1,4 @@
-from flask import Flask, json
+from flask import Flask, jsonify, json
 import PrimeTools as pt
 import os
 
@@ -36,17 +36,6 @@ help_text = """
 </table>
 """
 
-
-def json_handler(func, desc, req, result, result_type):
-    json_data = {
-        "api_endpoint": func,
-        "description" : desc,
-        "request": req,
-        "result_value": result,
-        "result_type" : result_type
-    }
-    return json.dumps(json_data)
-
 @api.route('/', methods=['GET'])
 @api.route('/api/', methods=['GET'])
 @api.route('/api/v1/', methods=['GET'])
@@ -55,48 +44,53 @@ def help():
 
 @api.route('/api/v1/is_prime/<int:n>', methods=['GET'])
 def get_is_prime(n):
-    func = "is_prime"
-    req = n
-    result = pt.is_prime(n)
-    desc = "Determines primality of a given integer."
-    result_type = "boolean"
-    return json_handler(func, desc, req, result, result_type)
+    return jsonify(
+        api_endpoint = "is_prime",
+        description = "Determines primality of a given integer.",
+        request = n,
+        result_value = pt.is_prime(n),
+        result_type = "boolean"
+    )
 
 @api.route('/api/v1/get_nth/<int:n>', methods=['GET'])
 def get_nth_prime(n):
-    func = "get_nth"
-    desc = "Given a positive integer n, determines n-th prime number"
-    req = n
-    result = pt.get_nth(n)
-    result_type = "integer"
-    return json_handler(func, desc, req, result, result_type)
+    return jsonify(
+        api_endpoint = "get_nth",
+        description = "Given a positive integer n, determines n-th prime number",
+        request = n,
+        result_value = pt.get_nth(n),
+        result_type = "integer",
+    )
 
 @api.route('/api/v1/nearest/<int:n>', methods=['GET'])
 def get_nearest_prime(n):
-    func = "nearest"
-    desc = "Returns the nearest prime number to a given integer."
-    req = n
-    result = pt.get_nearest(n)[0]
-    result_type = "integer"
-    return json_handler(func, desc, req, result, result_type)
+    return jsonify(
+        api_endpoint = "nearest",
+        description = "Returns the nearest prime number to a given integer.",
+        request = n,
+        result_value = pt.get_nearest(n)[0],
+        result_type = "integer"
+    )
 
 @api.route('/api/v1/neighbors/<int:n>', methods=['GET'])
 def get_prime_neighbors(n):
-    func = "neighbors"
-    desc = "Given an integer n, returns the greatest prime which is less than n and the smallest prime which is greater than n."
-    req = n
-    result = pt.get_neighbors(n)
-    result_type = "array"
-    return json_handler(func, desc, req, result, result_type)
+    return jsonify(
+        api_endpoint = "neighbors",
+        description = "Given an integer n, returns the greatest prime which is less than n and the smallest prime which is greater than n.",
+        request = n,
+        result_value = pt.get_neighbors(n),
+        result_type = "array"
+    )
 
 @api.route('/api/v1/factorize/<int:n>', methods=['GET'])
 def get_prime_factors(n):
-    func = "factorize"
-    desc = "Returns the prime factors of a given integer."
-    req = n
-    result = pt.factorize(n)
-    result_type = "array"
-    return json_handler(func, desc, req, result, result_type)
+    return jsonify(
+        api_endpoint = "factorize",
+        description = "Returns the prime factors of a given integer.",
+        request = n,
+        result_value = pt.factorize(n),
+        result_type = "array"
+    )
 
 if __name__ == '__main__':
     api.run(host='0.0.0.0', port=deploy_port)
