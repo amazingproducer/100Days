@@ -85,7 +85,7 @@ def get_nearest_prime(n):
 
 @api.route('/api/v1/neighbors/<n>', methods=['GET'])
 def get_prime_neighbors(n):
-    if not str(n).isdigit():
+    if not str(n).isdigit() or int(n) < 1:
         return handle_errors("Input must be a natural number.")
     if n < 3:
         return handle_errors("Input must be greater than 2.")
