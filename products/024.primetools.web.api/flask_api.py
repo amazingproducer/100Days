@@ -87,7 +87,7 @@ def get_nearest_prime(n):
 def get_prime_neighbors(n):
     if not str(n).isdigit() or int(n) < 1:
         return handle_errors("Input must be a natural number.")
-    if n < 3:
+    if int(n) < 3:
         return handle_errors("Input must be greater than 2.")
     return jsonify(
         api_endpoint = "neighbors",
