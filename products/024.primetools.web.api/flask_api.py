@@ -55,7 +55,7 @@ def get_is_prime(n):
         api_endpoint = "is_prime",
         description = "Determines primality of a given integer.",
         request = n,
-        result_value = pt.is_prime(n),
+        result_value = pt.is_prime(int(n)),
         result_type = "boolean"
     )
 
@@ -67,7 +67,7 @@ def get_nth_prime(n):
         api_endpoint = "get_nth",
         description = "Given a positive integer n, determines n-th prime number",
         request = n,
-        result_value = pt.get_nth(n),
+        result_value = pt.get_nth(int(n)),
         result_type = "integer",
     )
 
@@ -79,7 +79,7 @@ def get_nearest_prime(n):
         api_endpoint = "nearest",
         description = "Returns the nearest prime number to a given integer.",
         request = n,
-        result_value = pt.get_nearest(n)[0],
+        result_value = pt.get_nearest(int(n))[0],
         result_type = "integer"
     )
 
@@ -93,7 +93,7 @@ def get_prime_neighbors(n):
         api_endpoint = "neighbors",
         description = "Given an integer n, returns the greatest prime which is less than n and the smallest prime which is greater than n.",
         request = n,
-        result_value = pt.get_neighbors(n),
+        result_value = pt.get_neighbors(int(n)),
         result_type = "array"
     )
 
@@ -105,7 +105,7 @@ def get_prime_factors(n):
         api_endpoint = "factorize",
         description = "Returns the prime factors of a given integer.",
         request = n,
-        result_value = pt.factorize(n),
+        result_value = pt.factorize(int(n)),
         result_type = "array"
     )
 
