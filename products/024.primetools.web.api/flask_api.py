@@ -1,8 +1,11 @@
 from flask import Flask, jsonify, json
 import PrimeTools as pt
 import os
+import requests
+
 
 deploy_port = int(os.environ.get('PORT', 5000))
+callback_url = str(os.environ.get('PT_DEV_CALLBACK'))
 
 api = Flask(__name__)
 
@@ -51,6 +54,16 @@ def help():
 def get_is_prime(n):
     if not str(n).isdigit() or int(n) < 1:
         return handle_errors("Input must be a natural number.")
+    if int(n) > 1000:
+        report = "```CALLBACK - "+str(n)+" primality: "+str(pt.is_prime(int(n)))+". I am not a ninja.```"
+        requests.post(callback_url, json={"content":report, "username":"tensus"})
+        return jsonify(
+            api_endpoint = "is_prime",
+            description = "Determines primality of a given integer.",
+            request = n,
+            request_value = "Available via callback URL.",
+            result_type = "callback"
+        )
     return jsonify(
         api_endpoint = "is_prime",
         description = "Determines primality of a given integer.",
@@ -63,9 +76,19 @@ def get_is_prime(n):
 def get_nth_prime(n):
     if not str(n).isdigit() or int(n) < 1:
         return handle_errors("Input must be a natural number.")
+    if int(n) > 1000:
+        report = "```CALLBACK - n-th prime where n="+str(n)+": "+str(pt.get_nth(int(n)))+".```"
+        requests.post(callback_url, json={"content":report, "username":"tensus"})
+        return jsonify(
+            api_endpoint = "get_nth",
+            description = "Given a positive integer n, determines n-th prime number..",
+            request = n,
+            request_value = "Available via callback URL.",
+            result_type = "callback"
+        )
     return jsonify(
         api_endpoint = "get_nth",
-        description = "Given a positive integer n, determines n-th prime number",
+        description = "Given a positive integer n, determines n-th prime number.",
         request = n,
         result_value = pt.get_nth(int(n)),
         result_type = "integer",
