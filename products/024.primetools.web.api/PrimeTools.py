@@ -106,18 +106,56 @@ if __name__ == "__main__":
     parser.add_argument("--nearest", type=int, help="calculate nearest prime number")
     parser.add_argument("--neighbors", type=int, help="calculate neighboring prime numbers")
     parser.add_argument("-f", "--factorize", type=int, help="calculate prime factors")
+    parser.add_argument("-v", action="count", default=0, help="Increase output verbosity")
     args = parser.parse_args()
     if args.n:
-        print("Calculating n-th prime where n=" + str(args.n) +":", get_nth(args.n))
-    if args.neighbors:
-        print("Primes neighboring "+str(args.neighbors)+":", get_neighbors(args.neighbors))
-    if args.factorize:
-        print("Prime factors of "+str(args.factorize)+":", factorize(args.factorize))
-    if args.nearest:
-        print("Primes nearest "+str(args.nearest)+":", get_nearest(args.nearest))
-    if args.p:
-        if is_prime(args.p):
-            print(str(args.p), "is a prime number.")
+        if args.v > 2:
+            # TODO: present ordinals as plain text (1st, 2nd, 3rd, 4th, etc)
+            print("Where n=" + str(args.n) +", the n-th prime number is", get_nth(args.n))
+        elif args.v == 2:
+            print("get_nth("+str(args.n)+"): "+str(get_nth(args.n)))
+        elif args.v == 1:
+            print(str(args.n)+": "+str(get_nth(args.n)))
         else:
-            print(str(args.p), "is not a prime number.")
+            print(get_nth(args.n))
+    elif args.neighbors:
+        if args.v > 2:
+            print("The prime numbers neighboring "+str(args.neighbors)+" are:", get_neighbors(args.neighbors))
+        elif args.v == 2:
+            print("get_neighbors("+str(args.neighbors)+"): "+str(get_neighbors(args.neighbors)))
+        elif args.v == 1:
+            print(str(args.neighbors)+": "+str(get_neighbors(args.neighbors)))
+        else:
+            print(get_neighbors(args.neighbors))
+    elif args.factorize:
+        if args.v > 2:
+            # TODO: present list list as plain text
+            print("The prime factors of "+str(args.factorize)+" are:", factorize(args.factorize))
+        elif args.v == 2:
+            print("factorize("+str(args.factorize)+"): "+str(factorize(args.factorize)))
+        elif args.v == 1:
+            print(str(args.factorize)+": "+str(factorize(args.factorize)))
+        else:
+            print(factorize(args.factors))
+    elif args.nearest:
+        if args.v > 2:
+            print("The prime number nearest "+str(args.nearest)+" is", get_nearest(args.nearest)[0])
+        elif args.v == 2:
+            print("get_nearest("+str(args.nearest)+"): "+str(get_nearest(args.nearest)[0]))
+        elif args.v == 1:
+            print(str(args.nearest)+": "+str(get_nearest(args.nearest)[0]))
+        else:
+            print(get_nearest(args.nearest)[0])
+    elif args.p:
+        if args.v == 0:
+            print(is_prime(args.p))
+        elif args.v == 1:
+            print(str(args.p)+": "+str(is_prime(args.p)))
+        elif args.v == 2:
+            print("is_prime("+str(args.p)+"): "+str(is_prime(args.p)))
+        elif args.v > 2:
+            if is_prime(args.p):
+                print(str(args.p), "is a prime number.")
+            else:
+                print(str(args.p), "is not a prime number.")
 
