@@ -9,6 +9,9 @@ callback_url = str(os.environ.get('PT_DEV_CALLBACK'))
 
 api = Flask(__name__)
 
+with api.open_resource('./error.json') as error_file:
+    error_object = json.load(error_file)
+
 help_text = """
 <h3>PrimeTools Web API:</h3>
 <table style="width:100%">
@@ -49,6 +52,10 @@ def handle_errors(api_error):
 @api.route('/api/v1/', methods=['GET'])
 def help():
     return help_text
+
+@api.route('/error_heroku.json', methods=['GET'])
+def error_heroku():
+    return error_object
 
 @api.route('/api/v1/is_prime/<n>', methods=['GET'])
 def get_is_prime(n):
