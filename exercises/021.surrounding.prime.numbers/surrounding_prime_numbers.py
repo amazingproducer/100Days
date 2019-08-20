@@ -40,5 +40,11 @@ def get_nearest_primes(n):
             l = q[0][-3]
     return l, g
 
+def prime_string(x:bool):
+    if x == True:
+        return " (prime) "
+    return " "
+
 for i in range(-3,101):
-    print("The prime numbers surrounding "+str(i),"(prime) are:" if is_prime(i) else "are:", get_nearest_primes(i))
+    x = is_prime(i)
+    print(f"The prime numbers surrounding {i}{prime_string(x)}are: {get_nearest_primes(i)}")

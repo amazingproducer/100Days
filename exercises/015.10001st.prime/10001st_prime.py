@@ -18,5 +18,5 @@ class Prime:
             i += 2 # because incrementing by one would include even numbers. Wasteful!
         return j[-1]
 
-print("Example solution (we expect 13): ", Prime.generate_nth_prime(6))
-print("Exercise solution: ", Prime.generate_nth_prime(10001))
+print(f"Example solution (we expect 13): {Prime.generate_nth_prime(6)}")
+print(f"Exercise solution: {Prime.generate_nth_prime(10001)}")

@@ -50,9 +50,8 @@ def solve(lower_limit=1, upper_limit=4, x=big_series):
 #    print(q)
 #    print(z)
     return max(p), q[z]
-
-print("Example data (Highest Product, Sequence):")
-print(solve())
-print("Exercise data (Highest Product, Sequence):")
-print(solve(1, 13))
+e = solve()
+print(f"Example data - Highest Product: {e[0]}, Sequence: {e[1]}")
+q = solve(1, 13)
+print(f"Exercise data - Highest Product: {q[0]}, Sequence: {q[1]}")
 

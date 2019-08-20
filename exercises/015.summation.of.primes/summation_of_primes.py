@@ -47,11 +47,11 @@ class PrimeToys:
                 return r
 
 
-print("Testing example (expecting 17):", str(PrimeToys.get_sum()))
+print(f"Testing example (expecting 17): {PrimeToys.get_sum()}")
 import datetime
 start_time = datetime.datetime.utcnow()
-print("Solution start time: " + str(start_time))
-print("Attempting solution:", str(PrimeToys.get_sum(2000000)))
+print(f"Solution start time: {start_time}")
+print(f"Attempting solution: {PrimeToys.get_sum(2000000)}")
 finish_time = datetime.datetime.utcnow()
-print("Finish time: " + str(finish_time))
-print("Elapsed time:  "  + str(finish_time - start_time))
+print(f"Finish time: {finish_time}")
+print(f"Elapsed time: {finish_time - start_time}")

@@ -76,7 +76,7 @@ class NaivePrimeChecking:
         return factors
 
 for i in range(1, 11):
-    print("n-th prime testing, n=" + str(i) + ":", NaivePrimeChecking.get_nth_prime(i))
-    print("Testing for primality of " + str(i) + ":", NaivePrimeChecking.is_prime(i))
-print("Testing for prime input (should output [13]): ", NaivePrimeChecking.get_prime_factor(13))
-print("Solution: ", NaivePrimeChecking.get_prime_factor()[-1])
+    print(f"n-th prime testing, n={i}: {NaivePrimeChecking.get_nth_prime(i)}")
+    print(f"Testing for primality of {i}: {NaivePrimeChecking.is_prime(i)}")
+print(f"Testing for prime input (should output [13]): {NaivePrimeChecking.get_prime_factor(13)}")
+print(f"Solution: {NaivePrimeChecking.get_prime_factor()[-1]}")
