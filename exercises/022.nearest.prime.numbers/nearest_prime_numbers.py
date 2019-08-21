@@ -3,6 +3,7 @@
 
 # How do I handle the case of more than y equidistant primes?
 
+
 def is_prime(n):
     if n <= 1:
         return False
@@ -15,6 +16,7 @@ def is_prime(n):
             if n % i == 0:
                 return False
         return True
+
 
 def generate_prime():
     j = [2]
@@ -37,6 +39,7 @@ def generate_prime():
 # Once this most-likely bloated list has been generated, we can then iterate
 # over the list, evaluating the "distance" values in each tuple to determine
 # the bottom y values (excluding 0) and report their primes.
+
 
 def get_nearest_primes(n, y=2):
     if n < 1:
@@ -64,6 +67,7 @@ def get_nearest_primes(n, y=2):
             c -= 1
     return z
 
-for i in range(10,101):
-    print("Nearest", str(i), "primes to 101:", sorted(get_nearest_primes(101,i)))
 
+for i in range(10, 101):
+    print("Nearest", str(i), "primes to 101:",
+          sorted(get_nearest_primes(101, i)))
