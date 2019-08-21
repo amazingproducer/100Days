@@ -3,7 +3,6 @@ windows_reserved_filenames = ['com1', 'com2', 'com3', 'com4', 'com5', 'com6',
                               'lpt4', 'lpt5', 'lpt6', 'lpt7', 'lpt8', 'lpt9',
                               'con', 'nul', 'prn']
 windows_filename_blacklist = ['/', '?', '<', '>', '\\', ':', '*', '|', '"']
-osx_filename_blacklist = [':']
 url_filename_blacklist = [':', '/', '#', '?', '&', '@', '%', '+', '~']
 
 
@@ -31,3 +30,5 @@ print(f'Input contains Windows-prohibited characters: '
       f'{substring_check(input_str, windows_filename_blacklist)}')
 print(f'Input is a Windows-reserved name: '
       f'{reserved_name_check(input_str, windows_reserved_filenames)}')
+print(f'Input contains url-prohibited characters for file names: '
+      f'{substring_check(input_str, url_filename_blacklist)}')
