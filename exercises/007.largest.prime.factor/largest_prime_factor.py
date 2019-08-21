@@ -21,6 +21,7 @@
 # If our earlier rules can be trusted, it's possible that our target number is
 # prime, perhaps we should start by checking for this possibility.
 
+
 class NaivePrimeChecking:
     # Let's reapply this elsewhere - if it works!
     def is_prime(n):
@@ -56,7 +57,7 @@ class NaivePrimeChecking:
 # The largest prime factor will be no more than sqrt(n)
 
     def get_prime_factor(n=600851475143):
-        r = n # i think i can do this with just n now
+        r = n  # i think i can do this with just n now
         factors = []
         # manage the case of even numbers
         # manage the special case where r is 2
@@ -75,8 +76,10 @@ class NaivePrimeChecking:
             factors.append(int(r))
         return factors
 
+
 for i in range(1, 11):
     print(f"n-th prime testing, n={i}: {NaivePrimeChecking.get_nth_prime(i)}")
     print(f"Testing for primality of {i}: {NaivePrimeChecking.is_prime(i)}")
-print(f"Testing for prime input (should output [13]): {NaivePrimeChecking.get_prime_factor(13)}")
+print(
+    f"Testing for prime input (should output [13]): {NaivePrimeChecking.get_prime_factor(13)}")
 print(f"Solution: {NaivePrimeChecking.get_prime_factor()[-1]}")

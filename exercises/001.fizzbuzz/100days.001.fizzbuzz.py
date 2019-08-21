@@ -1,4 +1,4 @@
-#100days.001.fizzbuzz.py
+# 100days.001.fizzbuzz.py
 # Objective: "Write a program that prints the numbers from 1 to 100.
 # But for multiples of three print “Fizz” instead of the number and for the
 # multiples of five print “Buzz”. For numbers which are multiples of both
@@ -37,4 +37,3 @@ for i in range(lower_limit, upper_limit):
     else:
         j = i
     print(j)
-

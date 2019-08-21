@@ -13,14 +13,13 @@
 # ***** *****
 
 
-
 class triforce:
     def left_pad(line, height):
         return (2 * height) - line
 
     def center_pad(line, height):
         if line > height:
-            return (4 * height) - ((line * 2) -1)
+            return (4 * height) - ((line * 2) - 1)
         return 0
 
     def point_count(line, height):
@@ -29,16 +28,19 @@ class triforce:
     def abstract(height):
         line_count = 1
         while line_count <= height:
-            print(line_count, triforce.left_pad(line_count, height), triforce.point_count(line_count, height))
+            print(line_count, triforce.left_pad(line_count, height),
+                  triforce.point_count(line_count, height))
             line_count += 1
         while line_count <= (2 * height) and line_count > height:
-            print(line_count, triforce.left_pad(line_count, height), triforce.point_count(line_count, height), triforce.center_pad(line_count, height))
+            print(line_count, triforce.left_pad(line_count, height), triforce.point_count(
+                line_count, height), triforce.center_pad(line_count, height))
             line_count += 1
 
-    def draw(height=3): # Could this be a good place to use lambdas?
+    def draw(height=3):  # Could this be a good place to use lambdas?
         line_count = 1
         while line_count <= height:
-            print((" " * triforce.left_pad(line_count, height)) + ("*" * triforce.point_count(line_count, height)))
+            print((" " * triforce.left_pad(line_count, height)) +
+                  ("*" * triforce.point_count(line_count, height)))
             line_count += 1
         while line_count <= (2 * height) and line_count > height:
             print(
@@ -48,44 +50,44 @@ class triforce:
                 f'{"*" * int(triforce.point_count(line_count, height) / 2)}')
             line_count += 1
 
+
 # The following calls will print the subsequently displayed triforces:
 triforce.draw()
 triforce.draw(6)
 triforce.draw(9)
-#     *
-#    ***
-#   *****
-#  *     *
-# ***   ***
-#***** *****
-#           *
-#          ***
-#         *****
-#        *******
-#       *********
-#      ***********
-#     *           *
-#    ***         ***
-#   *****       *****
-#  *******     *******
-# *********   *********
-#*********** ***********
-#                 *
-#                ***
-#               *****
-#              *******
-#             *********
-#            ***********
-#           *************
-#          ***************
-#         *****************
-#        *                 *
-#       ***               ***
-#      *****             *****
-#     *******           *******
-#    *********         *********
-#   ***********       ***********
-#  *************     *************
-# ***************   ***************
-#***************** *****************
-
+#      *
+#     ***
+#    *****
+#   *     *
+#  ***   ***
+# ***** *****
+#            *
+#           ***
+#          *****
+#         *******
+#        *********
+#       ***********
+#      *           *
+#     ***         ***
+#    *****       *****
+#   *******     *******
+#  *********   *********
+# *********** ***********
+#                  *
+#                 ***
+#                *****
+#               *******
+#              *********
+#             ***********
+#            *************
+#           ***************
+#          *****************
+#         *                 *
+#        ***               ***
+#       *****             *****
+#      *******           *******
+#     *********         *********
+#    ***********       ***********
+#   *************     *************
+#  ***************   ***************
+# ***************** *****************

@@ -16,6 +16,7 @@ big_series = "731671765313306249192251196744265747423553491949349698352031277450
 # numbers of the sequence within the given range. Let's make a clumsy attempt
 # at that.
 
+
 def get_product_from_segment(a, b, x=big_series):
     a -= 1
     b += 1
@@ -34,13 +35,14 @@ def get_product_from_segment(a, b, x=big_series):
 
 # On second thought, let's build a dictionary for this data instead.
 
+
 def solve(lower_limit=1, upper_limit=4, x=big_series):
     a = lower_limit
-    b = upper_limit -1
-    p = [] # a list of our products
-    q = [] # a list of their corresponding factors
+    b = upper_limit - 1
+    p = []  # a list of our products
+    q = []  # a list of their corresponding factors
     while b < len(x):
-#    while b < (len(x) - 900): # debug loop
+        #    while b < (len(x) - 900): # debug loop
         p.append(get_product_from_segment(a, b, x))
         q.append(x[(a - 1):(b + 1)])
 #        print(x[(a-1):(b+1)]) # debug print
@@ -50,8 +52,9 @@ def solve(lower_limit=1, upper_limit=4, x=big_series):
 #    print(q)
 #    print(z)
     return max(p), q[z]
+
+
 e = solve()
 print(f"Example data - Highest Product: {e[0]}, Sequence: {e[1]}")
 q = solve(1, 13)
 print(f"Exercise data - Highest Product: {q[0]}, Sequence: {q[1]}")
-

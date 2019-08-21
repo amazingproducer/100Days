@@ -20,20 +20,28 @@
 # make a tool to get all of the divisors of a given number. But first, let's
 # make a thing to generate triangle numbers.
 
+import datetime
+
+
 def get_nth_triangular_number(n):
     return n * (n+1) / 2
 
 # Let's test this against the example data:
+
+
 def test_nth_triangular_number():
-    checklist = ( 1, 3, 6, 10, 15, 21, 28, 36, 45, 55 )
+    checklist = (1, 3, 6, 10, 15, 21, 28, 36, 45, 55)
     for i in range(1, 11):
         if checklist[i-1] != get_nth_triangular_number(i):
             return "Test Failed: nth triangular number"
         return "Test Passed: nth triangular number"
 
+
 print(test_nth_triangular_number())
 
 # Now let's try the divisor thing
+
+
 def get_divisors(n):
     # now my stupid array is mixed up so i will build and concatenate two
     divisor_set1 = []
@@ -52,14 +60,17 @@ def get_divisors(n):
     # also, l.reverse() doesn't make a list object
     return divisor_set1 + divisor_set2[::-1]
 
+
 def test_divisors():
-    checklist = [ 1, 2, 4, 7, 14, 28 ]
+    checklist = [1, 2, 4, 7, 14, 28]
     divisors = get_divisors(28)
     if divisors != checklist:
         return "Test Failed: get divisors"
     return "Test Passed: get divisors"
 
+
 print(test_divisors())
+
 
 def solve(n):
     i = 1
@@ -71,14 +82,15 @@ def solve(n):
         i += 1
     return int(first_triangle)
 
+
 def test_solve():
     if solve(5) != 28:
         return "Test Failed: solution"
     return "Test Passed: solution"
 
+
 print(test_solve())
 
-import datetime
 print("Attempting to solve exercise: Highly Divisible Triangular Number...")
 start_time = datetime.datetime.utcnow()
 print(f"Solution found: {solve(500)}")

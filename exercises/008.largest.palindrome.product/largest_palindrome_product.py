@@ -5,6 +5,7 @@
 # How do I check for a palindrome? Abuse the text reverse feature?
 # How do i efficiently multiply all the things?
 
+
 def lpd():
     for factor1 in reversed(range(100, 1000)):
         for factor2 in reversed(range(100, 1000)):
@@ -12,4 +13,3 @@ def lpd():
                 return((factor2 * factor1), factor1, factor2)
             factor2 += 1
         factor1 += 1
-

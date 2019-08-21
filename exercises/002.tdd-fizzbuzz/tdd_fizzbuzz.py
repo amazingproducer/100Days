@@ -12,5 +12,3 @@ class FizzBuzz:
                 fb_list.append(str(i))
         print(*fb_list, sep='\n')
         return fb_list
-
-

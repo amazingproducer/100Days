@@ -38,9 +38,11 @@
 # ** Maintain a list of of each prime number when it is used as a divisor. The
 # product of the elements of this list is the solution
 
+
 class SmallestMultiple:
-    exercise_set = range(2,21) # I think using this makes it not work right
-    def generate_nth_prime(n): # I thought bringing this in would help
+    exercise_set = range(2, 21)  # I think using this makes it not work right
+
+    def generate_nth_prime(n):  # I thought bringing this in would help
         j = [2]
         i = 3
         while len(j) < n:
@@ -52,18 +54,20 @@ class SmallestMultiple:
             i += 2
         return j[-1]
 
-    def get_from_set(): # I sure wish I documented what I meant to do here when I attempted this earlier.
+    # I sure wish I documented what I meant to do here when I attempted this earlier.
+    def get_from_set():
         i = 0
         j = None
         while not j:
             i += 1
-            for item in range(20,1, -1): # Maybe because the range was backwards?
+            for item in range(20, 1, -1):  # Maybe because the range was backwards?
                 print(item, i)
                 if i % item != 0:
                     break
             else:
-                return j # Oh boy does this take forever to get there
+                return j  # Oh boy does this take forever to get there
 # I think doing it the long way with the tables would have been quicker than
 # this way. Running it took about an hour to complete!
+
 
 print(SmallestMultiple.get_from_set())

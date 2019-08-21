@@ -1,4 +1,5 @@
-#Given a positive integer n, determine the greatest prime number which is less than n. Determine the lowest prime number which is greater than n.
+# Given a positive integer n, determine the greatest prime number which is less than n. Determine the lowest prime number which is greater than n.
+
 
 def is_prime(n):
     if n <= 1:
@@ -13,6 +14,7 @@ def is_prime(n):
                 return False
         return True
 
+
 def generate_prime():
     j = [2]
     i = 3
@@ -21,6 +23,7 @@ def generate_prime():
             j.append(i)
             yield [j, j[-1]]
         i += 2
+
 
 def get_nearest_primes(n):
     if n < 3:
@@ -40,11 +43,14 @@ def get_nearest_primes(n):
             l = q[0][-3]
     return l, g
 
-def prime_string(x:bool):
+
+def prime_string(x: bool):
     if x == True:
         return " (prime) "
     return " "
 
-for i in range(-3,101):
+
+for i in range(-3, 101):
     x = is_prime(i)
-    print(f"The prime numbers surrounding {i}{prime_string(x)}are: {get_nearest_primes(i)}")
+    print(
+        f"The prime numbers surrounding {i}{prime_string(x)}are: {get_nearest_primes(i)}")

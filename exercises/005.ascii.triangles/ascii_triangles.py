@@ -7,6 +7,7 @@
 # #####
 # ######
 
+
 def draw_triangle(limit: int = 6):
     i = 0
     j = ""
@@ -14,5 +15,6 @@ def draw_triangle(limit: int = 6):
         j += "#"
         print(j)
         i += 1
+
 
 draw_triangle()
