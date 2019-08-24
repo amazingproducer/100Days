@@ -31,15 +31,16 @@ class UserAudit():
                 return True
         return False
 
-
+    # This is all wrong
     def required_type(n, field, typename):
         if not n[field]:
-            return False
+            return False, None
         for char in n[field]:
-            print(char, typename)
-            if type(char).__name__ != typename:
-                return False
-        return True
+            if isinstance(char, typename):
+                pass
+            else:
+                return False, n[field]
+        return True, type(char).__name__
 
 
 
