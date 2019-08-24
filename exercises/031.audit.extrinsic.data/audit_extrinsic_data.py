@@ -1,4 +1,5 @@
 import json
+import re
 
 user_inputs_file = open('./user_input_data.json')
 user_input = json.load(user_inputs_file)
@@ -31,17 +32,26 @@ class UserAudit():
                 return True
         return False
 
-    # This is all wrong
+
     def required_type(n, field, typename):
         if not n[field]:
-            return False, None
-        for char in n[field]:
-            if isinstance(char, typename):
-                pass
-            else:
-                return False, n[field]
-        return True, type(char).__name__
+            return False
+        if typename == "alnum":
+            if not n[field].isalnum():
+        if typename == "digit":
+            if not n[field].isdigit():
+                return False
+        elif typename == "alpha":
+            if not n[field].isalpha():
+                return False
+        return True
 
 
+    def regex_match(n, field, reg):
+        if not n[field]:
+            return False
+        if re.match(reg, n[field]) == n[field]:
+            return True
+        return False
 
 
