@@ -1,5 +1,6 @@
 import json
 import re
+import datetime
 
 user_inputs_file = open('./user_input_data.json')
 user_input = json.load(user_inputs_file)
@@ -38,6 +39,7 @@ class UserAudit():
             return False
         if typename == "alnum":
             if not n[field].isalnum():
+                return False
         if typename == "digit":
             if not n[field].isdigit():
                 return False
@@ -55,3 +57,19 @@ class UserAudit():
         return False
 
 
+    def chron_check(n, bef_field, aft_field):
+        if not n[bef_field]:
+            return False, "Before field is null."
+        if not n[aft_field]:
+            return False, "After field is null."
+        try:
+            before = datetime.datetime.strptime(str(n[bef_field]),"%Y-%m-%dT%H:%M:%SZ")
+        except:
+            return False, f"Invalid {bef_field}."
+        try:
+            after = datetime.datetime.strptime(str(n[aft_field]),"%Y-%m-%dT%H:%M:%SZ")
+        except:
+            return False, f"Invalid {aft_field}."
+        if before < after:
+            return True
+        return False, f"{bef_field} is not before {aft_field}."
