@@ -133,7 +133,7 @@ if __name__ == "__main__":
 
     if args.n:
         if args.v > 2:
-            print(f"The {get_ordinal(n)} prime number is {get_nth(args.n)}")
+            print(f"The {get_ordinal(args.n)} prime number is {get_nth(args.n)}")
         elif args.v == 2:
             print(f"get_nth({args.n}): {get_nth(args.n)}")
         elif args.v == 1:
