@@ -6,10 +6,6 @@
 # selected path and filename cannot be found, Create and open a file at the
 # selected path.
 
-# CONFIG FILES
-# The blacklist, whitelist, and pattern matches are determined by the contents
-# of their related files and will not be used in command line arguments.
-
 # POSITIONAL ARGUMENTS
 # The dataset file has a default path and filename, but the user may declare
 # their own path and file name for this argument. It is the only positional
@@ -17,13 +13,46 @@
 
 # OPTIONAL ARGUMENTS
 # The following two arguments are mutually exclusive:
-# new - explicitly create a new file with the selected path
-# purge - invalid entries are purged during audit
+#   new - explicitly create a new file with the selected path
+#   purge - invalid entries are purged during audit
+# The following two arguments use provided lists by default:
+#   reserved - declare path+file of reserved reserved usernames as JSON array
+#   titles - declare path+file of valid user titles as JSON array
+
 
 
 import DataAudit as da
 import argparse
 
+def name_and_email_fields_required(entry):
+    return
+
+def username_must_not_contain_reserved_words(entry):
+    return
+
+def email_and_usernames_must_be_unique(dataset, entry):
+    return
+
+def username_length_must_be_within_bounds(entry):
+    return
+
+def email_address_must_be_valid(entry):
+    return
+
+def phone_number_must_be_valid(entry):
+    return
+
+def authorized_date_must_be_earlier_than_authenticated_date(entry):
+    return
+
+def authorized_date_must_be_earlier_than_released_date(entry):
+    return
+
+def authenticated_date_must_be_earlier_than_released_date(entry):
+    return
+
+def job_title_must_exist_in_whitelist(entry):
+    return
 
 
 
