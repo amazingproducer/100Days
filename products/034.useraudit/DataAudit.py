@@ -8,8 +8,9 @@ import json
 import re
 import datetime
 
-class UserAudit():
-    def load_dataset(dataset_path):
+
+class DataAudit():
+    def open_dataset(dataset_path, dataset_cleanup_bit=0, dataset_create_bit=0):
         dataset_load_flag = "r"
         if dataset_cleanup_bit:
             dataset_load_flag = "w"
@@ -18,11 +19,19 @@ class UserAudit():
         # TODO: Learn best error handling practices for opening files
         dataset_file = open(dataset_path, dataset_load_flag)
         # TODO: Handle errors on JSON load
-        dataset = json.load(dataset_file)
+        return json.load(dataset_file), dataset_file
 
-    def load_list(list_path):
+    def close_dataset(dataset_file_object, data=None):
+        json.dump(dataset_file_object, data)
+        dataset_file_object.close()
+
+    def open_list(list_path):
         list_file = open(list_path)
-        loaded_list = json.load(list_file)
+        return json.load(list_file), list_file
+
+    def close_list(list_file_object):
+        list_file_object.close()
+
 
     # In the following functions, n is the JSON entry in an array of entries.
     # The field parameter is the name of a field in that entry.
