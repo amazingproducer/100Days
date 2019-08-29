@@ -1,28 +1,39 @@
 #!/usr/bin/python3
 
-# This command line program will import the DataAudit module and perform a
-# prescribed set of audits on an existing dataset. If the path and filename of
-# the dataset are not declared, the default path and file name are used. If the
-# selected path and filename cannot be found, Create and open a file at the
-# selected path.
+# Usage: UserAudit.py [FILE] [OPTIONS]
 
-# POSITIONAL ARGUMENTS
-# The dataset file has a default path and filename, but the user may declare
-# their own path and file name for this argument. It is the only positional
-# argument in the application.
+# Audits the provided user dataset FILE and reports its validity.
 
-# OPTIONAL ARGUMENTS
-# The following two arguments are mutually exclusive:
-#   new - explicitly create a new file with the selected path
-#   purge - invalid entries are purged during audit
-# The following two arguments use provided lists by default:
-#   reserved - declare path+file of reserved reserved usernames as JSON array
-#   titles - declare path+file of valid user titles as JSON array
+# Optionally, when the program is executed with the -m or --merge arguments (and
+# the required file argument), audits are conducted on both files before an
+# attempt is made to merge the provided user input data with the existing
+# dataset. The net result of each file's audits and the merget attempt are then
+# reported to the user.
 
+# The user may declare the following optional arguments:
+# --reserved [filename] | use provided username blacklist (JSON)
+# --titles [filename]   | use provided job title whitelist (JSON)
+# --merge [filename]    | attempt to merge provided JSON file with dataset
+# --purge               | remove invalid entries as they are encountered
+# -v                    | increase output verbosity
+
+# This program includes a set of configuration files, which are used by default:
+# reserved_usernames.json: JSON array representing example blacklist
+# valid_user_titles.json: JSON array representing example whitelist
 
 
 import DataAudit as da
 import argparse
+
+
+def load_users_dataset(file):
+    return
+
+def load_reserved_usernames(file):
+    return
+
+def load_valid_job_titles(file):
+    return
 
 def name_and_email_fields_required(entry):
     return
@@ -57,17 +68,21 @@ def job_title_must_exist_in_whitelist(entry):
 
 
 if __name__ == "__main__":
-    desc = "UserAudit - audits or creates a user dataset file."
+     desc = "UserAudit - audit a dataset and optionally validate and merge user \
+    input data with it."
     footer = "This program is a part of 2019's 100 Days of Coding."
     parser = argparse.ArgumentParser(description=desc, epilog=footer)
-    parser.add_argument("--new", action="store_true", help="creates a new \
-                        dataset file")
-    # TODO: This argument is mutually exclusive with the above. Research method to
-    # implement this behavior.
-    parser.add_argument("--purge", action="store_true", help="purges invalid \
-                        entries from dataset during audit")
-    parser.add_argument("dataset_file", nargs='?',
-                        default='./user_input_data.json')
+    # TODO: get file argument as constant
+    parser.add_argument("dataset_file", help="[FILE] - load user dataset for
+                        validation.") 
+    parser.add_argument("-m", "--merge",  help="[FILE] - validate \
+                        and merge FILE with the user dataset.")
+    parser.add_argument("--purge", action="store_true", help="purge invalid \
+                        entries from dataset during audits")
+    parser.add_argument("--reserved", help="[FILE] - use custom username \
+                        blacklist")
+    parser.add_argument("--titles", help="[FILE] - use custom job_title \
+                        whitelist")
     args = parser.parse_args()
     # Does it work yet?
     if args:
