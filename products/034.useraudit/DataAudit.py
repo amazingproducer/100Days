@@ -14,8 +14,6 @@ class DataAudit():
         dataset_load_flag = "r"
         if dataset_cleanup_bit:
             dataset_load_flag = "w"
-        if dataset_create_bit:
-            dataset_load_flag = "x"
         # TODO: Learn best error handling practices for opening files
         dataset_file = open(dataset_path, dataset_load_flag)
         # TODO: Handle errors on JSON load
@@ -42,8 +40,8 @@ class DataAudit():
 
     # TODO: Consider allowing direct comparisons as well as substring checks
 
-    def blacklist_check(n, field, invalid_list):
-        for i in invalid_list:
+    def blacklist_check(n, field, blacklist):
+        for i in blacklist:
             if n[field]:
                 if i in n[field]:
                     return False
@@ -63,17 +61,17 @@ class DataAudit():
         return False
 
     def type_check(n, field, typename):
+        # While we're handling the unknown type case, let's refactor a bit
         if not n[field]:
             return False
-        if typename == "alnum":
-            if not n[field].isalnum():
-                return False
-        if typename == "digit":
-            if not n[field].isdigit():
-                return False
-        elif typename == "alpha":
-            if not n[field].isalpha():
-                return False
+        # This does work even if the given typename is invalid
+        # TODO: Build a list of usable types and build this dict with it
+        valid_types = {'alnum': n[field].isalnum, 'digit': n[field].isdigit,
+                       'alpha': n[field].isalpha}
+        if typename not in valid_types.keys():
+            raise Exception(f"The {typename} type is not supported.")
+        if not valid_types[typename]():
+            return False
         return True
 
     def regex_check(n, field, reg):
