@@ -64,8 +64,7 @@ class DataAudit():
         # While we're handling the unknown type case, let's refactor a bit
         if not n[field]:
             return False
-        # This does work even if the given typename is invalid
-        # TODO: Build a list of usable types and build this dict with it
+        # This does work even if the given typename is invalid. Ugly.
         valid_types = {'alnum': n[field].isalnum, 'digit': n[field].isdigit,
                        'alpha': n[field].isalpha}
         if typename not in valid_types.keys():

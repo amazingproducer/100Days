@@ -22,21 +22,30 @@
 # valid_user_titles.json: JSON array representing example whitelist
 
 
-import DataAudit as da
+from DataAudit import DataAudit as da
 import argparse
 
 
 def load_users_dataset(file):
-    return
+    global ua_dataset
+    ua_dataset = da.open_dataset(file)
 
 def load_reserved_usernames(file):
-    return
+    global ua_username_blacklist
+    ua_username_blacklist = da.open_list(file)
 
 def load_valid_job_titles(file):
-    return
+    global ua_title_whitelist
+    ua_title_whitelist = da.open_list(file)
 
-def name_and_email_fields_required(entry):
-    return
+def name_and_email_fields_required(dataset):
+    failset = []
+    for i in dataset:
+        if None in [i['first_name'], i['last_name'], i['auth_email']]:
+            failset.append(i)
+    if len(failset):
+        return False, failset
+    return True
 
 def username_must_not_contain_reserved_words(entry):
     return
@@ -68,12 +77,12 @@ def job_title_must_exist_in_whitelist(entry):
 
 
 if __name__ == "__main__":
-     desc = "UserAudit - audit a dataset and optionally validate and merge user \
-    input data with it."
+    desc = "UserAudit - audit a dataset and optionally validate and merge user\
+            input data with it."
     footer = "This program is a part of 2019's 100 Days of Coding."
     parser = argparse.ArgumentParser(description=desc, epilog=footer)
     # TODO: get file argument as constant
-    parser.add_argument("dataset_file", help="[FILE] - load user dataset for
+    parser.add_argument("dataset_file", action="store", help="[FILE] - load user dataset for\
                         validation.") 
     parser.add_argument("-m", "--merge",  help="[FILE] - validate \
                         and merge FILE with the user dataset.")
@@ -86,7 +95,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
     # Does it work yet?
     if args:
-        chz = da.DataAudit.open_dataset(args.dataset_file)
-        print(chz[0])
-        print(type(chz[1]))
-        print(args.dataset_file)
+        load_users_dataset(args.dataset_file)
+        print(name_and_email_fields_required(ua_dataset[0]))
