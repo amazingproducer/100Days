@@ -28,7 +28,7 @@ def generate():
 
 def factorize(n):
     if n <= 1:
-        return ["Error:", "Integer must be greater than one."]
+        return ValueError("Integer must be greater than one.")
     r = n
     factors = []
     while r % 2 == 0:
@@ -161,7 +161,7 @@ if __name__ == "__main__":
         elif args.v == 1:
             print(f"{args.factorize}: {factorize(args.factorize)}")
         else:
-            print(factorize(args.factors))
+            print(factorize(args.factorize))
     elif args.nearest:
         if args.v > 2:
             print(

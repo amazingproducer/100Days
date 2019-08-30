@@ -128,8 +128,8 @@ def get_prime_neighbors(n):
 
 @api.route('/api/v1/factorize/<n>', methods=['GET'])
 def get_prime_factors(n):
-    if not str(n).isdigit() or int(n) < 1:
-        return handle_errors("Input must be a natural number.")
+    if not str(n).isdigit() or int(n) <= 1:
+        return handle_errors("Input integer must be greater than one.")
     return jsonify(
         api_endpoint = "factorize",
         description = "Returns the prime factors of a given integer.",
