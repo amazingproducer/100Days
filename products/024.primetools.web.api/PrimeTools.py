@@ -28,7 +28,7 @@ def generate():
 
 def factorize(n):
     if n <= 1:
-        return ValueError("Integer must be greater than 1")
+        return ["Error:", "Integer must be greater than one."]
     r = n
     factors = []
     while r % 2 == 0:
