@@ -24,55 +24,75 @@
 
 from DataAudit import DataAudit as da
 import argparse
-
+from inspect import ismethod
 
 def load_users_dataset(file):
     global ua_dataset
     ua_dataset = da.open_dataset(file)
 
-def load_reserved_usernames(file):
+def load_reserved_usernames(file='./reserved_usernames.json'):
     global ua_username_blacklist
     ua_username_blacklist = da.open_list(file)
 
-def load_valid_job_titles(file):
+def load_valid_job_titles(file='./valid_user_titles.json'):
     global ua_title_whitelist
     ua_title_whitelist = da.open_list(file)
 
-def name_and_email_fields_required(dataset):
-    failset = []
-    for i in dataset:
-        if None in [i['first_name'], i['last_name'], i['auth_email']]:
-            failset.append(i)
-    if len(failset):
-        return False, failset
-    return True
 
-def username_must_not_contain_reserved_words(entry):
-    return
+class UserAudits():
+    def name_and_email_fields_required(self):
+        failset = []
+        for i in ua_dataset[0]:
+            if None in [i['first_name'], i['last_name'], i['auth_email']]:
+                failset.append(i)
+        if len(failset):
+            return "FAIL"
+        return "PASS"
 
-def email_and_usernames_must_be_unique(dataset, entry):
-    return
+    def username_must_not_contain_reserved_words(self):
+        failset = []
+        for i in ua_dataset[0]:
+            for j in ua_username_blacklist:
+                if i['username'] in j:
+                    failset.append(i)
+        if len(failset):
+            return "FAIL"
+        return "PASS"
 
-def username_length_must_be_within_bounds(entry):
-    return
+    def email_and_usernames_must_be_unique(self):
+        # This method isn't aware of what should be purged
+        usernames = [i['username'] for i in ua_dataset[0]]
+        email_addresses = [i['auth_email'] for i in ua_dataset[0]]
+        if len(usernames) != len(set(usernames)):
+            return "FAIL"
+        if len(email_addresses) != len(set(email_addresses)):
+            return "FAIL"
+        return "PASS"
 
-def email_address_must_be_valid(entry):
-    return
+    def username_length_must_be_within_bounds(self):
+        usernames = [i['username'] for i in ua_dataset[0]]
+        for i in usernames:
+            if not 3 < len(i) < 12:
+                return "FAIL"
+        return "PASS"
 
-def phone_number_must_be_valid(entry):
-    return
+    def email_address_must_be_valid(self):
+        return "INCOMPLETE"
 
-def authorized_date_must_be_earlier_than_authenticated_date(entry):
-    return
+    def phone_number_must_be_valid(self):
+        return "INCOMPLETE"
 
-def authorized_date_must_be_earlier_than_released_date(entry):
-    return
+    def authorized_date_must_be_earlier_than_authenticated_date(self):
+        return "INCOMPLETE"
 
-def authenticated_date_must_be_earlier_than_released_date(entry):
-    return
+    def authorized_date_must_be_earlier_than_released_date(self):
+        return "INCOMPLETE"
 
-def job_title_must_exist_in_whitelist(entry):
-    return
+    def authenticated_date_must_be_earlier_than_released_date(self):
+        return "INCOMPLETE"
+
+    def job_title_must_exist_in_whitelist(self):
+        return "INCOMPLETE"
 
 
 
@@ -81,7 +101,6 @@ if __name__ == "__main__":
             input data with it."
     footer = "This program is a part of 2019's 100 Days of Coding."
     parser = argparse.ArgumentParser(description=desc, epilog=footer)
-    # TODO: get file argument as constant
     parser.add_argument("dataset_file", action="store", help="[FILE] - load user dataset for\
                         validation.") 
     parser.add_argument("-m", "--merge",  help="[FILE] - validate \
@@ -96,4 +115,15 @@ if __name__ == "__main__":
     # Does it work yet?
     if args:
         load_users_dataset(args.dataset_file)
-        print(name_and_email_fields_required(ua_dataset[0]))
+        load_reserved_usernames()
+        # TODO: Refactor this mess as a function
+        ua_attrs = []
+        u = UserAudits()
+        for name in dir(u):
+            ua_attrs.append(getattr(u, name))
+        ua_funcs = filter(ismethod, ua_attrs)
+        for func in ua_funcs:
+            try:
+                print(f"{func.__name__}: {func()}")
+            except TypeError():
+                pass
