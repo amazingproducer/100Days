@@ -27,17 +27,6 @@ import argparse
 from inspect import ismethod
 
 
-class DataFile():
-    def load_users_dataset(file):
-        return da.open_dataset(file)
-
-    def load_reserved_usernames(file='./reserved_usernames.json'):
-        return da.open_list(file)
-
-    def load_valid_job_titles(file='./valid_user_titles.json'):
-        return da.open_list(file)
-
-
 class UserAudit():
     def name_and_email_fields_required(self):
         failset = []
@@ -120,9 +109,9 @@ class UserAudit():
 
     @classmethod
     def run_audit(cls, params):
-        cls.dataset = DataFile.load_users_dataset(params.dataset_file)
-        cls.username_blacklist = DataFile.load_reserved_usernames(params.reserved)
-        cls.title_whitelist = DataFile.load_valid_job_titles(params.titles)
+        cls.dataset = da.open_dataset(params.dataset_file)
+        cls.username_blacklist = da.open_list(params.reserved)
+        cls.title_whitelist = da.open_list(params.titles)
         attrs = []
         u = UserAudit()
         for name in dir(u):
