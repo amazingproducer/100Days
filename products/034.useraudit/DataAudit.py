@@ -61,7 +61,6 @@ class DataAudit():
         return False
 
     def type_check(n, field, typename):
-        # While we're handling the unknown type case, let's refactor a bit
         if not n[field]:
             return False
         # This does work even if the given typename is invalid. Ugly.
@@ -97,14 +96,12 @@ class DataAudit():
         except:
             return False, f"Invalid {aft_field}."
         if before < after:
-            return True
+            return True, f"{bef_field} is before {aft_field}"
         return False, f"{bef_field} is not before {aft_field}."
 
-    def uniqueness_check(n, field, dataset):
-        if n[field]:
-            for entry in dataset:
-                if entry["id"] != n["id"]:
-                    if entry[field] == n[field]:
-                        return False
-            return True
-        return False, f"{field} is empty."
+    def uniqueness_check(field, dataset):
+        # This is less helpful. Use the previous version of this method.
+        fields = [i[field] for i in dataset]
+        if len(fields) != len(set(fields)):
+            return False
+        return True

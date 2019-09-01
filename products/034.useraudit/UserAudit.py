@@ -26,51 +26,48 @@ from DataAudit import DataAudit as da
 import argparse
 from inspect import ismethod
 
-def load_users_dataset(file):
-    global ua_dataset
-    ua_dataset = da.open_dataset(file)
 
-def load_reserved_usernames(file='./reserved_usernames.json'):
-    global ua_username_blacklist
-    ua_username_blacklist = da.open_list(file)
+class DataFile():
+    def load_users_dataset(file):
+        return da.open_dataset(file)
 
-def load_valid_job_titles(file='./valid_user_titles.json'):
-    global ua_title_whitelist
-    ua_title_whitelist = da.open_list(file)
+    def load_reserved_usernames(file='./reserved_usernames.json'):
+        return da.open_list(file)
+
+    def load_valid_job_titles(file='./valid_user_titles.json'):
+        return da.open_list(file)
 
 
-class UserAudits():
+class UserAudit():
     def name_and_email_fields_required(self):
         failset = []
-        for i in ua_dataset[0]:
+        for i in self.dataset[0]:
             if None in [i['first_name'], i['last_name'], i['auth_email']]:
                 failset.append(i)
         if len(failset):
-            return "FAIL"
+            return f"FAIL: {len(failset)} items"
         return "PASS"
 
     def username_must_not_contain_reserved_words(self):
         failset = []
-        for i in ua_dataset[0]:
-            for j in ua_username_blacklist:
+        for i in self.dataset[0]:
+            for j in self.username_blacklist:
                 if i['username'] in j:
                     failset.append(i)
         if len(failset):
-            return "FAIL"
+            return f"FAIL: {len(failset)} items"
         return "PASS"
 
     def email_and_usernames_must_be_unique(self):
         # This method isn't aware of what should be purged
-        usernames = [i['username'] for i in ua_dataset[0]]
-        email_addresses = [i['auth_email'] for i in ua_dataset[0]]
-        if len(usernames) != len(set(usernames)):
+        if not da.uniqueness_check('username', self.dataset[0]):
             return "FAIL"
-        if len(email_addresses) != len(set(email_addresses)):
+        if not da.uniqueness_check('auth_email', self.dataset[0]):
             return "FAIL"
         return "PASS"
 
     def username_length_must_be_within_bounds(self):
-        usernames = [i['username'] for i in ua_dataset[0]]
+        usernames = [i['username'] for i in self.dataset[0]]
         for i in usernames:
             if not 3 < len(i) < 12:
                 return "FAIL"
@@ -82,19 +79,61 @@ class UserAudits():
     def phone_number_must_be_valid(self):
         return "INCOMPLETE"
 
-    def authorized_date_must_be_earlier_than_authenticated_date(self):
-        return "INCOMPLETE"
+    def authorized_date_must_be_earlier_than_last_authenticated_date(self):
+        failset = []
+        for i in self.dataset[0]:
+            if not da.precedence_check(i, "authorized_date",
+                                       "last_authenticated_date")[0]:
+                failset.append(i)
+        if len(failset):
+            return f"FAIL: {len(failset)} items"
+        return "PASS"
+
 
     def authorized_date_must_be_earlier_than_released_date(self):
-        return "INCOMPLETE"
+        failset = []
+        for i in self.dataset[0]:
+            if not da.precedence_check(i, "authorized_date",
+                                       "released_date")[0]:
+                failset.append(i)
+        if len(failset):
+            return f"FAIL: {len(failset)} items"
+        return "PASS"
 
-    def authenticated_date_must_be_earlier_than_released_date(self):
-        return "INCOMPLETE"
+    def last_authenticated_date_must_be_earlier_than_released_date(self):
+        failset = []
+        for i in self.dataset[0]:
+            if not da.precedence_check(i, "last_authenticated_date",
+                                       "released_date")[0]:
+                failset.append(i)
+        if len(failset):
+            return f"FAIL: {len(failset)} items"
+        return "PASS"
 
     def job_title_must_exist_in_whitelist(self):
         return "INCOMPLETE"
 
+    def report_audit_result(self):
+        # Print number of entries processed, validated, purged.
+        # Print information about file write actions
+        return "INCOMPLETE"
 
+    @classmethod
+    def run_audit(cls, params):
+        cls.dataset = DataFile.load_users_dataset(params.dataset_file)
+        cls.username_blacklist = DataFile.load_reserved_usernames(params.reserved)
+        cls.title_whitelist = DataFile.load_valid_job_titles(params.titles)
+        attrs = []
+        u = UserAudit()
+        for name in dir(u):
+            attrs.append(getattr(u, name))
+        funcs = filter(ismethod, attrs)
+        for func in funcs:
+            if func.__name__ != "run_audit":
+                try:
+                    print(f"{func.__name__}: {func()}")
+                except TypeError():
+                    pass
 
 if __name__ == "__main__":
     desc = "UserAudit - audit a dataset and optionally validate and merge user\
@@ -102,28 +141,16 @@ if __name__ == "__main__":
     footer = "This program is a part of 2019's 100 Days of Coding."
     parser = argparse.ArgumentParser(description=desc, epilog=footer)
     parser.add_argument("dataset_file", action="store", help="[FILE] - load user dataset for\
-                        validation.") 
-    parser.add_argument("-m", "--merge",  help="[FILE] - validate \
+                        validation.")
+    parser.add_argument("-m", "--merge", action="store_true", help="[FILE] - validate \
                         and merge FILE with the user dataset.")
     parser.add_argument("--purge", action="store_true", help="purge invalid \
                         entries from dataset during audits")
-    parser.add_argument("--reserved", help="[FILE] - use custom username \
-                        blacklist")
-    parser.add_argument("--titles", help="[FILE] - use custom job_title \
-                        whitelist")
+    parser.add_argument("--reserved", action="store", help="[FILE] - use custom username \
+                        blacklist", default='./reserved_usernames.json')
+    parser.add_argument("--titles", action="store", help="[FILE] - use custom job_title \
+                        whitelist", default='./valid_user_titles.json')
     args = parser.parse_args()
     # Does it work yet?
     if args:
-        load_users_dataset(args.dataset_file)
-        load_reserved_usernames()
-        # TODO: Refactor this mess as a function
-        ua_attrs = []
-        u = UserAudits()
-        for name in dir(u):
-            ua_attrs.append(getattr(u, name))
-        ua_funcs = filter(ismethod, ua_attrs)
-        for func in ua_funcs:
-            try:
-                print(f"{func.__name__}: {func()}")
-            except TypeError():
-                pass
+        UserAudit.run_audit(args)
