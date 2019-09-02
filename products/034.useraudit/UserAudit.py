@@ -31,7 +31,9 @@ class UserAudit():
     def name_and_email_fields_required(self):
         failset = []
         for i in self.dataset[0]:
-            if None in [i['first_name'], i['last_name'], i['auth_email']]:
+            if False in [da.empty_check(i, 'first_name'),
+                        da.empty_check(i, 'last_name'),
+                        da.empty_check(i, 'auth_email')]:
                 failset.append(i)
         if len(failset):
             return f"FAIL: {len(failset)} items"
@@ -40,15 +42,13 @@ class UserAudit():
     def username_must_not_contain_reserved_words(self):
         failset = []
         for i in self.dataset[0]:
-            for j in self.username_blacklist:
-                if i['username'] in j:
-                    failset.append(i)
+            if not da.blacklist_check(i, "username", self.uername_blacklist):
+                failset.append(i)
         if len(failset):
             return f"FAIL: {len(failset)} items"
         return "PASS"
 
     def email_and_usernames_must_be_unique(self):
-        # This method isn't aware of what should be purged
         if not da.uniqueness_check('username', self.dataset[0]):
             return "FAIL"
         if not da.uniqueness_check('auth_email', self.dataset[0]):
@@ -56,9 +56,8 @@ class UserAudit():
         return "PASS"
 
     def username_length_must_be_within_bounds(self):
-        usernames = [i['username'] for i in self.dataset[0]]
-        for i in usernames:
-            if not 3 < len(i) < 12:
+        for i in self.dataset[0]:
+            if not da.length_check(i, 'username', 3, 12):
                 return "FAIL"
         return "PASS"
 
@@ -100,7 +99,13 @@ class UserAudit():
         return "PASS"
 
     def job_title_must_exist_in_whitelist(self):
-        return "INCOMPLETE"
+        failset = []
+        for i in self.dataset[0]:
+            if not da.whitelist_check(i, "job_title", self.title_whitelist):
+                failset.append(i)
+        if len(failset):
+            return f"FAIL: {len(failset)} items"
+        return "PASS"
 
     def report_audit_result(self):
         # Print number of entries processed, validated, purged.
