@@ -42,7 +42,7 @@ class UserAudit():
     def username_must_not_contain_reserved_words(self):
         failset = []
         for i in self.dataset[0]:
-            if not da.blacklist_check(i, "username", self.username_blacklist):
+            if not da.blacklist_check(i, "username", self.username_blacklist[0]):
                 failset.append(i)
         if len(failset):
             return f"FAIL: {len(failset)} items"
@@ -103,7 +103,7 @@ class UserAudit():
     def job_title_must_exist_in_whitelist(self):
         failset = []
         for i in self.dataset[0]:
-            if not da.whitelist_check(i, "job_title", self.title_whitelist):
+            if not da.whitelist_check(i, "job_title", self.title_whitelist[0]):
                 failset.append(i)
         if len(failset):
             return f"FAIL: {len(failset)} items"
