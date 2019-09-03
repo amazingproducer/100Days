@@ -39,9 +39,22 @@ help_text = """
 </table>
 """
 
-def handle_errors(api_error):
+def handle_errors(route, desc, request, api_error):
     return jsonify(
-        error= api_error
+        api_endpoint = route,
+        description = desc,
+        request = request,
+        result_value = api_error,
+        result_type = "Error"
+    )
+
+def report_success(route, desc, request, result_value, result_type):
+    return jsonify(
+        api_endpoint = route,
+        description = desc,
+        request = request,
+        result_value = result_value,
+        result_type = result_type
     )
 
 @api.route('/', methods=['GET'])
@@ -58,85 +71,59 @@ def error_heroku():
 
 @api.route('/api/v1/is_prime/<n>', methods=['GET'])
 def get_is_prime(n):
+    route = "is_prime"
+    description = "Determines primality of a given integer."
     if not str(n).isdigit() or int(n) < 1:
-        return handle_errors("Input must be a natural number.")
+        return handle_errors(route, description,  n, "Input must be a natural number.")
     if int(n) > 1000:
         report = "```CALLBACK - "+str(n)+" primality: "+str(pt.is_prime(int(n)))+". I am not a ninja.```"
         requests.post(callback_url, json={"content":report, "username":"tensus"})
-        return jsonify(
-            api_endpoint = "is_prime",
-            description = "Determines primality of a given integer.",
-            request = n,
-            request_value = "Available via callback URL.",
-            result_type = "callback"
-        )
-    return jsonify(
-        api_endpoint = "is_prime",
-        description = "Determines primality of a given integer.",
-        request = n,
-        result_value = pt.is_prime(int(n)),
-        result_type = "boolean"
-    )
+        return report_success(route, description, n, "Available via\
+                              callback URL.", "callback")
+    return report_success(route, description, n, pt.is_prime(int(n)),
+                          "boolean")
 
 @api.route('/api/v1/get_nth/<n>', methods=['GET'])
 def get_nth_prime(n):
+    route = "get_nth_prime"
+    description = "Given a positive integer n, determine the n-th prime number."
     if not str(n).isdigit() or int(n) < 1:
-        return handle_errors("Input must be a natural number.")
+        return handle_errors(route, description, n, "Input must be a natural number.")
     if int(n) > 1000:
         report = "```CALLBACK - n-th prime where n="+str(n)+": "+str(pt.get_nth(int(n)))+".```"
         requests.post(callback_url, json={"content":report, "username":"tensus"})
-        return jsonify(
-            api_endpoint = "get_nth",
-            description = "Given a positive integer n, determines n-th prime number..",
-            request = n,
-            request_value = "Available via callback URL.",
-            result_type = "callback"
-        )
-    return jsonify(
-        api_endpoint = "get_nth",
-        description = "Given a positive integer n, determines n-th prime number.",
-        request = n,
-        result_value = pt.get_nth(int(n)),
-        result_type = "integer",
-    )
+        return report_success(route, description, n, "Available via callback
+                              URL.", "callback")
+    return report_success(route, description, n, pt.get_nth(int(n)), "integer")
 
 @api.route('/api/v1/nearest/<n>', methods=['GET'])
 def get_nearest_prime(n):
+    route = "get_nearest"
+    description = "Returns the nearest prime number to a given integer."
     if not str(n).isdigit() or int(n) < 1:
-        return handle_errors("Input must be a natural number.")
-    return jsonify(
-        api_endpoint = "nearest",
-        description = "Returns the nearest prime number to a given integer.",
-        request = n,
-        result_value = pt.get_nearest(int(n))[0],
-        result_type = "integer"
-    )
+        return handle_errors(route, description, n, "Input must be a natural number.")
+    return report_success(route, description, n, pt.get_nearest(int(n))[0]),
+"integer")
 
 @api.route('/api/v1/neighbors/<n>', methods=['GET'])
 def get_prime_neighbors(n):
+    route = "neighbors"
+    description = "Given an integer n, returns the greatest prime which is\
+            less than n and the smallest prime which is greater than n."
     if not str(n).isdigit() or int(n) < 1:
-        return handle_errors("Input must be a natural number.")
+        return handle_errors(route, description, n, "Input must be a natural number.")
     if int(n) < 3:
-        return handle_errors("Input must be greater than 2.")
-    return jsonify(
-        api_endpoint = "neighbors",
-        description = "Given an integer n, returns the greatest prime which is less than n and the smallest prime which is greater than n.",
-        request = n,
-        result_value = pt.get_neighbors(int(n)),
-        result_type = "array"
-    )
+        return handle_errors(route, description, n, "Input must be greater than 2.")
+    return report_success(route, description, n, pt.get_neighbors(int(n)),
+                          "array")
 
 @api.route('/api/v1/factorize/<n>', methods=['GET'])
 def get_prime_factors(n):
+    route = "factorize"
+    description = "Returns the prime factors of a given integer."
     if not str(n).isdigit() or int(n) <= 1:
-        return handle_errors("Input integer must be greater than one.")
-    return jsonify(
-        api_endpoint = "factorize",
-        description = "Returns the prime factors of a given integer.",
-        request = n,
-        result_value = pt.factorize(int(n)),
-        result_type = "array"
-    )
+        return handle_errors(route, description, n, "Input integer must be greater than one.")
+    return report_success(route, description, n, pt.factorize(int(n)), "array")
 
 if __name__ == '__main__':
     api.run(host='0.0.0.0', port=deploy_port)
