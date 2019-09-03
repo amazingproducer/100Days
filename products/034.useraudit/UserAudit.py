@@ -57,7 +57,9 @@ class UserAudit():
 
     def username_length_must_be_within_bounds(self):
         for i in self.dataset[0]:
-            if not da.length_check(i, 'username', 3, 12):
+            if not da.minimum_length_check(i, 'username', 3):
+                return "FAIL"
+            if not da.maximum_length_check(i,  'username', 12):
                 return "FAIL"
         return "PASS"
 
