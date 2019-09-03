@@ -41,9 +41,9 @@ class UserAudit():
 
     def username_must_not_contain_reserved_words(self):
         failset = []
-        for entry in self.dataset[0]:
-            if not da.blacklist_check(entry, "username", self.username_blacklist):
-                failset.append(entry)
+        for i in self.dataset[0]:
+            if not da.blacklist_check(i, "username", self.username_blacklist):
+                failset.append(i)
         if len(failset):
             return f"FAIL: {len(failset)} items"
         return "PASS"

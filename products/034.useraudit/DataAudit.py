@@ -41,7 +41,8 @@ class DataAudit():
     # TODO: Consider allowing direct comparisons as well as substring checks
 
     def blacklist_check(n, field, blacklist):
-        for i in blacklist:
+        if n[field]
+            for i in blacklist:
             if n[field]:
                 if i in n[field]:
                     return False
@@ -54,9 +55,15 @@ class DataAudit():
             return True
         return False
 
-    def length_check(n, field, min, max):
+    def minimum_length_check(n, field, min):
         if n[field]:
-            if min <= len(n[field]) and len(n[field]) <= max:
+            if min <= len(n[field]):
+                return True
+        return False
+
+    def maximum_length_check(n, field, max):
+        if n[field]:
+            if len(n[field]) <= max:
                 return True
         return False
 
