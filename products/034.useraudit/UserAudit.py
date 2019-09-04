@@ -70,6 +70,13 @@ class UserAudit():
         return "INCOMPLETE"
 
     def phone_number_must_be_valid(self):
+        pattern = "/^(\\+|1\\s)?[(][2-9]\\d{2}[)][\\s][2-9]\\d{2}-\\d{4}$/"
+        failset = []
+        for i in self.dataset[0]:
+            if not da.regex_check(i, "auth_phone", pattern):
+                failset.append(i)
+        if len(failset):
+            return f"FAIL {len(failset)} items"
         return "INCOMPLETE"
 
     def authorized_date_must_be_earlier_than_last_authenticated_date(self):

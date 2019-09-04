@@ -25,7 +25,10 @@ class DataAudit():
 
     def open_list(list_path):
         list_file = open(list_path)
-        return list(json.load(list_file))[0], list_file
+        list_set = json.load(list_file)
+        list_name = list(list_set.keys())[0]
+        list_object = list_set[list_name]
+        return list_object, list_file
 
     def close_list(list_file_object):
         list_file_object.close()
@@ -43,7 +46,7 @@ class DataAudit():
     def blacklist_check(n, field, blacklist):
         if n[field]:
             for i in blacklist:
-                if i in n[field]:
+                if i == n[field]:
                     return False
         return True
 
