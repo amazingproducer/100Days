@@ -70,7 +70,7 @@ def get_is_prime(n):
     description = "Determines primality of a given integer."
     if not str(n).isdigit() or int(n) < 1:
         return send_response(route, description,  n, "Input must be a natural\
-                             number.", "Error")
+number.", "Error")
     if int(n) > 1000:
         report = "```CALLBACK - " + \
             str(n)+" primality: "+str(pt.is_prime(int(n))) + \
@@ -78,7 +78,7 @@ def get_is_prime(n):
         requests.post(callback_url, json={
                       "content": report, "username": "tensus"})
         return send_response(route, description, n, "Available via\
-                              callback URL.", "callback")
+callback URL.", "callback")
     return send_response(route, description, n, pt.is_prime(int(n)),
                           "boolean")
 
@@ -89,14 +89,14 @@ def get_nth_prime(n):
     description = "Given a positive integer n, determine the n-th prime number."
     if not str(n).isdigit() or int(n) < 1:
         return send_response(route, description, n, "Input must be a natural\
-                             number.", "Entry")
+number.", "Entry")
     if int(n) > 1000:
         report = "```CALLBACK - n-th prime where n=" + \
             str(n)+": "+str(pt.get_nth(int(n)))+".```"
         requests.post(callback_url, json={
                       "content": report, "username": "tensus"})
         return send_response(route, description, n, "Available via callback\
-                              URL.", "callback")
+URL.", "callback")
     return send_response(route, description, n, pt.get_nth(int(n)), "integer")
 
 
@@ -106,22 +106,22 @@ def get_nearest_prime(n):
     description = "Returns the nearest prime number to a given integer."
     if not str(n).isdigit() or int(n) < 1:
         return send_response(route, description, n, "Input must be a natural\
-                             number.", "Error")
+number.", "Error")
     return send_response(route, description, n, pt.get_nearest(int(n))[0], "integer")
 
 @api.route('/api/v1/neighbors/<n>', methods = ['GET'])
 def get_prime_neighbors(n):
     route="neighbors"
     description="Given an integer n, returns the greatest prime which is\
-            less than n and the smallest prime which is greater than n."
+less than n and the smallest prime which is greater than n."
     if not str(n).isdigit() or int(n) < 1:
         return send_response(route, description, n, "Input must be a natural\
-                             number.", "Error")
+number.", "Error")
     if int(n) < 3:
         return send_response(route, description, n, "Input must be greater\
-                             than 2.", "Error")
+than 2.", "Error")
     return send_response(route, description, n, pt.get_neighbors(int(n)),
-                          "array")
+"array")
 
 @api.route('/api/v1/factorize/<n>', methods=['GET'])
 def get_prime_factors(n):
@@ -129,7 +129,7 @@ def get_prime_factors(n):
     description = "Returns the prime factors of a given integer."
     if not str(n).isdigit() or int(n) <= 1:
         return send_response(route, description, n, "Input integer must be\
-                             greater than one.", "Error")
+greater than one.", "Error")
     return send_response(route, description, n, pt.factorize(int(n)), "array")
 
 if __name__ == '__main__':
