@@ -49,19 +49,21 @@ class UserAudit():
         return "PASS"
 
     def email_and_usernames_must_be_unique(self):
-        if not da.uniqueness_check('username', self.dataset[0]):
-            return "FAIL"
-        if not da.uniqueness_check('auth_email', self.dataset[0]):
-            return "FAIL"
+        failset = []
+        for i in self.dataset[0]:
+            if not da.uniqueness_check(i, 'username', self.dataset[0]) or not da.uniqueness_check(i, 'auth_email', self.dataset[0]):
+                failset.append(i)
+        if len(failset):
+            return f"FAIL: {len(failset)} items"
         return "PASS"
 
     def username_length_must_be_within_bounds(self):
         failset = []
         for i in self.dataset[0]:
-            if not da.minimum_length_check(i, 'username', 3) or if not da.maximum_length_check(i,  'username', 12):
+            if not da.minimum_length_check(i, 'username', 3) or not da.maximum_length_check(i,  'username', 12):
                 failset.append(i)
         if len(failset):
-            return f"FAIL: {len(failset)} times"
+            return f"FAIL: {len(failset)} items"
         return "PASS"
 
     def email_address_must_be_valid(self):

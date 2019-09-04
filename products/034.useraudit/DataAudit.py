@@ -105,9 +105,8 @@ class DataAudit():
             return True, f"{bef_field} is before {aft_field}"
         return False, f"{bef_field} is not before {aft_field}."
 
-    def uniqueness_check(field, dataset):
-        # This is less helpful. Use the previous version of this method.
+    def uniqueness_check(n, field, dataset):
         fields = [i[field] for i in dataset]
-        if len(fields) != len(set(fields)):
+        if fields.count(n[field]) > 1:
             return False
         return True
