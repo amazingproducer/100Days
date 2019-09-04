@@ -56,11 +56,12 @@ class UserAudit():
         return "PASS"
 
     def username_length_must_be_within_bounds(self):
+        failset = []
         for i in self.dataset[0]:
-            if not da.minimum_length_check(i, 'username', 3):
-                return "FAIL"
-            if not da.maximum_length_check(i,  'username', 12):
-                return "FAIL"
+            if not da.minimum_length_check(i, 'username', 3) or if not da.maximum_length_check(i,  'username', 12):
+                failset.append(i)
+        if len(failset):
+            return f"FAIL: {len(failset)} times"
         return "PASS"
 
     def email_address_must_be_valid(self):
