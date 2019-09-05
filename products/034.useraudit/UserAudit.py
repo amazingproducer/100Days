@@ -25,6 +25,7 @@
 from DataAudit import DataAudit as da
 import argparse
 from inspect import ismethod
+import datetime
 
 
 class UserAudit():
@@ -36,6 +37,7 @@ class UserAudit():
                         da.empty_check(i, 'auth_email')]:
                 failset.append(i)
         if len(failset):
+            if 
             return f"FAIL: {len(failset)} items"
         return "PASS"
 
@@ -67,17 +69,25 @@ class UserAudit():
         return "PASS"
 
     def email_address_must_be_valid(self):
-        return "INCOMPLETE"
+        pattern = r"^\S+@\S+$"
+        failset = []
+        for i in self.dataset[0]:
+            if not da.regex_check(i, "auth_email", pattern):
+                failset.append(i)
+        if len(failset):
+            return f"FAIL {len(failset)} items"
+        return "PASS"
 
     def phone_number_must_be_valid(self):
-        pattern = "/^(\\+|1\\s)?[(][2-9]\\d{2}[)][\\s][2-9]\\d{2}-\\d{4}$/"
+        pattern =\
+        r"^(?:\+?1[-.●]?)?\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$"
         failset = []
         for i in self.dataset[0]:
             if not da.regex_check(i, "auth_phone", pattern):
                 failset.append(i)
         if len(failset):
             return f"FAIL {len(failset)} items"
-        return "INCOMPLETE"
+        return "PASS"
 
     def authorized_date_must_be_earlier_than_last_authenticated_date(self):
         failset = []
@@ -127,6 +137,14 @@ class UserAudit():
     @classmethod
     def run_audit(cls, params):
         cls.dataset = da.open_dataset(params.dataset_file)
+        if params.merge:
+            cls.do_merge = True
+            if params.purge:
+                cls.inputs = da.open_dataset(params.merge)
+        if params.purge:
+            cls.do_purge = True
+            cls.output =\
+            da.open_dataset(r"./dataset.{datetime.date.today}.json", "x")
         cls.username_blacklist = da.open_list(params.reserved)
         cls.title_whitelist = da.open_list(params.titles)
         attrs = []
@@ -146,9 +164,9 @@ if __name__ == "__main__":
             input data with it."
     footer = "This program is a part of 2019's 100 Days of Coding."
     parser = argparse.ArgumentParser(description=desc, epilog=footer)
-    parser.add_argument("dataset_file", action="store", help="[FILE] - load user dataset for\
+    parser.add_argument("dataset_file", help="[FILE] - load user dataset for\
                         validation.")
-    parser.add_argument("-m", "--merge", action="store_true", help="[FILE] - validate \
+    parser.add_argument("-m", "--merge", help="[FILE] - validate \
                         and merge FILE with the user dataset.")
     parser.add_argument("--purge", action="store_true", help="purge invalid \
                         entries from dataset during audits")

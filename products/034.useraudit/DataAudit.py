@@ -10,10 +10,10 @@ import datetime
 
 
 class DataAudit():
-    def open_dataset(dataset_path, dataset_cleanup_bit=0, dataset_create_bit=0):
+    def open_dataset(dataset_path, dataset_create_bit=0):
         dataset_load_flag = "r"
-        if dataset_cleanup_bit:
-            dataset_load_flag = "w"
+        if dataset_create_bit:
+            dataset_load_flag = "x"
         # TODO: Learn best error handling practices for opening files
         dataset_file = open(dataset_path, dataset_load_flag)
         # TODO: Handle errors on JSON load
@@ -84,7 +84,8 @@ class DataAudit():
     def regex_check(n, field, reg):
         if not n[field]:
             return False
-        if re.match(reg, n[field]) == n[field]:
+        pattern = re.compile(reg)
+        if pattern.fullmatch(n[field]):
             return True
         return False
 
