@@ -37,7 +37,6 @@ class UserAudit():
                         da.empty_check(i, 'auth_email')]:
                 failset.append(i)
         if len(failset):
-            if 
             return f"FAIL: {len(failset)} items"
         return "PASS"
 
@@ -137,14 +136,15 @@ class UserAudit():
     @classmethod
     def run_audit(cls, params):
         cls.dataset = da.open_dataset(params.dataset_file)
+        cls.output = da.open_dataset(params.output, "x")
         if params.merge:
             cls.do_merge = True
             if params.purge:
                 cls.inputs = da.open_dataset(params.merge)
         if params.purge:
             cls.do_purge = True
-            cls.output =\
-            da.open_dataset(r"./dataset.{datetime.date.today}.json", "x")
+            cls.purged_entries =\
+            da.open_dataset(params.purge, "x")
         cls.username_blacklist = da.open_list(params.reserved)
         cls.title_whitelist = da.open_list(params.titles)
         attrs = []
@@ -153,26 +153,30 @@ class UserAudit():
             attrs.append(getattr(u, name))
         funcs = filter(ismethod, attrs)
         for func in funcs:
-            if func.__name__ != "run_audit":
+            if func.__name__ not in ["report_audit_result", "run_audit"]:
                 try:
                     print(f"{func.__name__}: {func()}")
                 except TypeError():
                     pass
 
 if __name__ == "__main__":
-    desc = "UserAudit - audit a dataset and optionally validate and merge user\
+    desc = "UserAudit - audit a dataset and optionally validate and merge user \
             input data with it."
     footer = "This program is a part of 2019's 100 Days of Coding."
+    timestamp = datetime.datetime.utcnow().replace(microsecond=0).strftime("%Y-%m-%dT%H%M%S")
     parser = argparse.ArgumentParser(description=desc, epilog=footer)
-    parser.add_argument("dataset_file", help="[FILE] - load user dataset for\
-                        validation.")
+    parser.add_argument("dataset_file", help="[FILE] - input file (dataset to \
+                        be validated).")
     parser.add_argument("-m", "--merge", help="[FILE] - validate \
                         and merge FILE with the user dataset.")
-    parser.add_argument("--purge", action="store_true", help="purge invalid \
-                        entries from dataset during audits")
-    parser.add_argument("--reserved", action="store", help="[FILE] - use custom username \
+    parser.add_argument("-o", "--output", default=f'./validated.{timestamp}.json',
+                        help="[FILE] - destination file for validated entries.")
+    parser.add_argument("--purge", default=f'./purgefile.{timestamp}.json',
+                        help="[FILE] - purge invalid \
+                        entries from dataset and into a separate file.")
+    parser.add_argument("--reserved", help="[FILE] - use custom username \
                         blacklist", default='./reserved_usernames.json')
-    parser.add_argument("--titles", action="store", help="[FILE] - use custom job_title \
+    parser.add_argument("--titles", help="[FILE] - use custom job_title \
                         whitelist", default='./valid_user_titles.json')
     args = parser.parse_args()
     # Does it work yet?
