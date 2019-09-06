@@ -13,7 +13,11 @@ class DataAudit():
     def open_dataset(dataset_path, dataset_create_bit=0):
         dataset_load_flag = "r"
         if dataset_create_bit:
-            dataset_load_flag = "x"
+            dataset_load_flag = "r+"
+            dataset_file = open(dataset_path, "x")
+            emptydict = json.loads("{}")
+            json.dump(emptydict, dataset_file)
+            dataset_file.close()
         # TODO: Learn best error handling practices for opening files
         dataset_file = open(dataset_path, dataset_load_flag)
         # TODO: Handle errors on JSON load

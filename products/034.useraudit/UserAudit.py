@@ -26,7 +26,7 @@ from DataAudit import DataAudit as da
 import argparse
 from inspect import ismethod
 import datetime
-
+import json
 
 class UserAudit():
     def name_and_email_fields_required(self):
@@ -36,6 +36,10 @@ class UserAudit():
                         da.empty_check(i, 'last_name'),
                         da.empty_check(i, 'auth_email')]:
                 failset.append(i)
+                if self.do_purge:
+                    json.dump(i, self.purged_entries[1])
+            else:
+                json.dump(i, self.output[1])
         if len(failset):
             return f"FAIL: {len(failset)} items"
         return "PASS"
@@ -45,6 +49,10 @@ class UserAudit():
         for i in self.dataset[0]:
             if not da.blacklist_check(i, "username", self.username_blacklist[0]):
                 failset.append(i)
+                if self.do_purge:
+                    json.dump(i, self.purged_entries[1])
+            else:
+                json.dump(i, self.output[1])
         if len(failset):
             return f"FAIL: {len(failset)} items"
         return "PASS"
@@ -54,6 +62,10 @@ class UserAudit():
         for i in self.dataset[0]:
             if not da.uniqueness_check(i, 'username', self.dataset[0]) or not da.uniqueness_check(i, 'auth_email', self.dataset[0]):
                 failset.append(i)
+                if self.do_purge:
+                    json.dump(i, self.purged_entries[1])
+            else:
+                json.dump(i, self.output[1])
         if len(failset):
             return f"FAIL: {len(failset)} items"
         return "PASS"
@@ -63,6 +75,10 @@ class UserAudit():
         for i in self.dataset[0]:
             if not da.minimum_length_check(i, 'username', 3) or not da.maximum_length_check(i,  'username', 12):
                 failset.append(i)
+                if self.do_purge:
+                    json.dump(i, self.purged_entries[1])
+            else:
+                json.dump(i, self.output[1])
         if len(failset):
             return f"FAIL: {len(failset)} items"
         return "PASS"
@@ -73,6 +89,10 @@ class UserAudit():
         for i in self.dataset[0]:
             if not da.regex_check(i, "auth_email", pattern):
                 failset.append(i)
+                if self.do_purge:
+                    json.dump(i, self.purged_entries[1])
+            else:
+                json.dump(i, self.output[1])
         if len(failset):
             return f"FAIL {len(failset)} items"
         return "PASS"
@@ -84,6 +104,10 @@ class UserAudit():
         for i in self.dataset[0]:
             if not da.regex_check(i, "auth_phone", pattern):
                 failset.append(i)
+                if self.do_purge:
+                    json.dump(i, self.purged_entries[1])
+            else:
+                json.dump(i, self.output[1])
         if len(failset):
             return f"FAIL {len(failset)} items"
         return "PASS"
@@ -94,6 +118,10 @@ class UserAudit():
             if not da.precedence_check(i, "authorized_date",
                                        "last_authenticated_date")[0]:
                 failset.append(i)
+                if self.do_purge:
+                    json.dump(i, self.purged_entries[1])
+            else:
+                json.dump(i, self.output[1])
         if len(failset):
             return f"FAIL: {len(failset)} items"
         return "PASS"
@@ -105,6 +133,10 @@ class UserAudit():
             if not da.precedence_check(i, "authorized_date",
                                        "released_date")[0]:
                 failset.append(i)
+                if self.do_purge:
+                    json.dump(i, self.purged_entries[1])
+            else:
+                json.dump(i, self.output[1])
         if len(failset):
             return f"FAIL: {len(failset)} items"
         return "PASS"
@@ -115,6 +147,10 @@ class UserAudit():
             if not da.precedence_check(i, "last_authenticated_date",
                                        "released_date")[0]:
                 failset.append(i)
+                if self.do_purge:
+                    json.dump(i, self.purged_entries[1])
+            else:
+                json.dump(i, self.output[1])
         if len(failset):
             return f"FAIL: {len(failset)} items"
         return "PASS"
@@ -124,6 +160,10 @@ class UserAudit():
         for i in self.dataset[0]:
             if not da.whitelist_check(i, "job_title", self.title_whitelist[0]):
                 failset.append(i)
+                if self.do_purge:
+                    json.dump(i, self.purged_entries[1])
+            else:
+                json.dump(i, self.output[1])
         if len(failset):
             return f"FAIL: {len(failset)} items"
         return "PASS"
@@ -136,15 +176,14 @@ class UserAudit():
     @classmethod
     def run_audit(cls, params):
         cls.dataset = da.open_dataset(params.dataset_file)
-        cls.output = da.open_dataset(params.output, "x")
+        cls.output = da.open_dataset(params.output, True)
         if params.merge:
             cls.do_merge = True
-            if params.purge:
-                cls.inputs = da.open_dataset(params.merge)
+            cls.inputs = da.open_dataset(params.merge)
         if params.purge:
             cls.do_purge = True
             cls.purged_entries =\
-            da.open_dataset(params.purge, "x")
+            da.open_dataset(params.purge, 1)
         cls.username_blacklist = da.open_list(params.reserved)
         cls.title_whitelist = da.open_list(params.titles)
         attrs = []
@@ -171,7 +210,7 @@ if __name__ == "__main__":
                         and merge FILE with the user dataset.")
     parser.add_argument("-o", "--output", default=f'./validated.{timestamp}.json',
                         help="[FILE] - destination file for validated entries.")
-    parser.add_argument("--purge", default=f'./purgefile.{timestamp}.json',
+    parser.add_argument("-p", "--purge", default=f'./purgefile.{timestamp}.json',
                         help="[FILE] - purge invalid \
                         entries from dataset and into a separate file.")
     parser.add_argument("--reserved", help="[FILE] - use custom username \
