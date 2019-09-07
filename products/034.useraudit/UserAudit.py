@@ -37,8 +37,10 @@ class UserAudit():
                         da.empty_check(i, 'auth_email')]:
                 failset.append(i)
                 if self.do_purge:
-                    json.dump(i, self.purged_entries[1])
-            else:
+                    if i not in self.purged_entries[0].items():
+                        json.dump(i, self.purged_entries[1])
+                        del(i)
+            elif i not in self.dataset[0]:
                 json.dump(i, self.output[1])
         if len(failset):
             return f"FAIL: {len(failset)} items"
@@ -50,8 +52,10 @@ class UserAudit():
             if not da.blacklist_check(i, "username", self.username_blacklist[0]):
                 failset.append(i)
                 if self.do_purge:
-                    json.dump(i, self.purged_entries[1])
-            else:
+                    if i not in self.purged_entries[0].items():
+                        json.dump(i, self.purged_entries[1])
+                        del(i)
+            elif i not in self.dataset[0]:
                 json.dump(i, self.output[1])
         if len(failset):
             return f"FAIL: {len(failset)} items"
@@ -63,8 +67,10 @@ class UserAudit():
             if not da.uniqueness_check(i, 'username', self.dataset[0]) or not da.uniqueness_check(i, 'auth_email', self.dataset[0]):
                 failset.append(i)
                 if self.do_purge:
-                    json.dump(i, self.purged_entries[1])
-            else:
+                    if i not in self.purged_entries[0].items():
+                        json.dump(i, self.purged_entries[1])
+                        del(i)
+            elif i not in self.dataset[0]:
                 json.dump(i, self.output[1])
         if len(failset):
             return f"FAIL: {len(failset)} items"
@@ -76,8 +82,10 @@ class UserAudit():
             if not da.minimum_length_check(i, 'username', 3) or not da.maximum_length_check(i,  'username', 12):
                 failset.append(i)
                 if self.do_purge:
-                    json.dump(i, self.purged_entries[1])
-            else:
+                    if i not in self.purged_entries[0].items():
+                        json.dump(i, self.purged_entries[1])
+                        del(i)
+            elif i not in self.dataset[0]:
                 json.dump(i, self.output[1])
         if len(failset):
             return f"FAIL: {len(failset)} items"
@@ -90,8 +98,10 @@ class UserAudit():
             if not da.regex_check(i, "auth_email", pattern):
                 failset.append(i)
                 if self.do_purge:
-                    json.dump(i, self.purged_entries[1])
-            else:
+                    if i not in self.purged_entries[0].items():
+                        json.dump(i, self.purged_entries[1])
+                        del(i)
+            elif i not in self.dataset[0]:
                 json.dump(i, self.output[1])
         if len(failset):
             return f"FAIL {len(failset)} items"
@@ -105,8 +115,10 @@ class UserAudit():
             if not da.regex_check(i, "auth_phone", pattern):
                 failset.append(i)
                 if self.do_purge:
-                    json.dump(i, self.purged_entries[1])
-            else:
+                    if i not in self.purged_entries[0].items():
+                        json.dump(i, self.purged_entries[1])
+                        del(i)
+            elif i not in self.dataset[0]:
                 json.dump(i, self.output[1])
         if len(failset):
             return f"FAIL {len(failset)} items"
@@ -119,8 +131,10 @@ class UserAudit():
                                        "last_authenticated_date")[0]:
                 failset.append(i)
                 if self.do_purge:
-                    json.dump(i, self.purged_entries[1])
-            else:
+                    if i not in self.purged_entries[0].items():
+                        json.dump(i, self.purged_entries[1])
+                        del(i)
+            elif i not in self.dataset[0]:
                 json.dump(i, self.output[1])
         if len(failset):
             return f"FAIL: {len(failset)} items"
@@ -134,8 +148,10 @@ class UserAudit():
                                        "released_date")[0]:
                 failset.append(i)
                 if self.do_purge:
-                    json.dump(i, self.purged_entries[1])
-            else:
+                    if i not in self.purged_entries[0].items():
+                        json.dump(i, self.purged_entries[1])
+                        del(i)
+            elif i not in self.dataset[0]:
                 json.dump(i, self.output[1])
         if len(failset):
             return f"FAIL: {len(failset)} items"
@@ -148,8 +164,10 @@ class UserAudit():
                                        "released_date")[0]:
                 failset.append(i)
                 if self.do_purge:
-                    json.dump(i, self.purged_entries[1])
-            else:
+                    if i not in self.purged_entries[0].items():
+                        json.dump(i, self.purged_entries[1])
+                        del(i)
+            elif i not in self.dataset[0]:
                 json.dump(i, self.output[1])
         if len(failset):
             return f"FAIL: {len(failset)} items"
@@ -161,8 +179,10 @@ class UserAudit():
             if not da.whitelist_check(i, "job_title", self.title_whitelist[0]):
                 failset.append(i)
                 if self.do_purge:
-                    json.dump(i, self.purged_entries[1])
-            else:
+                    if i not in self.purged_entries[0].items():
+                        json.dump(i, self.purged_entries[1])
+                        del(i)
+            elif i not in self.dataset[0]:
                 json.dump(i, self.output[1])
         if len(failset):
             return f"FAIL: {len(failset)} items"
