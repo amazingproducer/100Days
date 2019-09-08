@@ -36,60 +36,28 @@ class UserAudit():
                         da.empty_check(i, 'last_name'),
                         da.empty_check(i, 'auth_email')]:
                 failset.append(i)
-                if self.do_purge:
-                    if i not in self.purged_entries[0].items():
-                        json.dump(i, self.purged_entries[1])
-                        del(i)
-            elif i not in self.dataset[0]:
-                json.dump(i, self.output[1])
-        if len(failset):
-            return f"FAIL: {len(failset)} items"
-        return "PASS"
+        return self.process_audit_result(failset)
 
     def username_must_not_contain_reserved_words(self):
         failset = []
         for i in self.dataset[0]:
             if not da.blacklist_check(i, "username", self.username_blacklist[0]):
                 failset.append(i)
-                if self.do_purge:
-                    if i not in self.purged_entries[0].items():
-                        json.dump(i, self.purged_entries[1])
-                        del(i)
-            elif i not in self.dataset[0]:
-                json.dump(i, self.output[1])
-        if len(failset):
-            return f"FAIL: {len(failset)} items"
-        return "PASS"
+        return self.process_audit_result(failset)
 
     def email_and_usernames_must_be_unique(self):
         failset = []
         for i in self.dataset[0]:
             if not da.uniqueness_check(i, 'username', self.dataset[0]) or not da.uniqueness_check(i, 'auth_email', self.dataset[0]):
                 failset.append(i)
-                if self.do_purge:
-                    if i not in self.purged_entries[0].items():
-                        json.dump(i, self.purged_entries[1])
-                        del(i)
-            elif i not in self.dataset[0]:
-                json.dump(i, self.output[1])
-        if len(failset):
-            return f"FAIL: {len(failset)} items"
-        return "PASS"
+        return self.process_audit_result(failset)
 
     def username_length_must_be_within_bounds(self):
         failset = []
         for i in self.dataset[0]:
             if not da.minimum_length_check(i, 'username', 3) or not da.maximum_length_check(i,  'username', 12):
                 failset.append(i)
-                if self.do_purge:
-                    if i not in self.purged_entries[0].items():
-                        json.dump(i, self.purged_entries[1])
-                        del(i)
-            elif i not in self.dataset[0]:
-                json.dump(i, self.output[1])
-        if len(failset):
-            return f"FAIL: {len(failset)} items"
-        return "PASS"
+        return self.process_audit_result(failset)
 
     def email_address_must_be_valid(self):
         pattern = r"^\S+@\S+$"
@@ -97,15 +65,7 @@ class UserAudit():
         for i in self.dataset[0]:
             if not da.regex_check(i, "auth_email", pattern):
                 failset.append(i)
-                if self.do_purge:
-                    if i not in self.purged_entries[0].items():
-                        json.dump(i, self.purged_entries[1])
-                        del(i)
-            elif i not in self.dataset[0]:
-                json.dump(i, self.output[1])
-        if len(failset):
-            return f"FAIL {len(failset)} items"
-        return "PASS"
+        return self.process_audit_result(failset)
 
     def phone_number_must_be_valid(self):
         pattern =\
@@ -114,15 +74,7 @@ class UserAudit():
         for i in self.dataset[0]:
             if not da.regex_check(i, "auth_phone", pattern):
                 failset.append(i)
-                if self.do_purge:
-                    if i not in self.purged_entries[0].items():
-                        json.dump(i, self.purged_entries[1])
-                        del(i)
-            elif i not in self.dataset[0]:
-                json.dump(i, self.output[1])
-        if len(failset):
-            return f"FAIL {len(failset)} items"
-        return "PASS"
+        return self.process_audit_result(failset)
 
     def authorized_date_must_be_earlier_than_last_authenticated_date(self):
         failset = []
@@ -130,15 +82,7 @@ class UserAudit():
             if not da.precedence_check(i, "authorized_date",
                                        "last_authenticated_date")[0]:
                 failset.append(i)
-                if self.do_purge:
-                    if i not in self.purged_entries[0].items():
-                        json.dump(i, self.purged_entries[1])
-                        del(i)
-            elif i not in self.dataset[0]:
-                json.dump(i, self.output[1])
-        if len(failset):
-            return f"FAIL: {len(failset)} items"
-        return "PASS"
+        return self.process_audit_result(failset)
 
 
     def authorized_date_must_be_earlier_than_released_date(self):
@@ -147,15 +91,7 @@ class UserAudit():
             if not da.precedence_check(i, "authorized_date",
                                        "released_date")[0]:
                 failset.append(i)
-                if self.do_purge:
-                    if i not in self.purged_entries[0].items():
-                        json.dump(i, self.purged_entries[1])
-                        del(i)
-            elif i not in self.dataset[0]:
-                json.dump(i, self.output[1])
-        if len(failset):
-            return f"FAIL: {len(failset)} items"
-        return "PASS"
+        return self.process_audit_result(failset)
 
     def last_authenticated_date_must_be_earlier_than_released_date(self):
         failset = []
@@ -163,39 +99,38 @@ class UserAudit():
             if not da.precedence_check(i, "last_authenticated_date",
                                        "released_date")[0]:
                 failset.append(i)
-                if self.do_purge:
-                    if i not in self.purged_entries[0].items():
-                        json.dump(i, self.purged_entries[1])
-                        del(i)
-            elif i not in self.dataset[0]:
-                json.dump(i, self.output[1])
-        if len(failset):
-            return f"FAIL: {len(failset)} items"
-        return "PASS"
+        return self.process_audit_result(failset)
 
     def job_title_must_exist_in_whitelist(self):
         failset = []
         for i in self.dataset[0]:
             if not da.whitelist_check(i, "job_title", self.title_whitelist[0]):
                 failset.append(i)
-                if self.do_purge:
-                    if i not in self.purged_entries[0].items():
-                        json.dump(i, self.purged_entries[1])
-                        del(i)
-            elif i not in self.dataset[0]:
-                json.dump(i, self.output[1])
+        return self.process_audit_result(failset)
+
+    @classmethod
+    def process_audit_result(cls, failset):
         if len(failset):
-            return f"FAIL: {len(failset)} items"
+            for i in failset:
+                if i not in cls.purged_entries[0]:
+                   cls.purged_entries[0].append(i)
+                if i in cls.dataset[0]:
+                    cls.dataset[0].pop(cls.dataset[0].index(i))
+            return f"FAIL: {len(failset)} items."
         return "PASS"
 
-    def report_audit_result(self):
-        # Print number of entries processed, validated, purged.
-        # Print information about file write actions
-        return "INCOMPLETE"
+    @classmethod
+    def report_audit_result(cls):
+        json.dump(cls.dataset[0], cls.output[1])
+        json.dump(cls.purged_entries[0], cls.purged_entries[1])
+        print(f"Processed {cls.dataset_initial_length} entries from {cls.dataset[1].name}, {len(cls.dataset[0])} of which were valid.")
+        print(f"{len(cls.dataset[0])} validated entries were written to: {cls.output[1].name}.")
+        print(f"{len(cls.purged_entries[0])} invalid files were written to: {cls.purged_entries[1].name}.")
 
     @classmethod
     def run_audit(cls, params):
         cls.dataset = da.open_dataset(params.dataset_file)
+        cls.dataset_initial_length = len(cls.dataset[0])
         cls.output = da.open_dataset(params.output, True)
         if params.merge:
             cls.do_merge = True
@@ -203,7 +138,7 @@ class UserAudit():
         if params.purge:
             cls.do_purge = True
             cls.purged_entries =\
-            da.open_dataset(params.purge, 1)
+            da.open_dataset(params.purge, True)
         cls.username_blacklist = da.open_list(params.reserved)
         cls.title_whitelist = da.open_list(params.titles)
         attrs = []
@@ -212,11 +147,14 @@ class UserAudit():
             attrs.append(getattr(u, name))
         funcs = filter(ismethod, attrs)
         for func in funcs:
-            if func.__name__ not in ["report_audit_result", "run_audit"]:
+            if func.__name__ not in ["report_audit_result", "run_audit",
+                                     "process_audit_result",
+                                     "report_audit_result"]:
                 try:
                     print(f"{func.__name__}: {func()}")
                 except TypeError():
                     pass
+        cls.report_audit_result()
 
 if __name__ == "__main__":
     desc = "UserAudit - audit a dataset and optionally validate and merge user \
