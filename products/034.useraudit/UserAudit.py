@@ -116,6 +116,7 @@ class UserAudit():
                    cls.purged_entries[0].append(i)
                 if i in cls.dataset[0]:
                     cls.dataset[0].pop(cls.dataset[0].index(i))
+        if cls.verbosity:
             return f"FAIL: {len(failset)} items."
         return "PASS"
 
@@ -123,15 +124,18 @@ class UserAudit():
     def report_audit_result(cls):
         if cls.do_output:
             json.dump(cls.dataset[0], cls.output[1])
-            print(f"{len(cls.dataset[0])} validated entries were written to: {cls.output[1].name}.")
+            if cls.verbosity:
+                print(f"{len(cls.dataset[0])} validated entries were written to: {cls.output[1].name}.")
         if cls.do_purge:
             json.dump(cls.purged_entries[0], cls.purged_entries[1])
-            print(f"{len(cls.purged_entries[0])} invalid files were written to: {cls.purged_entries[1].name}.")
+            if cls.verbosity:
+                print(f"{len(cls.purged_entries[0])} invalid files were written to: {cls.purged_entries[1].name}.")
         print(f"Processed {cls.dataset_initial_length} entries from {cls.dataset[1].name}, {len(cls.dataset[0])} of which were valid.")
 
     @classmethod
     def run_audit(cls, params):
         print(params)
+        cls.verbosity = params.v
         cls.dataset = da.open_dataset(params.dataset_file)
         cls.dataset_initial_length = len(cls.dataset[0])
         if params.output:
@@ -164,7 +168,10 @@ class UserAudit():
                                      "process_audit_result",
                                      "report_audit_result"]:
                 try:
-                    print(f"{func.__name__}: {func()}")
+                    if cls.verbosity:
+                        print(f"{func.__name__}: {func()}")
+                    else:
+                        func()
                 except TypeError():
                     pass
         cls.report_audit_result()
@@ -186,6 +193,8 @@ if __name__ == "__main__":
                         blacklist", default='./reserved_usernames.json')
     parser.add_argument("--titles", help="[FILE] - use custom job_title \
                         whitelist", default='./valid_user_titles.json')
+    parser.add_argument("-v", action="count", default=0,  help="increase output verbosity")
+
     args = parser.parse_args()
     # Does it work yet?
     if args:
