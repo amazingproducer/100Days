@@ -121,24 +121,37 @@ class UserAudit():
 
     @classmethod
     def report_audit_result(cls):
-        json.dump(cls.dataset[0], cls.output[1])
-        json.dump(cls.purged_entries[0], cls.purged_entries[1])
+        if cls.do_output:
+            json.dump(cls.dataset[0], cls.output[1])
+            print(f"{len(cls.dataset[0])} validated entries were written to: {cls.output[1].name}.")
+        if cls.do_purge:
+            json.dump(cls.purged_entries[0], cls.purged_entries[1])
+            print(f"{len(cls.purged_entries[0])} invalid files were written to: {cls.purged_entries[1].name}.")
         print(f"Processed {cls.dataset_initial_length} entries from {cls.dataset[1].name}, {len(cls.dataset[0])} of which were valid.")
-        print(f"{len(cls.dataset[0])} validated entries were written to: {cls.output[1].name}.")
-        print(f"{len(cls.purged_entries[0])} invalid files were written to: {cls.purged_entries[1].name}.")
 
     @classmethod
     def run_audit(cls, params):
+        print(params)
         cls.dataset = da.open_dataset(params.dataset_file)
         cls.dataset_initial_length = len(cls.dataset[0])
-        cls.output = da.open_dataset(params.output, True)
+        if params.output:
+            cls.do_output = True
+            cls.output = da.open_dataset(params.output, True)
+        else:
+            cls.do_output = False
         if params.merge:
             cls.do_merge = True
             cls.inputs = da.open_dataset(params.merge)
+        else:
+            cls.do_merge = False
         if params.purge:
             cls.do_purge = True
             cls.purged_entries =\
             da.open_dataset(params.purge, True)
+        else:
+            # add invalid entries to json object instead of a file
+            cls.do_purge = False
+            cls.purged_entries = (json.loads("[]"), None)
         cls.username_blacklist = da.open_list(params.reserved)
         cls.title_whitelist = da.open_list(params.titles)
         attrs = []
@@ -166,10 +179,8 @@ if __name__ == "__main__":
                         be validated).")
     parser.add_argument("-m", "--merge", help="[FILE] - validate \
                         and merge FILE with the user dataset.")
-    parser.add_argument("-o", "--output", default=f'./validated.{timestamp}.json',
-                        help="[FILE] - destination file for validated entries.")
-    parser.add_argument("-p", "--purge", default=f'./purgefile.{timestamp}.json',
-                        help="[FILE] - purge invalid \
+    parser.add_argument("-o", "--output",help="[FILE] - destination file for validated entries.")
+    parser.add_argument("-p", "--purge", help="[FILE] - purge invalid \
                         entries from dataset and into a separate file.")
     parser.add_argument("--reserved", help="[FILE] - use custom username \
                         blacklist", default='./reserved_usernames.json')
