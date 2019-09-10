@@ -31,7 +31,7 @@ import json
 class UserAudit():
     def name_and_email_fields_required(self):
         failset = []
-        for i in self.dataset[0]:
+        for i in self.audit_set[0]:
             if False in [da.empty_check(i, 'first_name'),
                         da.empty_check(i, 'last_name'),
                         da.empty_check(i, 'auth_email')]:
@@ -40,21 +40,21 @@ class UserAudit():
 
     def username_must_not_contain_reserved_words(self):
         failset = []
-        for i in self.dataset[0]:
+        for i in self.audit_set[0]:
             if not da.blacklist_check(i, "username", self.username_blacklist[0]):
                 failset.append(i)
         return self.process_audit_result(failset)
 
     def email_and_usernames_must_be_unique(self):
         failset = []
-        for i in self.dataset[0]:
+        for i in self.audit_set[0]:
             if not da.uniqueness_check(i, 'username', self.dataset[0]) or not da.uniqueness_check(i, 'auth_email', self.dataset[0]):
                 failset.append(i)
         return self.process_audit_result(failset)
 
     def username_length_must_be_within_bounds(self):
         failset = []
-        for i in self.dataset[0]:
+        for i in self.audit_set[0]:
             if not da.minimum_length_check(i, 'username', 3) or not da.maximum_length_check(i,  'username', 12):
                 failset.append(i)
         return self.process_audit_result(failset)
@@ -62,7 +62,7 @@ class UserAudit():
     def email_address_must_be_valid(self):
         pattern = r"^\S+@\S+$"
         failset = []
-        for i in self.dataset[0]:
+        for i in self.audit_set[0]:
             if not da.regex_check(i, "auth_email", pattern):
                 failset.append(i)
         return self.process_audit_result(failset)
@@ -71,14 +71,14 @@ class UserAudit():
         pattern =\
         r"^(?:\+?1[-.●]?)?\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$"
         failset = []
-        for i in self.dataset[0]:
+        for i in self.audit_set[0]:
             if not da.regex_check(i, "auth_phone", pattern):
                 failset.append(i)
         return self.process_audit_result(failset)
 
     def authorized_date_must_be_earlier_than_last_authenticated_date(self):
         failset = []
-        for i in self.dataset[0]:
+        for i in self.audit_set[0]:
             if not da.precedence_check(i, "authorized_date",
                                        "last_authenticated_date")[0]:
                 failset.append(i)
@@ -87,7 +87,7 @@ class UserAudit():
 
     def authorized_date_must_be_earlier_than_released_date(self):
         failset = []
-        for i in self.dataset[0]:
+        for i in self.audit_set[0]:
             if not da.precedence_check(i, "authorized_date",
                                        "released_date")[0]:
                 failset.append(i)
@@ -95,7 +95,7 @@ class UserAudit():
 
     def last_authenticated_date_must_be_earlier_than_released_date(self):
         failset = []
-        for i in self.dataset[0]:
+        for i in self.audit_set[0]:
             if not da.precedence_check(i, "last_authenticated_date",
                                        "released_date")[0]:
                 failset.append(i)
@@ -103,7 +103,7 @@ class UserAudit():
 
     def job_title_must_exist_in_whitelist(self):
         failset = []
-        for i in self.dataset[0]:
+        for i in self.audit_set[0]:
             if not da.whitelist_check(i, "job_title", self.title_whitelist[0]):
                 failset.append(i)
         return self.process_audit_result(failset)
@@ -114,8 +114,8 @@ class UserAudit():
             for i in failset:
                 if i not in cls.purged_entries[0]:
                    cls.purged_entries[0].append(i)
-                if i in cls.dataset[0]:
-                    cls.dataset[0].pop(cls.dataset[0].index(i))
+                if i in cls.audit_set[0]:
+                    cls.audit_set[0].pop(cls.audit_set[0].index(i))
         if cls.verbosity:
             return f"FAIL: {len(failset)} items."
         return "PASS"
@@ -123,21 +123,28 @@ class UserAudit():
     @classmethod
     def report_audit_result(cls):
         if cls.do_output:
-            json.dump(cls.dataset[0], cls.output[1])
+            json.dump(cls.audit_set[0], cls.output[1])
             if cls.verbosity:
-                print(f"{len(cls.dataset[0])} validated entries were written to: {cls.output[1].name}.")
+                print(f"{len(cls.audit_set)} validated entries were written to: {cls.output[1].name}.")
         if cls.do_purge:
             json.dump(cls.purged_entries[0], cls.purged_entries[1])
             if cls.verbosity:
                 print(f"{len(cls.purged_entries[0])} invalid files were written to: {cls.purged_entries[1].name}.")
-        print(f"Processed {cls.dataset_initial_length} entries from {cls.dataset[1].name}, {len(cls.dataset[0])} of which were valid.")
+        print(f"Processed {cls.dataset_initial_length} entries from {cls.audit_set[1].name}, {len(cls.dataset[0])} of which were valid.")
+
+    @classmethod
+    def merge_dataset(cls, params):
+        cls.audit_set = cls.input
+        print("Merging {cls.audit_set[1].name}...")
+        cls.compile_audits()
+
 
     @classmethod
     def run_audit(cls, params):
-        print(params)
         cls.verbosity = params.v
         cls.dataset = da.open_dataset(params.dataset_file)
         cls.dataset_initial_length = len(cls.dataset[0])
+        cls.audit_set = cls.dataset
         if params.output:
             cls.do_output = True
             cls.output = da.open_dataset(params.output, True)
@@ -158,6 +165,11 @@ class UserAudit():
             cls.purged_entries = (json.loads("[]"), None)
         cls.username_blacklist = da.open_list(params.reserved)
         cls.title_whitelist = da.open_list(params.titles)
+        cls.compile_audits()
+
+
+    @classmethod
+    def compile_audits(cls, params)
         attrs = []
         u = UserAudit()
         for name in dir(u):
@@ -166,7 +178,7 @@ class UserAudit():
         for func in funcs:
             if func.__name__ not in ["report_audit_result", "run_audit",
                                      "process_audit_result",
-                                     "report_audit_result"]:
+                                     "report_audit_result", "compile_audits"]:
                 try:
                     if cls.verbosity:
                         print(f"{func.__name__}: {func()}")
