@@ -133,9 +133,9 @@ class UserAudit():
         print(f"Processed {cls.dataset_initial_length} entries from {cls.audit_set[1].name}, {len(cls.dataset[0])} of which were valid.")
 
     @classmethod
-    def merge_dataset(cls, params):
-        cls.audit_set = cls.input
-        print("Merging {cls.audit_set[1].name}...")
+    def merge_dataset(cls):
+        cls.audit_set = cls.inputs
+        print(f"Merging {cls.audit_set[1].name}...")
         cls.compile_audits()
 
 
@@ -169,7 +169,7 @@ class UserAudit():
 
 
     @classmethod
-    def compile_audits(cls, params)
+    def compile_audits(cls):
         attrs = []
         u = UserAudit()
         for name in dir(u):
@@ -178,7 +178,8 @@ class UserAudit():
         for func in funcs:
             if func.__name__ not in ["report_audit_result", "run_audit",
                                      "process_audit_result",
-                                     "report_audit_result", "compile_audits"]:
+                                     "report_audit_result", "compile_audits",
+                                     "merge_dataset"]:
                 try:
                     if cls.verbosity:
                         print(f"{func.__name__}: {func()}")
@@ -187,6 +188,10 @@ class UserAudit():
                 except TypeError():
                     pass
         cls.report_audit_result()
+        if cls.do_merge:
+            cls.merge_dataset()
+            cls.do_merge = False
+
 
 if __name__ == "__main__":
     desc = "UserAudit - audit a dataset and optionally validate and merge user \
