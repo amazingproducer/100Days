@@ -27,7 +27,6 @@ import argparse
 from inspect import ismethod
 import datetime
 import json
-import os
 
 class UserAudit():
     def name_and_email_fields_required(self):
@@ -134,7 +133,7 @@ class UserAudit():
         if cls.do_purge:
             json.dump(cls.purged_entries[0], cls.purged_entries[1])
             if cls.verbosity:
-                print(f"{len(cls.purged_entries[0])} invalid files were written to: {cls.purged_entries[1].name}.")
+                print(f"{len(cls.purged_entries[0])} total invalid entries were written to: {cls.purged_entries[1].name}.")
         print(f"Processed {cls.dataset_initial_length} entries from {cls.audit_set[1].name}, {len(cls.audit_set[0])} of which were valid.")
 
 
@@ -167,10 +166,11 @@ class UserAudit():
         cls.title_whitelist = da.open_list(params.titles)
         if phase == "merge":
             cls.audit_set = cls.inputs
+            print(f"Merging {cls.inputs[1].name}...")
             cls.dataset_initial_length = len(cls.inputs[0])
         else:
             cls.audit_set = cls.dataset
-        print(f"Starting {phase} phase...")
+            print(f"Auditing {cls.dataset[1].name}...")
         cls.compile_audits(params, phase)
 
 
@@ -184,8 +184,7 @@ class UserAudit():
         for func in funcs:
             if func.__name__ not in ["report_audit_result", "run_audit",
                                      "process_audit_result",
-                                     "report_audit_result", "compile_audits",
-                                     "merge_dataset"]:
+                                     "report_audit_result", "compile_audits"]:
                 try:
                     if cls.verbosity:
                         print(f"{func.__name__}: {func()}")
@@ -195,7 +194,6 @@ class UserAudit():
                     pass
         cls.report_audit_result()
         if params.merge and phase != "merge":
-            print(f"Merging {cls.inputs[1].name}...")
             cls.run_audit(params, "merge")
 
 
