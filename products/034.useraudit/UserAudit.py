@@ -27,6 +27,7 @@ import argparse
 from inspect import ismethod
 import datetime
 import json
+import os
 
 class UserAudit():
     def name_and_email_fields_required(self):
@@ -116,6 +117,10 @@ class UserAudit():
                    cls.purged_entries[0].append(i)
                 if i in cls.audit_set[0]:
                     cls.audit_set[0].pop(cls.audit_set[0].index(i))
+        if cls.do_output:
+            for i in cls.audit_set[0]:
+                if i not in cls.output[0]:
+                    cls.output[0].append(i)
         if cls.verbosity:
             return f"FAIL: {len(failset)} items."
         return "PASS"
@@ -125,29 +130,23 @@ class UserAudit():
         if cls.do_output:
             json.dump(cls.audit_set[0], cls.output[1])
             if cls.verbosity:
-                print(f"{len(cls.audit_set)} validated entries were written to: {cls.output[1].name}.")
+                print(f"{len(cls.audit_set[0])} validated entries were written to: {cls.output[1].name}.")
         if cls.do_purge:
             json.dump(cls.purged_entries[0], cls.purged_entries[1])
             if cls.verbosity:
                 print(f"{len(cls.purged_entries[0])} invalid files were written to: {cls.purged_entries[1].name}.")
-        print(f"Processed {cls.dataset_initial_length} entries from {cls.audit_set[1].name}, {len(cls.dataset[0])} of which were valid.")
-
-    @classmethod
-    def merge_dataset(cls):
-        cls.audit_set = cls.inputs
-        print(f"Merging {cls.audit_set[1].name}...")
-        cls.compile_audits()
+        print(f"Processed {cls.dataset_initial_length} entries from {cls.audit_set[1].name}, {len(cls.audit_set[0])} of which were valid.")
 
 
     @classmethod
-    def run_audit(cls, params):
+    def run_audit(cls, params, phase):
         cls.verbosity = params.v
         cls.dataset = da.open_dataset(params.dataset_file)
         cls.dataset_initial_length = len(cls.dataset[0])
-        cls.audit_set = cls.dataset
         if params.output:
             cls.do_output = True
-            cls.output = da.open_dataset(params.output, True)
+            if phase == "audit":
+                cls.output = da.open_dataset(params.output, True)
         else:
             cls.do_output = False
         if params.merge:
@@ -157,19 +156,26 @@ class UserAudit():
             cls.do_merge = False
         if params.purge:
             cls.do_purge = True
-            cls.purged_entries =\
-            da.open_dataset(params.purge, True)
+            if phase == "audit":
+                cls.purged_entries =\
+                da.open_dataset(params.purge, True)
         else:
             # add invalid entries to json object instead of a file
             cls.do_purge = False
             cls.purged_entries = (json.loads("[]"), None)
         cls.username_blacklist = da.open_list(params.reserved)
         cls.title_whitelist = da.open_list(params.titles)
-        cls.compile_audits()
+        if phase == "merge":
+            cls.audit_set = cls.inputs
+            cls.dataset_initial_length = len(cls.inputs[0])
+        else:
+            cls.audit_set = cls.dataset
+        print(f"Starting {phase} phase...")
+        cls.compile_audits(params, phase)
 
 
     @classmethod
-    def compile_audits(cls):
+    def compile_audits(cls, params, phase):
         attrs = []
         u = UserAudit()
         for name in dir(u):
@@ -188,9 +194,9 @@ class UserAudit():
                 except TypeError():
                     pass
         cls.report_audit_result()
-        if cls.do_merge:
-            cls.merge_dataset()
-            cls.do_merge = False
+        if params.merge and phase != "merge":
+            print(f"Merging {cls.inputs[1].name}...")
+            cls.run_audit(params, "merge")
 
 
 if __name__ == "__main__":
@@ -215,4 +221,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
     # Does it work yet?
     if args:
-        UserAudit.run_audit(args)
+        UserAudit.run_audit(args, "audit")
