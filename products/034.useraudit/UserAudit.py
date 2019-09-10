@@ -126,14 +126,17 @@ class UserAudit():
 
     @classmethod
     def report_audit_result(cls):
+        purge_count = cls.dataset_initial_invalid_length
         if cls.do_output:
+            print(f"Writing to {cls.output[1].name}...")
             json.dump(cls.audit_set[0], cls.output[1])
             if cls.verbosity:
                 print(f"{len(cls.audit_set[0])} validated entries were written to: {cls.output[1].name}.")
         if cls.do_purge:
+            print(f"Writing to {cls.purged_entries[1].name}...")
             json.dump(cls.purged_entries[0], cls.purged_entries[1])
             if cls.verbosity:
-                print(f"{len(cls.purged_entries[0])} total invalid entries were written to: {cls.purged_entries[1].name}.")
+                print(f"{len(cls.purged_entries[0]) - purge_count} invalid entries were written to: {cls.purged_entries[1].name}.")
         print(f"Processed {cls.dataset_initial_length} entries from {cls.audit_set[1].name}, {len(cls.audit_set[0])} of which were valid.")
 
 
@@ -162,6 +165,7 @@ class UserAudit():
             # add invalid entries to json object instead of a file
             cls.do_purge = False
             cls.purged_entries = (json.loads("[]"), None)
+        cls.dataset_initial_invalid_length = len(cls.purged_entries[0])
         cls.username_blacklist = da.open_list(params.reserved)
         cls.title_whitelist = da.open_list(params.titles)
         if phase == "merge":
