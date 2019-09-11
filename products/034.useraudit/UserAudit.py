@@ -28,6 +28,8 @@ from inspect import ismethod
 import datetime
 import json
 
+
+
 class UserAudit():
     def name_and_email_fields_required(self):
         failset = []
@@ -121,7 +123,7 @@ class UserAudit():
                 if i not in cls.output[0]:
                     cls.output[0].append(i)
         if cls.verbosity:
-            return f"FAIL: {len(failset)} items."
+            return f"FAIL: {len(failset)} {'items' if len(failset) != 1 else 'item'}."
         return "PASS"
 
     @classmethod
@@ -131,13 +133,13 @@ class UserAudit():
             print(f"Writing to {cls.output[1].name}...")
             json.dump(cls.audit_set[0], cls.output[1])
             if cls.verbosity:
-                print(f"{len(cls.audit_set[0])} validated entries were written to: {cls.output[1].name}.")
+                print(f"{len(cls.audit_set[0])} validated {'entries were' if len(cls.audit_set[0]) != 1 else 'entry was'} written to: {cls.output[1].name}.")
         if cls.do_purge:
             print(f"Writing to {cls.purged_entries[1].name}...")
             json.dump(cls.purged_entries[0], cls.purged_entries[1])
             if cls.verbosity:
-                print(f"{len(cls.purged_entries[0]) - purge_count} invalid entries were written to: {cls.purged_entries[1].name}.")
-        print(f"Processed {cls.dataset_initial_length} entries from {cls.audit_set[1].name}, {len(cls.audit_set[0])} of which were valid.")
+                print(f"{len(cls.purged_entries[0]) - purge_count} invalid {'entries were' if len(cls.purged_entries[0]) - purge_count != 1 else 'entry was'} written to: {cls.purged_entries[1].name}.")
+        print(f"Processed {cls.dataset_initial_length} {'entries' if cls.dataset_initial_length != 1 else 'entry'} from {cls.audit_set[1].name}, {len(cls.audit_set[0])} of which {'were' if len(cls.audit_set[0]) != 1 else 'was'} valid.")
 
 
     @classmethod
