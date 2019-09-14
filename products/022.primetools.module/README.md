@@ -10,4 +10,4 @@ Like other python modules, PrimeTools can be imported as a python 3 module in al
 PrimeTools can also be used as a command line application.
 
 ## Note:
-This product has been reincorporated into the [PrimeTools Web API](https://github.com/amazingproducer/100days/024.primetools.web.api) product.
+This product has been reincorporated into the [PrimeTools Web API](https://github.com/amazingproducer/100Days/tree/master/products/024.primetools.web.api) product.
