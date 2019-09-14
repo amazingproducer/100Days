@@ -12,7 +12,7 @@ _While it is possible to clone the entire 100days repository and run a local cop
 
 ### Endpoints:
 HTTP Method	| Route
-_______________ | __________________________
+--------------- | --------------------------
 GET		| /api/v1/is_prime/{INTEGER}
 GET		| /api/v1/get_nth/{INTEGER}
 GET		| /api/v1/nearest/{INTEGER}
