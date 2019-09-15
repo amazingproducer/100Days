@@ -24,10 +24,10 @@ This application includes a set of configuration files, which are used by defaul
 
 
 
-Module DataAudit
+### Module DataAudit
 ================
 
-Classes
+#### Classes
 -------
 
 `DataAudit(*args, **kwargs)`
@@ -36,97 +36,41 @@ Classes
     ### Methods
 
     `blacklist_check(n, field, blacklist)`
-    :
+    : Returns True if _n[field]_ is a member of _blacklist_
 
     `close_dataset(dataset_file_object, data=None)`
-    :
+    : Closes an open dataset file
 
     `close_list(list_file_object)`
-    :
+    : Closes an open list file
 
     `empty_check(n, field)`
-    :
+    : Returns True if _n[field]_ is an empty string
 
     `maximum_length_check(n, field, max)`
-    :
+    : Returns True if _n[field]_ is greater than or equal to _max_
 
     `minimum_length_check(n, field, min)`
-    :
+    : Returns True if _n[field]_ is less than or equal to _min_
 
     `open_dataset(dataset_path, dataset_create_bit=0)`
-    :
+    : Opens and imports a dataset file
 
     `open_list(list_path)`
-    :
+    : Opens and imports a list file
 
     `precedence_check(n, bef_field, aft_field)`
-    :
+    : Returns True if _bef_field_ is before _aft_field_
 
     `regex_check(n, field, reg)`
-    :
+    : Returns True if _n[field]_ matches _regex pattern_
 
     `type_check(n, field, typename)`
-    :
+    : Returns True if all characters in _n[field]_ are of _typename_
 
     `uniqueness_check(n, field, dataset)`
-    :
+    : Returns True if _n[field]_ is not found within _dataset_
 
     `whitelist_check(n, field, whitelist)`
-    :
+    : Returns true if _n[field]_ is a member of _whitelist_
 
-
-
-Module UserAudit
-================
-
-Classes
--------
-
-`UserAudit(*args, **kwargs)`
-:   
-
-    ### Static methods
-
-    `compile_audits(params, phase)`
-    :
-
-    `process_audit_result(failset)`
-    :
-
-    `report_audit_result()`
-    :
-
-    `run_audit(params, phase)`
-    :
-
-    ### Methods
-
-    `authorized_date_must_be_earlier_than_last_authenticated_date(self)`
-    :
-
-    `authorized_date_must_be_earlier_than_released_date(self)`
-    :
-
-    `email_address_must_be_valid(self)`
-    :
-
-    `email_and_usernames_must_be_unique(self)`
-    :
-
-    `job_title_must_exist_in_whitelist(self)`
-    :
-
-    `last_authenticated_date_must_be_earlier_than_released_date(self)`
-    :
-
-    `name_and_email_fields_required(self)`
-    :
-
-    `phone_number_must_be_valid(self)`
-    :
-
-    `username_length_must_be_within_bounds(self)`
-    :
-
-    `username_must_not_contain_reserved_words(self)`
-    :
