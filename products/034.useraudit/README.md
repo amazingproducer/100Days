@@ -31,24 +31,23 @@ This application includes a set of configuration files, which are used by defaul
 `DataAudit(*args, **kwargs)`
    : ### Methods
 
-    `blacklist_check(n, field, blacklist)`
-    : 
-    Returns True if _n[field]_ is a member of _blacklist_
+   `blacklist_check(n, field, blacklist)`
+   : Returns True if _n[field]_ is a member of _blacklist_
 
-    `close_dataset(dataset_file_object, data=None)`
-    : Closes an open dataset file
+   `close_dataset(dataset_file_object, data=None)`
+   : Closes an open dataset file
 
-    `close_list(list_file_object)`
-    : Closes an open list file
+   `close_list(list_file_object)`
+   : Closes an open list file
 
-    `empty_check(n, field)`
-    : Returns True if _n[field]_ is an empty string
+   `empty_check(n, field)`
+   : Returns True if _n[field]_ is an empty string
 
-    `maximum_length_check(n, field, max)`
-    : Returns True if _n[field]_ is greater than or equal to _max_
+   `maximum_length_check(n, field, max)`
+   : Returns True if _n[field]_ is greater than or equal to _max_
 
-    `minimum_length_check(n, field, min)`
-    : Returns True if _n[field]_ is less than or equal to _min_
+   `minimum_length_check(n, field, min)`
+   : Returns True if _n[field]_ is less than or equal to _min_
 
     `open_dataset(dataset_path, dataset_create_bit=0)`
     : Opens and imports a dataset file
