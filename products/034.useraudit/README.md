@@ -29,7 +29,7 @@ This application includes a set of configuration files, which are used by defaul
 #### Classes
 
 `DataAudit(*args, **kwargs)`
-: ### Methods
+   : ### Methods
 
     `blacklist_check(n, field, blacklist)`
     : 
