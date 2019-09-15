@@ -24,7 +24,7 @@ This application includes a set of configuration files, which are used by defaul
 
 
 
-### Module DataAudit
+### Using the DataAudit Module
 
 #### Classes
 
@@ -33,12 +33,10 @@ This application includes a set of configuration files, which are used by defaul
 ##### Methods
 
    `blacklist_check(n, field, blacklist)`
-   : 
-   Returns True if _n[field]_ is a member of _blacklist_
+   : Returns True if _n[field]_ is a member of _blacklist_
 
    `close_dataset(dataset_file_object, data=None)`
-   : 
-   Closes an open dataset file
+   : Closes an open dataset file
 
    `close_list(list_file_object)`
    : Closes an open list file
