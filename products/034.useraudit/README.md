@@ -1,5 +1,7 @@
+# Overview
+
 UserAudit is a CLI app which validates a user dataset and optionally validates and merges user input data with it.
-The validations performed are arbitrary and are used as a demonstration of the DataAudit module's generalized auditing capability.
+_The validations performed are arbitrary and are used as a demonstration of the DataAudit module's generalized auditing capability._
 
 `Usage: UserAudit.py [FILE] [OPTIONS]`
 
@@ -20,3 +22,111 @@ This application includes a set of configuration files, which are used by defaul
 - reserved_usernames.json: JSON array representing example blacklist
 - valid_user_titles.json: JSON array representing example whitelist
 
+
+
+Module DataAudit
+================
+
+Classes
+-------
+
+`DataAudit(*args, **kwargs)`
+:   
+
+    ### Methods
+
+    `blacklist_check(n, field, blacklist)`
+    :
+
+    `close_dataset(dataset_file_object, data=None)`
+    :
+
+    `close_list(list_file_object)`
+    :
+
+    `empty_check(n, field)`
+    :
+
+    `maximum_length_check(n, field, max)`
+    :
+
+    `minimum_length_check(n, field, min)`
+    :
+
+    `open_dataset(dataset_path, dataset_create_bit=0)`
+    :
+
+    `open_list(list_path)`
+    :
+
+    `precedence_check(n, bef_field, aft_field)`
+    :
+
+    `regex_check(n, field, reg)`
+    :
+
+    `type_check(n, field, typename)`
+    :
+
+    `uniqueness_check(n, field, dataset)`
+    :
+
+    `whitelist_check(n, field, whitelist)`
+    :
+
+
+
+Module UserAudit
+================
+
+Classes
+-------
+
+`UserAudit(*args, **kwargs)`
+:   
+
+    ### Static methods
+
+    `compile_audits(params, phase)`
+    :
+
+    `process_audit_result(failset)`
+    :
+
+    `report_audit_result()`
+    :
+
+    `run_audit(params, phase)`
+    :
+
+    ### Methods
+
+    `authorized_date_must_be_earlier_than_last_authenticated_date(self)`
+    :
+
+    `authorized_date_must_be_earlier_than_released_date(self)`
+    :
+
+    `email_address_must_be_valid(self)`
+    :
+
+    `email_and_usernames_must_be_unique(self)`
+    :
+
+    `job_title_must_exist_in_whitelist(self)`
+    :
+
+    `last_authenticated_date_must_be_earlier_than_released_date(self)`
+    :
+
+    `name_and_email_fields_required(self)`
+    :
+
+    `phone_number_must_be_valid(self)`
+    :
+
+    `username_length_must_be_within_bounds(self)`
+    :
+
+    `username_must_not_contain_reserved_words(self)`
+    :
