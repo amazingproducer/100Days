@@ -29,7 +29,8 @@ This application includes a set of configuration files, which are used by defaul
 #### Classes
 
 `DataAudit(*args, **kwargs)`
-   :: ### Methods
+: 
+##### Methods
 
    `blacklist_check(n, field, blacklist)`
    : Returns True if _n[field]_ is a member of _blacklist_
@@ -49,24 +50,24 @@ This application includes a set of configuration files, which are used by defaul
    `minimum_length_check(n, field, min)`
    : Returns True if _n[field]_ is less than or equal to _min_
 
-    `open_dataset(dataset_path, dataset_create_bit=0)`
-    : Opens and imports a dataset file
+   `open_dataset(dataset_path, dataset_create_bit=0)`
+   : Opens and imports a dataset file
 
-    `open_list(list_path)`
-    : Opens and imports a list file
+   `open_list(list_path)`
+   : Opens and imports a list file
 
-    `precedence_check(n, bef_field, aft_field)`
-    : Returns True if _bef_field_ is before _aft_field_
+   `precedence_check(n, bef_field, aft_field)`
+   : Returns True if _bef_field_ is before _aft_field_
 
-    `regex_check(n, field, reg)`
-    : Returns True if _n[field]_ matches _regex pattern_
+   `regex_check(n, field, reg)`
+   : Returns True if _n[field]_ matches _regex pattern_
 
-    `type_check(n, field, typename)`
-    : Returns True if all characters in _n[field]_ are of _typename_
+   `type_check(n, field, typename)`
+   : Returns True if all characters in _n[field]_ are of _typename_
 
-    `uniqueness_check(n, field, dataset)`
-    : Returns True if _n[field]_ is not found within _dataset_
+   `uniqueness_check(n, field, dataset)`
+   : Returns True if _n[field]_ is not found within _dataset_
 
-    `whitelist_check(n, field, whitelist)`
-    : Returns true if _n[field]_ is a member of _whitelist_
+   `whitelist_check(n, field, whitelist)`
+   : Returns true if _n[field]_ is a member of _whitelist_
 
