@@ -3,6 +3,7 @@
 
 
 def is_prime(n):
+    """Determines primality of n. Returns boolean."""
     if n <= 1:
         return False
     elif n <= 2:
@@ -17,6 +18,7 @@ def is_prime(n):
 
 
 def generate():
+    """Generator Function. Yields successive prime numbers."""
     j = [2]
     i = 3
     while i:
@@ -27,6 +29,7 @@ def generate():
 
 
 def factorize(n):
+    """Calculates prime factors of n. Returns a list."""
     if n <= 1:
         return ValueError("Integer must be greater than one.")
     r = n
@@ -44,6 +47,7 @@ def factorize(n):
 
 
 def get_nth(n):
+    """Determines the n-th prime number. Returns an integer."""
     if n < 1:
         return ValueError("Input must be a positive integer.")
     j = [2]
@@ -56,6 +60,8 @@ def get_nth(n):
 
 
 def get_neighbors(n):
+    """Calculates the greatest prime number which is less than n and the lowest
+    prime number which is greater than n. Returns list."""
     if n < 3:
         return ValueError("Integer must be greater than 3.")
     p = generate()
@@ -77,6 +83,8 @@ def get_neighbors(n):
 
 
 def get_nearest(n, y=1):
+    """Calculates the prime number which the lowest difference from n. Returns
+    an integer."""
     if n < 1:
         # Integer must be positive - using 1 instead
         n = 1
@@ -106,6 +114,7 @@ def get_nearest(n, y=1):
 
 
 def get_ordinal(n):
+    """Determines the proper ordinal for an integer n. Returns a string."""
     n = int(n)
     # Zeroeth, First, Second, Third, Fourth+
     ordinal = ['th', 'st', 'nd', 'rd', 'th'][min((n % 10), 4)]

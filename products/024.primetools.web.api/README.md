@@ -18,3 +18,37 @@ GET		| /api/v1/nearest/{INTEGER}	| find an integer's nearest prime
 GET		| /api/v1/neighbors/{INTEGER}	| find an integer's nearest neighboring primes
 GET		| /api/v1/factorize/{INTEGER}	| calculate prime factors of an integer
 
+Module PrimeTools
+-----------------
+
+###Functions
+
+`factorize(n)`
+:   Calculates prime factors of n. Returns a list.
+
+
+`generate()`
+:   Generator Function. Yields successive prime numbers.
+
+
+`get_nearest(n, y=1)`
+:   Calculates the prime number which the lowest difference from n. Returns
+    an integer.
+
+
+`get_neighbors(n)`
+:   Calculates the greatest prime number which is less than n and the lowest
+    prime number which is greater than n. Returns list.
+
+
+`get_nth(n)`
+:   Determines the n-th prime number. Returns an integer.
+
+
+`get_ordinal(n)`
+:   Determines the proper ordinal for an integer n. Returns a string.
+
+
+`is_prime(n)`
+:   Determines primality of n. Returns boolean.
+
