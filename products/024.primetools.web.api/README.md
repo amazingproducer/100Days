@@ -7,7 +7,7 @@ This application utilizes the PrimeTools portable module to provide web endpoint
 - Prime Factorization
 
 ## Usage:
-_While it is possible to clone the entire 100days repository and run a local copy of the PrimeTools web API, evaluating the live [heroku deployment](https://prime-tools.herokuapp.com/api/v1) is recommended._
+_While it is possible to clone the entire 100days repository and run a local copy of the PrimeTools web API, evaluating the [auto-deployed heroku instance](https://prime-tools.herokuapp.com/api/v1) is recommended._
 
 ### Endpoints:
 HTTP Method	| Route				| Feature
