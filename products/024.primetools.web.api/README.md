@@ -18,10 +18,10 @@ GET		| /api/v1/nearest/{INTEGER}	| find an integer's nearest prime
 GET		| /api/v1/neighbors/{INTEGER}	| find an integer's nearest neighboring primes
 GET		| /api/v1/factorize/{INTEGER}	| calculate prime factors of an integer
 
-Module PrimeTools
+PrimeTools Module
 -----------------
 
-###Functions
+### Functions
 
 `factorize(n)`
 :   Calculates prime factors of n. Returns a list.
