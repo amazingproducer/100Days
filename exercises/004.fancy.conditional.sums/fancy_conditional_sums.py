@@ -1,10 +1,5 @@
 #!/bin/usr/python3
-"""
-This is a test of the doctest tool.
-
->>> FancyConditionalSum.example()
-23
-"""
+"""Exercise from Day 4/100."""
 
 
 # If we list all the natural numbers below 10 that are multiples of 3 or 5, we
@@ -13,7 +8,14 @@ This is a test of the doctest tool.
 
 
 class FancyConditionalSum:
+    """
+    Test against the example result.
+
+    >>> FancyConditionalSum.example()
+    23
+    """
     def example():
+        """Ensures that the algorithm produces the example result."""
         sum = 0
         for i in range(1, 10):
             if i % 5 == 0:
@@ -23,6 +25,7 @@ class FancyConditionalSum:
         return sum
 
     def solve():
+        """Use the algorithm to solve the exercise."""
         sum = 0
         for i in range(1, 1000):
             if i % 5 == 0:

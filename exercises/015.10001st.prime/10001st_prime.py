@@ -1,11 +1,12 @@
 #!/usr/bin/python3
-# By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see
-# that the 6th prime is 13.
-# What is the 10001st prime number?
+"""
+By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see
+that the 6th prime is 13.
+What is the 10001st prime number?
 
-# I'm reluctant to reuse my n-th prime code now that I see how bad it is,
-# but knowing how long it takes to reach the 10001st entry might be valuable.
-
+I'm reluctant to reuse my n-th prime code now that I see how bad it is,
+but knowing how long it takes to reach the 10001st entry might be valuable.
+"""
 
 class Prime:
     def generate_nth_prime(n):
