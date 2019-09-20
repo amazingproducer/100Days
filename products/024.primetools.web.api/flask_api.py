@@ -41,6 +41,7 @@ help_text = """
 
 
 def send_response(route, desc, request, result_value, result_type):
+    """Reusable function for spitting out the fancy JSON."""
     return jsonify(
         api_endpoint=route,
         description=desc,
@@ -54,6 +55,7 @@ def send_response(route, desc, request, result_value, result_type):
 @api.route('/api/', methods=['GET'])
 @api.route('/api/v1/', methods=['GET'])
 def help():
+    """Print the ugly, manually-written route list."""
     return help_text
 
 
