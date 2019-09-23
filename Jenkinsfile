@@ -12,7 +12,7 @@ pipeline {
       }
       post {
         always {
-          ssh 'whoami'
+          sh 'whoami'
         }
       }    
     }
