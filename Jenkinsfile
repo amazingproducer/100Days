@@ -1,3 +1,20 @@
-checkout([$class: 'GitSCM', branches: [[name: '*/master']], 
-     userRemoteConfigs: [[url: 'https://github.com/amazingproducer/100Days.git']]])
-
+pipeline {
+  agent { docker { image 'python:3.7.2' } }
+  stages {
+    stage('build') {
+      steps {
+        sh 'whoami'
+      }
+    }
+    stage('test') {
+      steps {
+        sh 'whoami'
+      }
+      post {
+        always {
+          ssh 'whoami'
+        }
+      }    
+    }
+  }
+}
