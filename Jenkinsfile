@@ -8,11 +8,11 @@ pipeline {
     }
     stage('test') {
       steps {
-        sh 'whoami'
+        sh 'ls -lha'
       }
       post {
         always {
-          sh 'whoami'
+          sh 'uname -a'
         }
       }    
     }
