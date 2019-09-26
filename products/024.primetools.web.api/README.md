@@ -18,6 +18,26 @@ GET		| /api/v1/nearest/{INTEGER}	| find an integer's nearest prime
 GET		| /api/v1/neighbors/{INTEGER}	| find an integer's nearest neighboring primes
 GET		| /api/v1/factorize/{INTEGER}	| calculate prime factors of an integer
 
+### As a Command Line app:
+```
+usage: PrimeTools.py [-h] [-p P] [-n N] [--nearest NEAREST]
+                     [--neighbors NEIGHBORS] [-f FACTORIZE] [-v]
+
+PrimeTools Python Module - a part of 2019 100 Days of Coding
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -p P                  determine primality (default)
+  -n N                  calculate n-th prime number
+  --nearest NEAREST     calculate nearest prime number
+  --neighbors NEIGHBORS
+                        calculate neighboring prime numbers
+  -f FACTORIZE, --factorize FACTORIZE
+                        calculate prime factors
+  -v                    Increase output verbosity
+```
+
+
 PrimeTools Module
 -----------------
 
