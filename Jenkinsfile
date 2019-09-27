@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('build') {
       steps {
-        sh 'whereis python'
+        sh 'whereis python333'
       }
     }
     stage('test') {
