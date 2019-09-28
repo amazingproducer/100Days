@@ -68,6 +68,7 @@ def error_heroku():
 
 @api.route('/api/v1/is_prime/<n>', methods=['GET'])
 def get_is_prime(n):
+    """Determines the primality of a given natural number."""
     route = "is_prime"
     description = "Determines primality of a given integer."
     if not str(n).isdigit() or int(n) < 1:
@@ -87,6 +88,7 @@ callback URL.", "callback")
 
 @api.route('/api/v1/get_nth/<n>', methods=['GET'])
 def get_nth_prime(n):
+    """Given a positive integer n, determine the n-th prime number."""
     route = "get_nth_prime"
     description = "Given a positive integer n, determine the n-th prime number."
     if not str(n).isdigit() or int(n) < 1:
@@ -104,6 +106,7 @@ URL.", "callback")
 
 @api.route('/api/v1/nearest/<n>', methods=['GET'])
 def get_nearest_prime(n):
+    """Returns the nearest prime number to a given integer."""
     route = "get_nearest"
     description = "Returns the nearest prime number to a given integer."
     if not str(n).isdigit() or int(n) < 1:
@@ -113,6 +116,7 @@ number.", "Error")
 
 @api.route('/api/v1/neighbors/<n>', methods = ['GET'])
 def get_prime_neighbors(n):
+    """Given an integer n, returns the greatest prime which is less than n and the smallest prime which is greater than n."""
     route="neighbors"
     description="Given an integer n, returns the greatest prime which is \
 less than n and the smallest prime which is greater than n."
@@ -127,6 +131,7 @@ than 2.", "Error")
 
 @api.route('/api/v1/factorize/<n>', methods=['GET'])
 def get_prime_factors(n):
+    """Returns the prime factors of a given integer."""
     route = "factorize"
     description = "Returns the prime factors of a given integer."
     if not str(n).isdigit() or int(n) <= 1:
