@@ -1,8 +1,13 @@
-# Find the difference between the sum of the squares of the first one hundred
-# natural numbers and the square of the sum of the first one hundred natural
-# numbers.
-
+#!/usr/bin/python3
+"""Exercise from day 52/100."""
 class SumSquare():
+    """
+    Calculate the difference between the sum of the squares of the first n
+    natural numbersand the square of the sum of the first n natural numbers.
+
+    >>> SumSquare.solve(10)
+    2640
+    """
     def sum(x, y):
         return x + y
 
@@ -12,7 +17,7 @@ class SumSquare():
     def diff(x, y):
         return abs(x-y)
 
-    def solve(n):
+    def solve(n=100):
         sum_of_squares = 0
         square_of_sums = 0
         sums = 0
@@ -25,10 +30,8 @@ class SumSquare():
         square_of_sums = SumSquare.square(sums)
         return SumSquare.diff(sum_of_squares, square_of_sums)
 
-if SumSquare.solve(10) == 2640:
-    print(
-"""Find the difference between the sum of the squares of the first one hundred
-natural numbers and the square of the sum of the first one hundred natural numbers.""")
-    print(f"Solution: {SumSquare.solve(100)}")
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod(verbose=True)
 
-
+print(f"Solution: {SumSquare.solve()}")
