@@ -1,10 +1,16 @@
-# The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
-# Find the sum of all the primes below two million.
+#!/usr/bin/python3
+"""Find the sum of all the primes below two million."""
 
 import datetime
 
 
 class PrimeToys:
+    """
+    Calculate the sum of all primes below 10.
+
+    >>> PrimeToys.get_sum(10)
+    17
+    """
     # Borrowed from day 19
     def is_prime(n):
         if n <= 1:
@@ -50,7 +56,10 @@ class PrimeToys:
                 return r
 
 
-print(f"Testing example (expecting 17): {PrimeToys.get_sum()}")
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod(verbose=True)
+
 start_time = datetime.datetime.utcnow()
 print(f"Solution start time: {start_time}")
 print(f"Attempting solution: {PrimeToys.get_sum(2000000)}")
