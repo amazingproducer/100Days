@@ -68,7 +68,12 @@ def error_heroku():
 
 @api.route('/api/v1/is_prime/<n>', methods=['GET'])
 def get_is_prime(n):
-    """Determines the primality of a given natural number."""
+    """
+    Determines the primality of a given natural number.
+
+    >>> pt.is_prime(17)
+    True
+    """
     route = "is_prime"
     description = "Determines primality of a given integer."
     if not str(n).isdigit() or int(n) < 1:
@@ -141,3 +146,5 @@ greater than one.", "Error")
 
 if __name__ == '__main__':
     api.run(host='127.0.0.1', port=deploy_port)
+
+
