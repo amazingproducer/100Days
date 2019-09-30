@@ -12,7 +12,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing'
-                sh 'python3 -m pytest -v /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/flask_api.py'
+                sh 'pytest --disable-warnings /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/flask_api.py'
             }
         }
         stage('Deploy') {
