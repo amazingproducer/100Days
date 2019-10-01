@@ -41,9 +41,9 @@ pipeline {
             echo 'This will run only if successful'
             setBuildStatus("Build succeeded", "SUCCESS");
             withCredentials([string(credentialsId: 'github-pat-jenkins', variable: 'PAT')]) {
-              sh 'git add -A https://jenkins:$PAT@github.com/amazingproducer/100days'
-              sh 'git commit -a -m "Autobuild via Jenkins" https://jenkins:$PAT@github.com/amazingproducer/100days'
-              sh 'git push https://jenkins:$PAT@github.com/amazingproducer/100Days'
+              sh 'git add -A https://amazingproducer:$PAT@github.com/amazingproducer/100days'
+              sh 'git commit -a -m "Autobuild via Jenkins" https://amazingproducer:$PAT@github.com/amazingproducer/100days'
+              sh 'git push https://amazingproducer:$PAT@github.com/amazingproducer/100Days'
             }
             sh 'sudo supervisorctl restart prime-tools'
         }
