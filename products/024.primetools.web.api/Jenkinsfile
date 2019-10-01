@@ -42,7 +42,7 @@ pipeline {
             setBuildStatus("Build succeeded", "SUCCESS");
             withCredentials([string(credentialsId: 'github-pat-jenkins', variable: 'PAT')]) {
               sh 'git add -A'
-              sh 'git commit -a -m "Autobuild via Jenkins" https://jenkins:$PAT@github.com/amazingproducer/100days'
+              sh 'git commit -a -m "Autobuild via Jenkins"'
               sh 'git push https://jenkins:$PAT@github.com/amazingproducer/100Days'
             }
             sh 'sudo supervisorctl restart prime-tools'
