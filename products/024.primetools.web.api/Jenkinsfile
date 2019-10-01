@@ -15,6 +15,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building'
+                sh 'python3 -m venv products/024.primetools.web.api/venv'
                 sh '. products/024.primetools.web.api/venv/bin/activate'
                 sh 'pip3 install -r /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/requirements.txt'
             }
