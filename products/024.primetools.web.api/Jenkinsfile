@@ -43,7 +43,7 @@ pipeline {
             withCredentials([string(credentialsId: 'github-pat-jenkins', variable: 'PAT')]) {
               sh 'git branch documentation'
               sh 'git checkout documentation'
-              sh 'git add -A'
+              sh 'git add *.html'
               sh 'git commit -a -m "Autobuild via Jenkins"'
               sh 'git push --set-upstream https://jenkins:$PAT@github.com/amazingproducer/100Days documentation'
             }
