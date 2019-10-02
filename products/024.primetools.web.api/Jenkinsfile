@@ -17,7 +17,7 @@ pipeline {
                 echo 'Building'
                 sh 'python3 -m venv products/024.primetools.web.api/venv'
                 sh '. products/024.primetools.web.api/venv/bin/activate'
-                sh 'pip3 install -r /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/requirements.txt'
+                sh 'python3 -m pip install -r /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/requirements.txt'
             }
         }
         stage('Test') {
@@ -29,7 +29,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying'
-                sh 'pip3 install flask'
+                sh 'python3 -m pip install flask'
                 sh 'pydoc -w /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/flask_api.py'
             }
         }
