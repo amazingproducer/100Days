@@ -30,6 +30,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying'
+                 sh 'rm -rf /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/html'
 		    withCredentials([string(credentialsId: 'github-pat-jenkins', variable: 'PAT')]) {
 		      sh 'git branch -f documentation'
 		      sh 'git checkout documentation'
