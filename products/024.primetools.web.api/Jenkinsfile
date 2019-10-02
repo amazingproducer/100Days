@@ -23,6 +23,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing'
+                sh 'export PYTHONWARNINGS="ignore::DeprecationWarning"'
                 sh 'pytest --doctest-modules --disable-warnings --disable-pytest-warnings /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/flask_api.py'
             }
         }
