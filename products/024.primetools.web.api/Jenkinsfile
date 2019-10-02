@@ -30,7 +30,7 @@ pipeline {
             steps {
                 echo 'Deploying'
                 sh 'python3 -m pip install flask'
-                sh 'pydoc -w /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/flask_api.py'
+                sh 'pydoc -w /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/'
             }
         }
     }
