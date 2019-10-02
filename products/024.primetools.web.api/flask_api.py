@@ -1,3 +1,4 @@
+"""PrimeTools Web API - part of 2019's 100 Days of Code."""
 from flask import Flask, jsonify, json
 import PrimeTools as pt
 import os

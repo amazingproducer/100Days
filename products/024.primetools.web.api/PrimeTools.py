@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-# All the stuff is here, but it doesn't exactly make it a module yet
-
+"""PrimeTools CLI and Module - part of 2019's 100 Days of Coding."""
 
 def is_prime(n):
     """Determines primality of n. Returns boolean."""
