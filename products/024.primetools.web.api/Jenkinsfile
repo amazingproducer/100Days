@@ -29,7 +29,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying'
-                sh 'cd /var/lib/jenkins/workspace/jfile-100D-PrimTools-API/products/024.primetools.web.api/'
+                sh 'cd /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/'
                 sh 'pydoc -w /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/'
             }
         }
