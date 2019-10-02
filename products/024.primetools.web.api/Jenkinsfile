@@ -39,7 +39,7 @@ pipeline {
             echo 'This will always run'
         }
         success {
-            echo 'This will run only if successful'
+            echo 'This will run only if successful.'
             setBuildStatus("Build succeeded", "SUCCESS");
             withCredentials([string(credentialsId: 'github-pat-jenkins', variable: 'PAT')]) {
               sh 'git branch -f documentation'
