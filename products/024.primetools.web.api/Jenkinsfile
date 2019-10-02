@@ -29,9 +29,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying'
-                sh 'pip3 install -r /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/requirements.txt'
-                sh 'cd /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api'
-                sh 'pydoc3 -w ./'
+                sh 'pydoc3 -w /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/'
             }
         }
     }
