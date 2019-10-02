@@ -40,7 +40,7 @@ pipeline {
                 sh 'pdoc3 --force --html -o /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/html /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/PrimeTools.py'
 		    withCredentials([string(credentialsId: 'github-pat-jenkins', variable: 'PAT')]) {
 		      sh 'git add --ignore-errors /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/html/*.html'
-		      sh 'git commit -a -m "Autobuild via Jenkins"'
+		      sh 'git commit -m "Autobuild via Jenkins"'
 		      sh 'git push --set-upstream https://jenkins:$PAT@github.com/amazingproducer/100Days documentation'
 		    }
             }
