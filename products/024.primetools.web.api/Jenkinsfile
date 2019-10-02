@@ -17,6 +17,7 @@ pipeline {
                 echo 'Building'
                 sh 'python3 -m venv products/024.primetools.web.api/venv'
                 sh '. products/024.primetools.web.api/venv/bin/activate'
+                sh 'source /var/lib/jenkins/.profile'
                 sh 'python3 -m pip install -r /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/requirements.txt'
             }
         }
