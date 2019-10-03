@@ -8,8 +8,7 @@ import requests
 deploy_port = int(os.environ.get('PORT', 5000))
 callback_url = str(os.environ.get('PT_DEV_CALLBACK'))
 
-api = Flask(__name__, static_url_path='',
-            static_folder='/var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/html')
+api = Flask(__name__, static_url_path='', static_folder='html')
 
 help_text = """
 <h3>PrimeTools Web API:</h3>
