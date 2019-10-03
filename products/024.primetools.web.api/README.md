@@ -7,6 +7,7 @@ This application utilizes the PrimeTools portable module to provide web endpoint
 
 ## HTML Documentation
 [PrimeTools Web API](https://prime-tools.shamacon.us/docs/flask_api.html)
+
 [PrimeTools CLI and Module](https://prime-tools.shamacon.us/docs/PrimeTools.html)
 
 ## Usage:
