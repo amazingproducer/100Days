@@ -1,5 +1,5 @@
 """PrimeTools Web API - part of 2019's 100 Days of Code."""
-from flask import Flask, jsonify, json, send_from_directory, render_template
+from flask import Flask, jsonify, json, send_from_directory
 import PrimeTools as pt
 import os
 import requests
