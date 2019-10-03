@@ -30,15 +30,15 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying'
-                 sh 'rm -rf /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/html'
+                 sh 'rm -rf /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/docs'
 		    withCredentials([string(credentialsId: 'github-pat-jenkins', variable: 'PAT')]) {
 		      sh 'git branch -f documentation'
 		      sh 'git checkout documentation'
 		    }
-                sh 'pdoc3 --force --html -o /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/html /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/flask_api.py'
-                sh 'pdoc3 --force --html -o /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/html /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/PrimeTools.py'
+                sh 'pdoc3 --force --html -o /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/docs /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/flask_api.py'
+                sh 'pdoc3 --force --html -o /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/docs /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/PrimeTools.py'
 		    withCredentials([string(credentialsId: 'github-pat-jenkins', variable: 'PAT')]) {
-		      sh 'git add --ignore-errors /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/html/*.html'
+		      sh 'git add --ignore-errors /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/docs/*.html'
 		      sh 'git commit -m "Autobuild via Jenkins"'
 		      sh 'git push --force --set-upstream https://jenkins:$PAT@github.com/amazingproducer/100Days documentation'
 		    }
