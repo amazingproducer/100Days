@@ -1,10 +1,13 @@
-## Note:
 # PrimeTools Web API
 This application utilizes the PrimeTools portable module to provide web endpoints for each of its prime number calculations, including:
 - Primality Evaluation
 - n-th Prime Calculation
 - Find nearest prime number(s)
 - Prime Factorization
+
+## HTML Documentation
+[PrimeTools Web API](https://prime-tools.shamacon.us/docs/flask_api.html)
+[PrimeTools CLI and Module](https://prime-tools.shamacon.us/docs/PrimeTools.html)
 
 ## Usage:
 _While it is possible to use a sparse checkout and run a local copy of the PrimeTools web API, evaluating the automatically deployed instance at https://prime-tools.shamacon.us/api/v1 is recommended._
@@ -36,39 +39,3 @@ optional arguments:
                         calculate prime factors
   -v                    Increase output verbosity
 ```
-
-
-PrimeTools Module
------------------
-
-### Functions
-
-`factorize(n)`
-:   Calculates prime factors of n. Returns a list.
-
-
-`generate()`
-:   Generator Function. Yields successive prime numbers.
-
-
-`get_nearest(n, y=1)`
-:   Calculates the prime number which the lowest difference from n. Returns
-    an integer.
-
-
-`get_neighbors(n)`
-:   Calculates the greatest prime number which is less than n and the lowest
-    prime number which is greater than n. Returns list.
-
-
-`get_nth(n)`
-:   Determines the n-th prime number. Returns an integer.
-
-
-`get_ordinal(n)`
-:   Determines the proper ordinal for an integer n. Returns a string.
-
-
-`is_prime(n)`
-:   Determines primality of n. Returns boolean.
-
