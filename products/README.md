@@ -6,7 +6,7 @@ Python 3 module which supports a range of prime number calculations.
 
 ### [PrimeTools Web API](https://github.com/amazingproducer/100Days/tree/master/products/024.primetools.web.api)
 Flask based API using the PrimeTools module.
-[live demo](https://prime-tools.herokuapp.com/api/v1/)
+[live demo](https://prime-tools.shamacon.us/api/v1/)
 
 ### [DataAudit](https://github.com/amazingproducer/100Days/blob/master/products/034.useraudit/DataAudit.py)
 A generalized data validation library, written as a python 3 module.
