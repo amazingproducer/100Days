@@ -61,7 +61,7 @@ def help():
 
 @api.route('/docs/<string:path>')
 def send_docs(path):
-    return render_template('/docs/%s.html' % path)
+    return render_template('%s.html' % path)
 
 @api.route('/error_heroku.json', methods=['GET'])
 def error_heroku():
