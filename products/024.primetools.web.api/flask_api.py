@@ -59,9 +59,9 @@ def help():
     """Print the ugly, manually-written route list."""
     return help_text
 
-@api.route('/docs/<path:path>')
+@api.route('/docs/<path:filename>')
 def send_docs(path):
-    return send_from_directory('docs', path)
+    return send_from_directory('html', path)
 
 @api.route('/error_heroku.json', methods=['GET'])
 def error_heroku():
