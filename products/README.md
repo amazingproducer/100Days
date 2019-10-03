@@ -3,10 +3,12 @@ Contained within these folders are products which apply methods and systems whic
 
 ### [PrimeTools Module](https://github.com/amazingproducer/100Days/tree/master/products/022.primetools.module)
 Python 3 module which supports a range of prime number calculations.
+
 [auto-built documentation](https://prime-tools.shamacon.us/docs/PrimeTools.html)
 
 ### [PrimeTools Web API](https://github.com/amazingproducer/100Days/tree/master/products/024.primetools.web.api)
 Flask based API using the PrimeTools module.
+
 [auto-built documentation](https://prime-tools.shamacon.us/docs/flask_api.html)
 
 [live demo](https://prime-tools.shamacon.us/api/v1/)
