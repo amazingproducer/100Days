@@ -1,5 +1,5 @@
 """PrimeTools Web API - part of 2019's 100 Days of Code."""
-from flask import Flask, jsonify, json, send_from_directory
+from flask import Flask, jsonify, json, send_from_directory, render_template
 import PrimeTools as pt
 import os
 import requests
@@ -59,9 +59,9 @@ def help():
     """Print the ugly, manually-written route list."""
     return help_text
 
-@api.route('/docs/<path:path>')
+@api.route('/docs/<string:path>')
 def send_docs(path):
-    return send_from_directory('html', path)
+    return render_template('/docs/%s.html' % path)
 
 @api.route('/error_heroku.json', methods=['GET'])
 def error_heroku():
