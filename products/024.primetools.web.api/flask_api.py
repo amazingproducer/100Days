@@ -59,7 +59,7 @@ def help():
     """Print the ugly, manually-written route list."""
     return help_text
 
-@api.route('/<path:path>')
+@api.route('/<path:filename>')
 def send_docs(path):
     return send_from_directory('html', path)
 
