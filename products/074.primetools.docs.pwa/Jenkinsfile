@@ -20,7 +20,7 @@ pipeline {
     }
     post {
         always {
-            echo 'This will always run.'
+            echo 'This will always run!'
             sh 'cp products/074.primetools.docs.pwa/index.html /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/docs/index.html'
             sh 'cp products/074.primetools.docs.pwa/manifest.webmanifest /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/docs/manifest.webmanifest'
             sh 'cp products/074.primetools.docs.pwa/bangsplat.jpg /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/docs/bangsplat.jpg'
