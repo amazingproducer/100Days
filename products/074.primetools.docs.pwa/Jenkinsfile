@@ -24,7 +24,7 @@ pipeline {
             sh 'cp products/074.primetools.docs.pwa/index.html /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/docs/index.html'
             sh 'cp products/074.primetools.docs.pwa/manifest.webmanifest /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/docs/manifest.webmanifest'
             sh 'cp products/074.primetools.docs.pwa/bangsplat.jpg /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/docs/bangsplat.jpg'
-            sh 'cp products/074.primetools.docs.pwa/prime-tools-docs-pwa-sw.js /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/docs/prime-tools-docs-pwa-sw.js'
+            sh 'cp products/074.primetools.docs.pwa/prime-tools-docs-sw.js /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/products/024.primetools.web.api/docs/prime-tools-docs-sw.js'
         }
         success {
             echo 'This will run only if successful.'
