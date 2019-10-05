@@ -1,0 +1,43 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing.'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying'
+            }
+        }
+    }
+    post {
+        always {
+            echo 'This will always run.'
+            sh 'cp products/074.primetools.docs.pwa/*.html /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/docs/'
+            sh 'cp products/074.primetools.docs.pwa/*.webmanifest /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/docs/'
+            sh 'cp products/074.primetools.docs.pwa/*.jpg /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/docs/'
+            sh 'cp products/074.primetools.docs.pwa/*.js /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/docs/'
+        }
+        success {
+            echo 'This will run only if successful.'
+        }
+        failure {
+            echo 'This will run only if failed'
+        }
+        unstable {
+            echo 'This will run only if the run was marked as unstable'
+        }
+        changed {
+            echo 'This will run only if the state of the Pipeline has changed'
+            echo 'For example, if the Pipeline was previously failing but is now successful'
+        }
+    }
+}
