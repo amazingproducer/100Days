@@ -26,8 +26,7 @@ if ("serviceWorker" in navigator) {
     console.log("[PrimeTools Docs] active service worker found, no need to register");
   } else {
     // Register the service worker
-    navigator.serviceWorker
-      .register("prime-tools-docs-sw.js", {
+    navigator.serviceWorker.register("prime-tools-docs-sw.js", {
         scope: "./"
       })
       .then(function (reg) {
