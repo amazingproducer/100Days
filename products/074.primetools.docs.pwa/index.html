@@ -16,12 +16,13 @@
 
 
 <script>
- if (!navigator.serviceWorker.controller) {
+	if ('serviceWorker' in navigator) {
+    console.log("[PrimeTools Docs] active service worker found, no need to register");
+  } else {
+
      navigator.serviceWorker.register("https://prime-tools.shamacon.us/docs/prime-tools-docs-sw.js").then(function(reg) {
          console.log("[PrimeTools Docs] Service worker has been registered for scope: " + reg.scope);
      });
-  } else {
-    console.log("[PrimeTools Docs] active service worker found, no need to register");
     };
   
 
