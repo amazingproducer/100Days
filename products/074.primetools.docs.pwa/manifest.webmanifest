@@ -1,4 +1,5 @@
-r": "ltr",
+{
+    "dir": "ltr",
     "lang": "English",
     "name": "PrimeTools Documentation Progressive Web Application",
     "scope": "/",
