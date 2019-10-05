@@ -14,7 +14,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building'
+                echo 'Building.'
                 sh 'python3 -m venv products/024.primetools.web.api/venv'
                 sh '. products/024.primetools.web.api/venv/bin/activate'
                 sh 'source /var/lib/jenkins/.profile'
