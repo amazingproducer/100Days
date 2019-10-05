@@ -10,27 +10,20 @@
 <a href="PrimeTools.html">Module and CLI documentation</a><br>
 
 
-
+<button onclick="install()">
+  Install
+</button>
 
 	<script>
-// This is the "Offline copy of pages" service worker
-
-// Add this below content to your HTML page, or add the js file to your page at the very top to register service worker
-
-// Check compatibility for the browser we're running this in
-if ("serviceWorker" in navigator) {
   if (navigator.serviceWorker.controller) {
     console.log("[PrimeTools Docs] active service worker found, no need to register");
   } else {
     // Register the service worker
-    navigator.serviceWorker.register("/prime-tools-docs-sw.js").then(function (reg) {
+    navigator.serviceWorker.register("https://prime-tools.shamacon.us/docs/prime-tools-docs-sw.js").then(function (reg) {
 	    console.log("[PrimeTools Docs] Service worker has been registered for scope: " + reg.scope);
     });
   }
-}
+
 	</script>
-<button onclick="install()">
-  Install
-</button>
 	</body>
 </html>
