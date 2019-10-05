@@ -21,10 +21,10 @@ pipeline {
     post {
         always {
             echo 'This will always run.'
-            sh 'cp products/074.primetools.docs.pwa/*.html /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/docs/'
-            sh 'cp products/074.primetools.docs.pwa/*.webmanifest /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/docs/'
-            sh 'cp products/074.primetools.docs.pwa/*.jpg /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/docs/'
-            sh 'cp products/074.primetools.docs.pwa/*.js /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/docs/'
+            sh 'cp products/074.primetools.docs.pwa/index.html /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/docs/index.html'
+            sh 'cp products/074.primetools.docs.pwa/manifest.webmanifest /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/docs/manifest.webmanifest'
+            sh 'cp products/074.primetools.docs.pwa/bangsplat.jpg /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/docs/bangsplat.jpg'
+            sh 'cp products/074.primetools.docs.pwa/primetools-docs-pwa-sw.js /var/lib/jenkins/workspace/jfile-100D-PrimeTools-API/docs/primetools-docs-pwa-sw.js'
         }
         success {
             echo 'This will run only if successful.'
