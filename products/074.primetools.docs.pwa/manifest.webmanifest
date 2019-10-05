@@ -1,7 +1,7 @@
 {"dir" : "ltr",
     "lang" : "English",
     "name" : "PrimeTools Documentation Progressive Web Application",
-    "scope" : "/",
+    "scope" : "https://prime-tools.shamacon.us/docs/",
     "display" : "browser",
     "start_url" : "https://prime-tools.shamacon.us/docs/index.html",
     "short_name" : "PrimeTools Docs",
