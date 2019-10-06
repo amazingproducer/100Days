@@ -16,7 +16,7 @@ Flask based API using the PrimeTools module.
 ### [PrimeTools Docs PWA](https://github.com/amazingproducer/100Days/tree/master/products/074.primetools.docs.pwa)
 An installable progressive web application providing offline documentation of the PrimeTools python module, CLI app, and web API.
 
-[live app](https://prime-tools.shamacon.us/api/v1/)
+[live app](https://prime-tools.shamacon.us/docs/)
 
 ### [DataAudit](https://github.com/amazingproducer/100Days/blob/master/products/034.useraudit/DataAudit.py)
 A generalized data validation library, written as a python 3 module.
