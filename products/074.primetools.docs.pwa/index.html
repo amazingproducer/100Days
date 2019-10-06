@@ -1,14 +1,41 @@
 <html>
 	<head>
 <link rel='manifest' href='manifest.webmanifest'>
+
+<style>
+html {
+    cursor: default;
+    font-family: system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+    -moz-tab-size: 4;
+    word-break: break-word;
+}
+body {
+    line-height: 1.5em;
+}
+#pt-title {
+    font-weight: 300;
+    font-size: 2.5em;
+    line-height: 1.1em;
+    margin: .67em 0;
+}
+#pt-entry-header {
+    color: #058;
+    text-decoration: none;
+    transition: color .3s ease-in-out;
+    font-size: 1.4em;
+    font-weight: 300;
+}
+</style>	
 	</head>
 	</body>
 
-<h3 id="pt-title">PrimeTools Docs</h3><br>
+<h1 id="pt-title">PrimeTools Docs</h1><br>
 
 <a href="flask_api.html" id="pt-entry-header">API documentation</a><br>
 <a href="PrimeTools.html" id="pt-entry-header">Module and CLI documentation</a><br>
-
+<br>
 
 <button onclick="install()">
   Install
