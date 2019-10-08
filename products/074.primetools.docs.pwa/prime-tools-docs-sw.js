@@ -59,3 +59,7 @@ function updateCache(request, response) {
     return cache.put(request, response);
   });
 }
+
+this.onpush = event => {
+  console.log(event.data);
+}
