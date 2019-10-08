@@ -55,8 +55,26 @@ The PrimeTools python module, CLI app, and web API each provide several types of
 </button>
 
 
+
+
 <script>
+// TODO: learn to unify these registrations
+navigator.serviceWorker.register('prime-tools-docs-sw.js').then(
+  function(serviceWorkerRegistration) {
+    serviceWorkerRegistration.pushManager.subscribe().then(
+      function(pushSubscription) {
+        console.log(pushSubscription.subscriptionId);
+        console.log(pushSubscription.endpoint);
+      }, function(error) {
+        console.log(error);
+      }
+    );
+  });
+
+	
+
 if ("serviceWorker" in navigator) {
+	
   if (navigator.serviceWorker.controller) {
     console.log("[PrimeTools Docs] active service worker found, no need to register");
   } else {
