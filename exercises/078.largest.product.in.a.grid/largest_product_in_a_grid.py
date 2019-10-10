@@ -90,6 +90,19 @@ def VectorCheck(vector, row, column):
             print(f"Column-processed {current_value} ({row},{column}) {group} {group_product}")
             if group_product > greatest_product:
                 greatest_product = group_product
+    if vector == "rising":
+        if  row >= 3 and column <= 16:
+            group = []
+            group_product = 1
+            i = 0
+            while i <= 3:
+                group.append(integers_twenty[row-i][column+i])
+                i += 1
+            for j in group:
+                group_product *= j
+            print(f"Rising-processed {current_value} ({row}, {column}) {group} {group_product}")
+            if group_product > greatest_product:
+                greatest_product = group_product
     return "Some cases are unmanaged."
 # why is this giving me results out of order? should i explicitly iterate in order?
 #for row in integers_twenty:
@@ -100,4 +113,4 @@ for i in range(20):
             VectorCheck(vectors[k], i, j)
         j += 1
 
-print(greatest_product)
+print(f"Greatest product: {greatest_product}")
