@@ -51,5 +51,20 @@ print(integers_twenty)
 
 # same line = (1,0) #add one to index within line
 # same column = (0,1) # add one to index of line list
-# diagonal falling = (1,1) # add one to index within line and subtract one from index of line list
+# diagonal falling = (1,1) # add one to index within line and add one from index of line list
 # diagonal rising  = (-1,1) # subtract one from index within line and add one to index of line list
+
+greatest_product = 0
+vectors = ["line","column","rising","falling"]
+
+def VectorCheck(vector, position: tuple=(0,0)):
+    if vector == "line":
+        print(integers_twenty[position[0]][position[1]])
+    return "Some cases are unmanaged."
+
+for y in integers_twenty:
+    for x in y:
+        for vector in vectors:
+            VectorCheck(vector, (integers_twenty.index(y), y.index(x)))
+
+print(f"{greatest_product}")
