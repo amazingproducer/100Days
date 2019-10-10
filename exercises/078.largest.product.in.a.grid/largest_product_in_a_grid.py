@@ -62,28 +62,42 @@ def VectorCheck(vector, row, column):
     current_value = current_row[column]
     global greatest_product
     if vector == "line":
-        group = []
+        #group = []
         if column <= 16:
-            group_product = 1 
-            print(f"Processing {current_value} ({row},{column})...")
+            group = []
+            group_product = 1
+            #print(f"Processing {current_value} ({row},{column})...")
             i = 0
             while i <= 3:
-                print(f"Adding ({row},{column})...")
+                #print(f"Adding ({row},{column})...")
                 group.append(current_row[column+i])
                 i += 1
             for j in group:
                 group_product *= j
+            print(f"Line-processed {current_value} ({row},{column}) {group} {group_product}")
             if group_product > greatest_product:
                 greatest_product = group_product
-
-
+    if vector == "column":
+        if row <= 16:
+            group = []
+            group_product = 1
+            i = 0
+            while i <= 3:
+                group.append(integers_twenty[row+i][column])
+                i += 1
+            for j in group:
+                group_product *= j
+            print(f"Column-processed {current_value} ({row},{column}) {group} {group_product}")
+            if group_product > greatest_product:
+                greatest_product = group_product
     return "Some cases are unmanaged."
-
-for y in integers_twenty:
-    print(type(y))
-    print(len(integers_twenty))
-    for x in y:
-        for vector in vectors:
-            VectorCheck(vector, integers_twenty.index(y), y.index(x))
+# why is this giving me results out of order? should i explicitly iterate in order?
+#for row in integers_twenty:
+for i in range(20):
+    j = 0
+    while j < 20:
+        for k in range(3):
+            VectorCheck(vectors[k], i, j)
+        j += 1
 
 print(greatest_product)
