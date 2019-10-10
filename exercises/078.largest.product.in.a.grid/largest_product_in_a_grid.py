@@ -1,7 +1,11 @@
 #!/usr/bin/python3
 """Day 78: Largest Product in a Grid. Part of 2019's 100 Days of Coding Challenge.
 'the greatest product of four adjacent numbers in the same direction (up, down,
-left, right, or diagonally) in the 20×20 grid'."""
+left, right, or diagonally) in the 20×20 grid'.
+
+>>> Solve()
+70600674
+"""
 
 string_twenty = """08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
 49 49 99 40 17 81 18 57 60 87 17 40 98 43 69 48 04 56 62 00
@@ -36,7 +40,7 @@ integers_twenty = [list(map(int, line.split())) for line in string_twenty.split(
 #print(string_twenty.split("\n"))
 #print(lines_twenty)
 #print([int(i) for line in lines_twenty for i in line.split()])
-print(integers_twenty)
+#print(integers_twenty)
 #print([list(map(int, line.split())) for line in string_twenty.split("\n")])
 
 # I have no idea how to deal with the vectors. Maybe this will take more use
@@ -74,7 +78,7 @@ def VectorCheck(vector, row, column):
                 i += 1
             for j in group:
                 group_product *= j
-            print(f"Line-processed {current_value} ({row},{column}) {group} {group_product}")
+            #print(f"Line-processed {current_value} ({row},{column}) {group} {group_product}")
             if group_product > greatest_product:
                 greatest_product = group_product
     if vector == "column":
@@ -87,7 +91,7 @@ def VectorCheck(vector, row, column):
                 i += 1
             for j in group:
                 group_product *= j
-            print(f"Column-processed {current_value} ({row},{column}) {group} {group_product}")
+            #print(f"Column-processed {current_value} ({row},{column}) {group} {group_product}")
             if group_product > greatest_product:
                 greatest_product = group_product
     if vector == "rising":
@@ -100,7 +104,7 @@ def VectorCheck(vector, row, column):
                 i += 1
             for j in group:
                 group_product *= j
-            print(f"Rising-processed {current_value} ({row}, {column}) {group} {group_product}")
+            #print(f"Rising-processed {current_value} ({row}, {column}) {group} {group_product}")
             if group_product > greatest_product:
                 greatest_product = group_product
     if vector == "falling":
@@ -113,17 +117,22 @@ def VectorCheck(vector, row, column):
                 i += 1
             for j in group:
                 group_product *= j
-            print(f"Falling-processed {current_value} ({row}, {column}) {group} {group_product}")
+            #print(f"Falling-processed {current_value} ({row}, {column}) {group} {group_product}")
             if group_product > greatest_product:
                 greatest_product = group_product
 
 # why is this giving me results out of order? should i explicitly iterate in order?
 #for row in integers_twenty:
-for i in range(20):
-    j = 0
-    while j < 20:
-        for k in range(4):
-            VectorCheck(vectors[k], i, j)
-        j += 1
+def Solve():
+    for i in range(20):
+        j = 0
+        while j < 20:
+            for k in range(4):
+                VectorCheck(vectors[k], i, j)
+            j += 1
+    return greatest_product
 
-print(f"Greatest product: {greatest_product}")
+print(f"Greatest product: {Solve()}")
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod(verbose=True)
