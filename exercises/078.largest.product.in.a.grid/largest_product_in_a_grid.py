@@ -58,15 +58,25 @@ greatest_product = 0
 vectors = ["line","column","rising","falling"]
 
 def VectorCheck(vector, row, column):
+    current_row = integers_twenty[row]
+    current_value = current_row[column]
+    global greatest_product
     if vector == "line":
         group = []
-        print(f"max:{len(integers_twenty[row])}, row:{row}, column:{column}")
-        if len(integers_twenty[row]) - column >= 4:
-            for i in range(4):
-                print(f"attempting {column + i} as x")
-                print(integers_twenty[row][column+i])
-                group.append(integers_twenty[row][column+i])
-            print(group)
+        if column <= 16:
+            group_product = 1 
+            print(f"Processing {current_value} ({row},{column})...")
+            i = 0
+            while i <= 3:
+                print(f"Adding ({row},{column})...")
+                group.append(current_row[column+i])
+                i += 1
+            for j in group:
+                group_product *= j
+            if group_product > greatest_product:
+                greatest_product = group_product
+
+
     return "Some cases are unmanaged."
 
 for y in integers_twenty:
@@ -76,4 +86,4 @@ for y in integers_twenty:
         for vector in vectors:
             VectorCheck(vector, integers_twenty.index(y), y.index(x))
 
-print(f"{greatest_product}")
+print(greatest_product)
