@@ -29,106 +29,54 @@ string_twenty = """08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
 01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48"""
 
 lines_twenty = string_twenty.split("\n")
-
-# I don't think this is what I want. It makes a big list of integers and I think
-# I want twenty lists of integers.
-#integers_twenty = [int(i) for line in lines_twenty for i in line.split()]
-
-# Okay, I think this is what I want.
 integers_twenty = [list(map(int, line.split())) for line in string_twenty.split("\n")]
-#print(string_twenty)
-#print(string_twenty.split("\n"))
-#print(lines_twenty)
-#print([int(i) for line in lines_twenty for i in line.split()])
-#print(integers_twenty)
-#print([list(map(int, line.split())) for line in string_twenty.split("\n")])
-
-# I have no idea how to deal with the vectors. Maybe this will take more use
-# of the map function.
-
-# for every entry in every list, calculate its product with the next three
-# entries in every vector, comparing each product with the highest product and
-# replacing the highest product with that product if it is higher.
-
-# what are the vectors?
-# same line - (1,0), (-1,0) ## no, wait, this is multiplication; order won't matter
-
-# same line = (1,0) #add one to index within line
-# same column = (0,1) # add one to index of line list
-# diagonal falling = (1,1) # add one to index within line and add one from index of line list
-# diagonal rising  = (-1,1) # subtract one from index within line and add one to index of line list
-
 greatest_product = 0
-vectors = ["line","column","rising","falling"]
+vectors = ["row","column","rising","falling"]
 
 def VectorCheck(vector, row, column):
     current_row = integers_twenty[row]
     current_value = current_row[column]
     global greatest_product
-    if vector == "line":
-        #group = []
+    group = []
+    group_product = 1
+    i = 0
+    while i <= 3:
+        if vector == "row":
+            group.append(current_row[column+i])
+        if vector == "column":
+            group.append(integers_twenty[row+i][column])
+        if vector == "rising":
+            group.append(integers_twenty[row-i][column+i])
+        if vector == "falling":
+            group.append(integers_twenty[row+i][column+i])
+        i +=1
+    for j in group:
+        group_product *= j
+    if group_product > greatest_product:
+        greatest_product = group_product
+    return greatest_product
+
+
+def VectorBuild(vector, row, column):
+    if vector == "row":
         if column <= 16:
-            group = []
-            group_product = 1
-            #print(f"Processing {current_value} ({row},{column})...")
-            i = 0
-            while i <= 3:
-                #print(f"Adding ({row},{column})...")
-                group.append(current_row[column+i])
-                i += 1
-            for j in group:
-                group_product *= j
-            #print(f"Line-processed {current_value} ({row},{column}) {group} {group_product}")
-            if group_product > greatest_product:
-                greatest_product = group_product
+            VectorCheck(vector, row, column)
     if vector == "column":
         if row <= 16:
-            group = []
-            group_product = 1
-            i = 0
-            while i <= 3:
-                group.append(integers_twenty[row+i][column])
-                i += 1
-            for j in group:
-                group_product *= j
-            #print(f"Column-processed {current_value} ({row},{column}) {group} {group_product}")
-            if group_product > greatest_product:
-                greatest_product = group_product
+            VectorCheck(vector, row, column)
     if vector == "rising":
         if  row >= 3 and column <= 16:
-            group = []
-            group_product = 1
-            i = 0
-            while i <= 3:
-                group.append(integers_twenty[row-i][column+i])
-                i += 1
-            for j in group:
-                group_product *= j
-            #print(f"Rising-processed {current_value} ({row}, {column}) {group} {group_product}")
-            if group_product > greatest_product:
-                greatest_product = group_product
+            VectorCheck(vector, row, column)
     if vector == "falling":
         if row <= 16 and column <= 16:
-            group = []
-            group_product = 1
-            i = 0
-            while i <= 3:
-                group.append(integers_twenty[row+i][column+i])
-                i += 1
-            for j in group:
-                group_product *= j
-            #print(f"Falling-processed {current_value} ({row}, {column}) {group} {group_product}")
-            if group_product > greatest_product:
-                greatest_product = group_product
+            VectorCheck(vector, row, column)
 
-# why is this giving me results out of order? should i explicitly iterate in order?
-#for row in integers_twenty:
 def Solve():
     for i in range(20):
         j = 0
         while j < 20:
             for k in range(4):
-                VectorCheck(vectors[k], i, j)
+                VectorBuild(vectors[k], i, j)
             j += 1
     return greatest_product
 
