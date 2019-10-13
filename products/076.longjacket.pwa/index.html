@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    ...
+    <link rel="manifest" href="/appmanifest.manifest">
+</head>
+<body>
+    ...
+</body>
+<script>
+if ('serviceWorker' in navigator && 'PushManager' in window) {
+  console.log('Service Worker and Push is supported');
+
+  navigator.serviceWorker.register('/sw-push-notification.js')
+      .then(function(registration) {
+        console.log('Service Worker is registered', registration);
+        // i am totally using borrowed code for now
+        // our PushManager helper methods
+        window.lua.pwa.checkSubscription(registration);
+      })
+      .catch(function(error) {
+        console.error('Service Worker Error', error);
+      });
+} else {
+  console.warn('Push messaging is not supported');
+}
+</script>
+</html>
