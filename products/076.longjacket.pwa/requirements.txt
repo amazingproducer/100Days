@@ -2,3 +2,4 @@ Flask
 sqlalchemy
 pywebpush
 py-vapid
+pyopenssl

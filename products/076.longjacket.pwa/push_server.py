@@ -45,3 +45,6 @@ def notify():
 
 
     return "{} notification(s) sent".format(count)
+
+if __name__ == "__main__":
+    app.run(ssl_context='adhoc')
