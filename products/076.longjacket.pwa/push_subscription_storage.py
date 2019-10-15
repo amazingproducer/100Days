@@ -4,6 +4,7 @@
 import json
 from flask import Flask
 from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 db = SQLAlchemy(app)

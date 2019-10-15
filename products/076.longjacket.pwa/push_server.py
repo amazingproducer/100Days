@@ -1,10 +1,16 @@
 # let's borrow some code and see how it can work for us!
 
+import os
 import datetime
-from flask import jsonify, request
+from flask import Flask, json, jsonify, request
 from pywebpush import webpush, WebPushException
-WEBPUSH_VAPID_PRIVATE_KEY = 'xxx'
+from push_subscription_storage import Subscriber
 
+WEBPUSH_VAPID_PRIVATE_KEY = str(os.environ.get("LJ_PUSH_PRIVKEY"))
+vapid_claims = json.load(open('./claim.json'))
+WEBPUSH_VAPID_PUBLIC_KEY = "BNAVJ63X40KbUEzSXqSW1C7Md9lcpj5TJF9Yk2_1hiaobNmk4Zx5HTcZ4wX-E4m_3gGdvUzz5MQROGDo8MiCr2Q"
+
+app = Flask(__name__)
 @app.route('/api/subscribe')
 def subscribe():
     subscription_info = request.json.get('subscription_info')
@@ -34,10 +40,10 @@ def notify():
             webpush(
                 subscription_info=_item.subscription_info_json,
                 data="Test 123",
-                vapid_private_key=WEBPUSH_VAPID_PRIVATE_KEY,
-                vapid_claims={
-                    "sub": "mailto:webpush@mydomain.com"
-                }
+                vapid_private_key=WEBPUSH_VAPID_PRIVATE_KEY
+                #vapid_claims={
+                #    "sub": "mailto:webpush@mydomain.com"
+                #}
             )
             count += 1
         except WebPushException as ex:
@@ -47,4 +53,4 @@ def notify():
     return "{} notification(s) sent".format(count)
 
 if __name__ == "__main__":
-    app.run(ssl_context='adhoc')
+    app.run(host='0.0.0.0', ssl_context='adhoc')

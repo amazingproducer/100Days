@@ -1,5 +1,5 @@
 Flask
-sqlalchemy
+flask_sqlalchemy
 pywebpush
 py-vapid
 pyopenssl
