@@ -2,7 +2,7 @@
 
 import os
 import datetime
-from flask import Flask, json, jsonify, request
+from flask import Flask, json, jsonify, request, send_file, send_from_directory
 from pywebpush import webpush, WebPushException
 from push_subscription_storage import Subscriber
 
@@ -11,6 +11,14 @@ vapid_claims = json.load(open('./claim.json'))
 WEBPUSH_VAPID_PUBLIC_KEY = "BNAVJ63X40KbUEzSXqSW1C7Md9lcpj5TJF9Yk2_1hiaobNmk4Zx5HTcZ4wX-E4m_3gGdvUzz5MQROGDo8MiCr2Q"
 print(vapid_claims)
 app = Flask(__name__)
+@app.route('/<file>')
+def flask_root(file='./index.html'):
+    return send_file(file)
+
+@app.route('/')
+def index():
+    return send_file('./index.html')
+
 @app.route('/api/subscribe')
 def subscribe():
     subscription_info = request.json.get('subscription_info')

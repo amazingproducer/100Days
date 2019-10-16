@@ -1,11 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    ...
-    <link rel="manifest" href="/appmanifest.manifest">
+
+<template>
+  <div>
+    <button type="button" class="btn btn-primary" @click.prevent="subscribe">{{ buttonText }}</button>
+  </div>
+</template>
+
+<script>
+import axios from 'axios'
+
+export default {
+  name: 'HomeActionBar',
+  props: ['isSubscribedProp'],
+  data() {
+    return {
+      isSubscribed: this.isSubscribedProp
+    }
+  },
+  computed: {
+    buttonText() {
+      if (Notification.permission === 'denied') {
+        window.longjacket.updateSubscriptionOnServer(null)
+        return 'Notification Blocked'
+      }
+
+      if (!this.isSubscribed) {
+        return 'Enable Push Notification'
+      }
+      return 'Disable Push Notification'
+    },
+  },
+  methods: {
+    subscribe() {
+      if (Notification.permission === 'denied') {
+        console.log('Notification is Blocked')
+        return
+      }
+
+      if (this.isSubscribed) {
+        window.longjacket.unsubscribe()
+          .then((result) => {
+            if (result) {
+              console.log('Unsubscribe successful')
+              this.isSubscribed = false
+            }
+          })
+          .catch((error) => {
+            console.log(error.message)
+          })
+      } else {
+        window.longjacket.subscribe()
+          .then((result) => {
+            if (result) {
+              console.log('Subscribe successful')
+              this.isSubscribed = true
+            }
+          })
+          .catch((error) => {
+            // use null to trigger update if user block notification
+            this.isSubscribed = null
+            console.log(error.message)
+          })
+      }
+    },
+  }
+}
+</script>
+
+
+	<script src="./app.js"></script>
+<link rel="manifest" href="/manifest.webmanifest">
 </head>
 <body>
-    ...
+    LooooooongLoooooong Jacket
 </body>
 <script>
 if ('serviceWorker' in navigator && 'PushManager' in window) {
@@ -16,7 +85,7 @@ if ('serviceWorker' in navigator && 'PushManager' in window) {
         console.log('Service Worker is registered', registration);
         // i am totally using borrowed code for now
         // our PushManager helper methods
-        window.lua.pwa.checkSubscription(registration);
+        window.longjacket.checkSubscription(registration);
       })
       .catch(function(error) {
         console.error('Service Worker Error', error);
@@ -25,4 +94,6 @@ if ('serviceWorker' in navigator && 'PushManager' in window) {
   console.warn('Push messaging is not supported');
 }
 </script>
+
+
 </html>

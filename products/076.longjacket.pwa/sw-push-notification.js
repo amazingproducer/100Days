@@ -8,11 +8,11 @@ self.addEventListener('push', function(event) {
   console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
 
   // https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification
-  const title = 'MyApp Alert';
+  const title = 'LongJacket Alert';
   const options = {
     body: event.data.text(),
-    icon: '/static/img/icon-512.png',
-    badge: '/static/img/icon-96.png',
+    icon: '/images/e3e8e963-3a4a-7244-cefd-4d6eda8690e4.webPlatform.png',
+    badge: '/images/9aaeccf9-8f8c-e950-5b77-d688b74dc457.webPlatform.png',
     tag: 'alert'
   };
 
