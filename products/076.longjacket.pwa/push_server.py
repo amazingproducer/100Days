@@ -9,7 +9,7 @@ from push_subscription_storage import Subscriber
 WEBPUSH_VAPID_PRIVATE_KEY = str(os.environ.get("LJ_PUSH_PRIVKEY"))
 vapid_claims = json.load(open('./claim.json'))
 WEBPUSH_VAPID_PUBLIC_KEY = "BNAVJ63X40KbUEzSXqSW1C7Md9lcpj5TJF9Yk2_1hiaobNmk4Zx5HTcZ4wX-E4m_3gGdvUzz5MQROGDo8MiCr2Q"
-
+print(vapid_claims)
 app = Flask(__name__)
 @app.route('/api/subscribe')
 def subscribe():

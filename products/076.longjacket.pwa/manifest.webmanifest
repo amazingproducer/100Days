@@ -1,0 +1,112 @@
+{
+    "dir": "ltr",
+    "lang": "English",
+    "name": "LongJacket Field App",
+    "scope": "/",
+    "display": "minimal-ui",
+    "start_url": "https://longjacket.shamacon.us/index.html",
+    "short_name": "LongJacket",
+    "theme_color": "transparent",
+    "description": "Field accountability software for inspectors and patrollers.",
+    "orientation": "any",
+    "background_color": "transparent",
+    "related_applications": [],
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "/images/4add1db2-c81d-20a9-a22c-1a8bed3a0f7f.webPlatform.png",
+            "sizes": "44x44",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/f503fa1f-ded9-1661-bcee-0fc3dd1c1e85.webPlatform.png",
+            "sizes": "48x48",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/881bed65-cad2-1918-e4b8-d738e3a48b37.webPlatform.png",
+            "sizes": "1240x600",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/4becc40f-9bd7-52ca-a12d-a989d699f0e8.webPlatform.png",
+            "sizes": "300x300",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/037ccf1b-703a-dcbb-55b0-330e35b83a23.webPlatform.png",
+            "sizes": "150x150",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/e0ef1d2e-d03f-08b1-97ef-82987d8f2f16.webPlatform.png",
+            "sizes": "88x88",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/00c87bf8-741d-6f85-d62f-9be5c2e1bc39.webPlatform.png",
+            "sizes": "24x24",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/7d4c2309-cc36-3299-8e8e-9bf452557f1f.webPlatform.png",
+            "sizes": "50x50",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/2a14b2ed-750e-d5fb-888c-08c51b340445.webPlatform.png",
+            "sizes": "620x300",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/b8abc449-5331-a516-62b1-2f107ee52100.webPlatform.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/c630fd03-cd52-1a8b-6723-137e135fa217.webPlatform.png",
+            "sizes": "144x144",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/9aaeccf9-8f8c-e950-5b77-d688b74dc457.webPlatform.png",
+            "sizes": "96x96",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/87bd8413-08ce-1c95-5838-f2b7b7346619.webPlatform.png",
+            "sizes": "72x72",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/d21ab623-dfc7-cf8c-e40b-0c5fc77db248.webPlatform.png",
+            "sizes": "36x36",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/e3e8e963-3a4a-7244-cefd-4d6eda8690e4.webPlatform.png",
+            "sizes": "1024x1024",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/f3a1254e-5d3f-0137-cc48-d5d765e88b63.webPlatform.png",
+            "sizes": "180x180",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/318aaa88-6378-b380-fca1-05655b1140c4.webPlatform.png",
+            "sizes": "152x152",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/5580754d-7f41-5788-69f4-0872e5b586f7.webPlatform.png",
+            "sizes": "120x120",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/4114e0ff-a728-6422-34f6-6ab35dd87d23.webPlatform.png",
+            "sizes": "76x76",
+            "type": "image/png"
+        }
+    ]
+}
