@@ -1,6 +1,6 @@
 // TODO: learn wtf is going on here
 
-import axios from 'axios'
+//import axios from 'axios'
 
 window.longjacket = {
   // public key of the push notification server. 

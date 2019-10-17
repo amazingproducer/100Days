@@ -7,10 +7,7 @@
     <button type="button" class="btn btn-primary" @click.prevent="subscribe">{{ buttonText }}</button>
   </div>
 </template>
-
 <script>
-import axios from 'axios'
-
 export default {
   name: 'HomeActionBar',
   props: ['isSubscribedProp'],
@@ -70,7 +67,8 @@ export default {
 </script>
 
 
-	<script src="./app.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js" type="module"></script>
+<script src="./app.js" type="module"></script>
 <link rel="manifest" href="/manifest.webmanifest">
 </head>
 <body>
