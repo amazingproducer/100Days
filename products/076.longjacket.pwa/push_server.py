@@ -21,7 +21,8 @@ def index():
 
 @app.route('/api/subscribe')
 def subscribe():
-    subscription_info = request.json.get('subscription_info')
+    if request.json:
+      subscription_info = request.json.get('subscription_info')
     # if is_active=False == unsubscribe
     is_active = request.json.get('is_active')
 

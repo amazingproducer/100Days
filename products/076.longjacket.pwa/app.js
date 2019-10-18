@@ -2,30 +2,30 @@
 
 //import axios from 'axios'
 
-window.longjacket = {
+//window.longjacket = {
   // public key of the push notification server. 
   // if you are using the Test Push Notification Server, 
   // get public key from https://web-push-codelab.glitch.me/
-  applicationServerPublicKey: 'BNAVJ63X40KbUEzSXqSW1C7Md9lcpj5TJF9Yk2_1hiaobNmk4Zx5HTcZ4wX-E4m_3gGdvUzz5MQROGDo8MiCr2Q',
-  registration: null,
-  isSubscribed: false,
+//  applicationServerPublicKey: 'BNAVJ63X40KbUEzSXqSW1C7Md9lcpj5TJF9Yk2_1hiaobNmk4Zx5HTcZ4wX-E4m_3gGdvUzz5MQROGDo8MiCr2Q',
+//  registration: null,
+//  isSubscribed: false,
   // render a button UI to subscribe/unsubscribe push notification
   // I am using Vue.js for the UI, though you can onvert it to use plain javascript or jQuery
   // TODO: Learn how this works and convert it to plain javascript
-  initUi(options) {
-    if ($('#lua-home-actionbar').length) {
-      new Vue({
-        el: '#lua-home-actionbar',
-        data: {
-          isSubscribed: options.isSubscribed
-        },
-        template: '<HomeActionBar :isSubscribedProp="isSubscribed" />',
-        components: { HomeActionBar },
-      })
-    }
-  },
+//  initUi(options) {
+//    if ($('#lua-home-actionbar').length) {
+//      new Vue({
+//        el: '#lua-home-actionbar',
+//        data: {
+//          isSubscribed: options.isSubscribed
+//        },
+//        template: '<HomeActionBar :isSubscribedProp="isSubscribed" />',
+//        components: { HomeActionBar },
+//      })
+//    }
+//  },
   // call when service worker is registered
-  checkSubscription(registration) {
+function checkSubscription(registration) {
     registration.pushManager.getSubscription()
       .then((subscription) => {
         this.isSubscribed = !(subscription === null)
@@ -36,9 +36,9 @@ window.longjacket = {
         this.registration = registration
 
         // update UI to indicate Push Notification is subscribed or not
-        this.initUi({ isSubscribed: this.isSubscribed })
+//        this.initUi({ isSubscribed: this.isSubscribed })
       })
-  },
+  }//,
   // subscribe push notification
   subscribe() {
     const applicationServerKey = this.urlB64ToUint8Array(this.applicationServerPublicKey)
