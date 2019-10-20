@@ -1,29 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
+<!--
 <template>
   <div>
     <button type="button" class="btn btn-primary" @click.prevent="subscribe">{{ buttonText }}</button>
   </div>
 </template>
-
+--!>
 
 <link rel="manifest" href="/manifest.webmanifest">
 </head>
 <body>
 	LooooooongLoooooong Jacket
 
-
+<!--
 <input type="file" accept="image/*;capture=camera">
+--!>
 
-
-
+<button disabled>
+Capture photographic evidence</button>
 <video autoplay></video>
 
+
+<!--
 <img class="screenshot" src="">
 <canvas style="display:none;"></canvas>
+--!>
+	<script>
+const vid = document.querySelector('video');
+navigator.mediaDevices.getUserMedia({video: { facingMode: "environment" } }) // request cam
+.then(stream => {
+  vid.srcObject = stream; // don't use createObjectURL(MediaStream)
+  return vid.play(); // returns a Promise
+})
+.then(()=>{ // enable the button
+  const btn = document.querySelector('button');
+  btn.disabled = false;
+  btn.onclick = e => {
+    takeASnap()
+    .then(download);
+  };
+});
 
+function takeASnap(){
+  const canvas = document.createElement('canvas'); // create a canvas
+  const ctx = canvas.getContext('2d'); // get its context
+  canvas.width = vid.videoWidth; // set its size to the one of the video
+  canvas.height = vid.videoHeight;
+  ctx.drawImage(vid, 0,0); // the video
+  return new Promise((res, rej)=>{
+    canvas.toBlob(res, 'image/jpeg'); // request a Blob from the canvas
+  });
+}
+function download(blob){
+  // uses the <a download> to download a Blob
+  let a = document.createElement('a'); 
+  a.href = URL.createObjectURL(blob);
+  a.download = 'screenshot.jpg';
+  document.body.appendChild(a);
+  a.click();
+}
+
+</script>
+
+<!--
 <script>
 const captureVideoButton = document.querySelector('#screenshot .capture-button');
 const screenshotButton = document.querySelector('#screenshot-button');
@@ -143,7 +184,7 @@ function handleError(error) {
 }
 
 </script>
-
+--!>
 </body>
 
 
