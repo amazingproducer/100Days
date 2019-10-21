@@ -14,20 +14,22 @@
 <body>
 	LooooooongLoooooong Jacket
 
-<!--
-<input type="file" accept="image/*;capture=camera">
---!>
+<input type="file" accept="image/*" capture="environment">
 
+
+<!--
 <button disabled>
 Capture photographic evidence</button>
 <video autoplay></video>
-
+--!>
 
 <!--
 <img class="screenshot" src="">
 <canvas style="display:none;"></canvas>
 --!>
-	<script>
+
+<!--
+<script>
 const vid = document.querySelector('video');
 navigator.mediaDevices.getUserMedia({video: { facingMode: "environment" } }) // request cam
 .then(stream => {
@@ -63,6 +65,8 @@ function download(blob){
 }
 
 </script>
+--!>
+
 
 <!--
 <script>
