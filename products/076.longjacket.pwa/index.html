@@ -8,14 +8,94 @@
   </div>
 </template>
 --!>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
 <link rel="manifest" href="/manifest.webmanifest">
 </head>
 <body>
 	LooooooongLoooooong Jacket
 
-<input type="file" accept="image/*" capture="environment">
+<input type="file" class="fileinput" id="fileinput" accept="image/*" capture="environment">
 
+<div class="gallery" id="thumbnail" /><img class="thumbnail" id="thumbnail" />
+
+<script>
+$('#fileinput').on("input", function(){
+    var file = this.files[0];
+    var reader = new FileReader();
+    reader.onload = function(e) {
+
+        var exif = EXIF.readFromBinaryFile(this.result);
+        console.log(exif);
+
+
+     }
+
+     reader.readAsArrayBuffer(file);
+
+
+});
+<script>
+
+
+
+<!--
+<script>
+$(function() {
+    $('#fileinput').on('change', function(){
+       var files = this.files,
+           i=0;
+        for(i=0; i<files.length;++i){
+            previewImage(this.files[i]);
+        }
+    });
+    function previewImage(file) {
+        var gallery = $('#gallery'),
+            thumb = null,
+            img = null,
+            reader= null;
+        if(!file.type.match('image/*')){
+            throw 'File type must be an image';
+        }
+
+        thumb = $('<div />',{class: 'thumbnail'}).appendTo(gallery);
+        img = $('<img />');
+        reader = new FileReader();
+        reader.onload = function(e){
+            img.prop('src',reader.result);
+            // important for exif-js! Set src attribute after calling img.prop
+            img.src = img.prop('src');
+            img.appendTo(thumb);
+            EXIF.getData(img, function() {
+                console.log(EXIF.pretty(img));
+            });
+        };
+        reader.readAsDataURL(file);
+    }
+
+});
+</script>
+--!>
+
+
+<!--
+<script>
+$("fileinput").change(function() {
+    var file = this.files[0];  // file
+        fr   = new FileReader; // to read file contents
+
+    fr.onloadend = function() {
+        // get EXIF data
+        var exif = EXIF.readFromBinaryFile(new BinaryFile(this.result));
+
+        // alert a value
+        alert(exif.Make);
+    };
+
+    fr.readAsBinaryString(file); // read the file
+});
+</script>
+--!>
 
 <!--
 <button disabled>
