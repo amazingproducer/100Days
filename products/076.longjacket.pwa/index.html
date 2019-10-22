@@ -4,6 +4,30 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
 <link rel="manifest" href="/manifest.webmanifest">
+	<script>
+//location capability check
+function getLocation() {
+    if ("geolocation" in navigator) {
+navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+getLocation();
+//basic location response
+function geoSuccess(position) {
+    var lat = position.coords.latitude;
+    var lng = position.coords.longitude;
+    alert("lat:" + lat + " lng:" + lng);
+}
+
+//basic location error response
+function geoError() {
+    alert("Geocoder failed.");
+}
+	</script>
+
+
 </head>
 <body>
 	LooooooongLoooooong Jacket
@@ -27,7 +51,7 @@ $('#fileinput').on("input", function(){
 
 
 });
-<script>
+</script>
 
 
 
@@ -128,7 +152,7 @@ if (hasGetUserMedia()) {
 }
 
 
-
 </script>
 
 </html>
+
