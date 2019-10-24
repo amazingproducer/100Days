@@ -4,13 +4,35 @@ import os
 import datetime
 from flask import Flask, json, jsonify, request, send_file, send_from_directory
 from pywebpush import webpush, WebPushException
-from push_subscription_storage import Subscriber
+#from push_subscription_storage import Subscriber
+from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean
+from flask_sqlalchemy import SQLAlchemy
 
 WEBPUSH_VAPID_PRIVATE_KEY = str(os.environ.get("LJ_PUSH_PRIVKEY"))
 vapid_claims = json.load(open('./claim.json'))
 WEBPUSH_VAPID_PUBLIC_KEY = "BNAVJ63X40KbUEzSXqSW1C7Md9lcpj5TJF9Yk2_1hiaobNmk4Zx5HTcZ4wX-E4m_3gGdvUzz5MQROGDo8MiCr2Q"
 print(vapid_claims)
 app = Flask(__name__)
+db = SQLAlchemy(app)
+
+
+class Subscriber(db.Model):
+    __tablename__ = 'subscriber'
+
+    id = Column(Integer(), primary_key=True, default=None)
+    created = Column(DateTime())
+    modified = Column(DateTime())
+    subscription_info = Column(Text())
+    is_active = Column(Boolean(), default=True)
+
+    @property
+    def subscription_info_json(self):
+        return json.loads(self.subscription_info)
+
+    @subscription_info_json.setter
+    def subscription_info_json(self, value):
+        self.subscription_info = json.dumps(value)
+
 @app.route('/<file>')
 def flask_root(file='./index.html'):
     return send_file(file)

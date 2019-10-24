@@ -32,13 +32,13 @@ self.addEventListener('notificationclick', function(event) {
     type: "window"
   }).then(function(clientList) {
     const client = clientList.find(function(c) {
-      new URL(c.url).pathname === '/notification'
+      new URL(c.url).pathname === '/notify'
     });
     if (client !== undefined) {
       return client.focus();
     }
 
-    return clients.openWindow('/notification');
+    return clients.openWindow('/notify');
   }));
 });
 
