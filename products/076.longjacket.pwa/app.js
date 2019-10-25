@@ -62,6 +62,26 @@ function updateBtn() {
 
 function updateSubscriptionOnServer(subscription) {
   // TODO: Send subscription to application server
+    console.log(JSON.stringify(subscription));
+    fetch('/api/subscribe', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(subscription)
+  })
+  .then(function(response) {
+    if (!response.ok) {
+      throw new Error('Bad status code from server.');
+    }
+
+    return response.json();
+  })
+  .then(function(responseData) {
+    if (!(responseData.data && responseData.data.success)) {
+      throw new Error('Bad response from server.');
+    }
+  });
 
   const subscriptionJson = document.querySelector('.js-subscription-json');
   const subscriptionDetails =
@@ -143,6 +163,7 @@ function initializeUI() {
   });
 }
 
+/*
 if ('serviceWorker' in navigator && 'PushManager' in window) {
   console.log('Service Worker and Push is supported');
 
@@ -160,3 +181,4 @@ if ('serviceWorker' in navigator && 'PushManager' in window) {
   console.warn('Push messaging is not supported');
   pushButton.textContent = 'Push Not Supported';
 }
+*/

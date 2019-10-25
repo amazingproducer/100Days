@@ -4,6 +4,9 @@
 <!-- I might not need jquery for now
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
 --!>
+<!--
+<script type="module" src="https://unpkg.com/axios/dist/axios.min.js"></script>
+--!>
 
 <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
 <link rel="manifest" href="/manifest.webmanifest">
@@ -52,6 +55,7 @@ function geoError() {
     </section>
 
 
+<script src="./app.js"></script>
 <script>
 const fileQuery = document.getElementById("filequery"),
   fileInput = document.getElementById("fileinput");
@@ -92,7 +96,7 @@ var toDecimal = function (number) {
 
 </body>
 
-
+<!--
 <script>
 if ('serviceWorker' in navigator && 'PushManager' in window) {
   console.log('Service Worker and Push is supported');
@@ -110,7 +114,9 @@ if ('serviceWorker' in navigator && 'PushManager' in window) {
 } else {
   console.warn('Push messaging is not supported');
 }
-
+</script>
+--!>
+<script>
 
 function askPermission() {
   return new Promise(function(resolve, reject) {
@@ -130,13 +136,32 @@ function askPermission() {
 }
 
 
+if ('serviceWorker' in navigator && 'PushManager' in window) {
+  console.log('Service Worker and Push is supported');
+
+  navigator.serviceWorker.register('sw-push-notification.js')
+  .then(function(swReg) {
+    console.log('Service Worker is registered', swReg);
+
+    swRegistration = swReg;
+    initializeUI();
+  })
+  .catch(function(error) {
+    console.error('Service Worker Error', error);
+  });
+} else {
+  console.warn('Push messaging is not supported');
+  pushButton.textContent = 'Push Not Supported';
+}
+
+/*
 function subscribeUserToPush() {
   return navigator.serviceWorker.register('/sw-push-notification.js')
   .then(function(registration) {
     const subscribeOptions = {
       userVisibleOnly: true,
       applicationServerKey: urlBase64ToUint8Array(
-        'iBNAVJ63X40KbUEzSXqSW1C7Md9lcpj5TJF9Yk2_1hiaobNmk4Zx5HTcZ4wX-E4m_3gGdvUzz5MQROGDo8MiCr2Q'
+        'BNAVJ63X40KbUEzSXqSW1C7Md9lcpj5TJF9Yk2_1hiaobNmk4Zx5HTcZ4wX-E4m_3gGdvUzz5MQROGDo8MiCr2Q'
       )
     };
 
@@ -170,6 +195,8 @@ function sendSubscriptionToBackEnd(subscription) {
     }
   });
 }
+*/
+
 
 //camera detection
 function hasGetUserMedia() {
@@ -185,8 +212,6 @@ if (hasGetUserMedia()) {
 
 
 </script>
-
-<script src="./app.js"></script>
 
 </html>
 
