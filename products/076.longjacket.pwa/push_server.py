@@ -11,9 +11,9 @@ from flask_sqlalchemy import SQLAlchemy
 import logging
 
 WEBPUSH_VAPID_PRIVATE_KEY = str(os.environ.get("LJ_PUSH_PRIVKEY"))
+vapid_claim = open('./claim.json').read()
 vapid_claim_string = json.load(open('./claim.json'))
-WEBPUSH_VAPID_PUBLIC_KEY = "BNAVJ63X40KbUEzSXqSW1C7Md9lcpj5TJF9Yk2_1hiaobNmk4Zx5HTcZ4wX-E4m_3gGdvUzz5MQROGDo8MiCr2Q"
-print(vapid_claim_string)
+WEBPUSH_VAPID_PUBLIC_KEY ='BNAVJ63X40KbUEzSXqSW1C7Md9lcpj5TJF9Yk2_1hiaobNmk4Zx5HTcZ4wX-E4m_3gGdvUzz5MQROGDo8MiCr2Q'
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///push_subscriptions.db'
 db = SQLAlchemy(app)
@@ -92,15 +92,15 @@ def notify():
     app.logger.info(f"pushing with VAPID claims: {vapid_claim_string}")
     for item in items:
         try:
+            print(json.dumps(vapid_claim))
             webpush(
-                subscription_info=json.loads(item.subscription_info.replace("\'", "\"")),
+                subscription_info=item.subscription_info.replace("\'", "\""),
                 data="Investigate sea monster at: lat:19.759 lng:-154.9845",
                 vapid_private_key=WEBPUSH_VAPID_PRIVATE_KEY,
-                vapid_claims=vapid_claim_string
+                vapid_claims= json.dumps(json.loads(vapid_claim))
             )
             count += 1
         except WebPushException as ex:
-            app.logger.info("i am too lazy to look at the log for webpush failures right now")
             logging.exception("webpush fail")
 
     app.logger.info(f"{Subscriber.query.all()}")
