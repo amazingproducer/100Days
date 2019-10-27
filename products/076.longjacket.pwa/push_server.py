@@ -96,9 +96,9 @@ def notify():
     app.logger.info(f"pushing with VAPID claims: {vapid_claim_string}")
     for item in items:
         try:
-            app.logger.info(type(json.loads(item.subscription_info)),
-                json.loads(item.subscription_info.replace("\'","\"")),
-                json.loads(item.subscription_info.replace("'",'"')))
+#            app.logger.info(type(json.loads(item.subscription_info)),
+#                json.loads(item.subscription_info.replace("\'","\"")),
+#                json.loads(item.subscription_info.replace("'",'"')))
             if "'" in item.subscription_info:
                 subscription_method = json.loads(item.subscription_info.replace("\'","\""))
             else:
