@@ -100,7 +100,7 @@ def notify():
 #                json.loads(item.subscription_info.replace("\'","\"")),
 #                json.loads(item.subscription_info.replace("'",'"')))
             if "'" in item.subscription_info:
-                subscription_method = json.loads(item.subscription_info.replace("\'","\""))
+                subscription_method = json.loads(item.subscription_info.replace("'",'"'))
             else:
                 subscription_method = json.loads(item.subscription_info)
             webpush(
