@@ -92,12 +92,13 @@ def notify():
     app.logger.info(f"pushing with VAPID claims: {vapid_claim_string}")
     for item in items:
         try:
-            print(json.dumps(vapid_claim))
+            print(type(json.loads(vapid_claim)), json.loads(vapid_claim),
+                 json.dumps(json.loads(vapid_claim)))
             webpush(
-                subscription_info=item.subscription_info.replace("\'", "\""),
+                subscription_info=json.loads(item.subscription_info.replace("\'","\"")),
                 data="Investigate sea monster at: lat:19.759 lng:-154.9845",
                 vapid_private_key=WEBPUSH_VAPID_PRIVATE_KEY,
-                vapid_claims= json.dumps(json.loads(vapid_claim))
+                vapid_claims=vapid_claim_string
             )
             count += 1
         except WebPushException as ex:
