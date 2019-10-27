@@ -44,6 +44,10 @@ class Subscriber(db.Model):
 #        db.session.commit()
 #        super().__init__(**kwargs)
 
+db.drop_all()
+db.create_all()
+db.session.commit()
+
 @app.route('/<file>')
 def flask_root(file='./index.html'):
     return send_file(file)
@@ -108,14 +112,14 @@ def notify():
     return "{} notification(s) sent".format(count)
 
 if __name__ == "__main__":
-    db.__tablename__ = 'subscriber'
+#    db.__tablename__ = 'subscriber'
 
-    id = db.Column(db.Integer(), primary_key=True, default=None)
-    created = db.Column(db.DateTime())
-    modified = db.Column(db.DateTime())
-    subscription_info = db.Column(db.Text())
-    is_active = db.Column(db.Boolean(), default=True)
-    db.drop_all()
-    db.create_all()
-    db.session.commit()
+#    id = db.Column(db.Integer(), primary_key=True, default=None)
+#    created = db.Column(db.DateTime())
+#    modified = db.Column(db.DateTime())
+#    subscription_info = db.Column(db.Text())
+#    is_active = db.Column(db.Boolean(), default=True)
+#    db.drop_all()
+#    db.create_all()
+#    db.session.commit()
     app.run(host='0.0.0.0', ssl_context='adhoc')
