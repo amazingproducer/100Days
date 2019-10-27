@@ -151,12 +151,13 @@ function initializeUI() {
   .then(function(subscription) {
     isSubscribed = !(subscription === null);
 
-    updateSubscriptionOnServer(subscription, false);
 
     if (isSubscribed) {
       console.log('User IS subscribed.');
+      updateSubscriptionOnServer(subscription, true);
     } else {
       console.log('User is NOT subscribed.');
+      updateSubscriptionOnServer(subscription, false);
     }
 
     updateBtn();
