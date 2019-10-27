@@ -18,6 +18,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///push_subscriptions.db'
 db = SQLAlchemy(app)
 
+logging.basicConfig(filename='webservice.log', level=logging.DEBUG)
 
 class Subscriber(db.Model):
     db.__tablename__ = 'subscriber'
@@ -53,25 +54,25 @@ def index():
 
 @app.route('/api/subscribe', methods=['POST'])
 def subscribe():
-    print(f"Got request! {request.json.get('subscription_info')}")
+    app.logger.info(f"Got request! {request.json.get('subscription_info')}")
 #    if request.json:
-#        print(f"Request received: {request.json}")
+#        app.logger.info(f"Request received: {request.json}")
     subinfo = request.json.get('subscription_info')
-    print(f"subinfo is {type(subinfo)}")
+    app.logger.info(f"subinfo is {type(subinfo)}")
     subscription_info = request.json.get('subscription_info')
-    print(f"Requester's info: {subscription_info}")
+    app.logger.info(f"Requester's info: {subscription_info}")
     # if is_active=False == unsubscribe
     is_active = request.json.get('is_active')
-    print(f"Subscriber info type: {type(Subscriber.query.filter(Subscriber.subscription_info ==  str(subscription_info)))}")
-    print(f"Subscriber info: {db.session.query(Subscriber).filter(Subscriber.subscription_info==str(subscription_info)).first()}")
+    app.logger.info(f"Subscriber info type: {type(Subscriber.query.filter(Subscriber.subscription_info ==  str(subscription_info)))}")
+    app.logger.info(f"Subscriber info: {db.session.query(Subscriber).filter(Subscriber.subscription_info==str(subscription_info)).first()}")
     # we assume subscription_info shall be the same
     item = db.session.query(Subscriber).filter(Subscriber.subscription_info==str(subscription_info)).first()
-#    print(f"Subscriber's info: {Subscriber.subscription_info}")
-    print(f"Requester's info: {subscription_info}")
+#    app.logger.info(f"Subscriber's info: {Subscriber.subscription_info}")
+    app.logger.info(f"Requester's info: {subscription_info}")
     if not item:
         item = Subscriber()
         item.created = datetime.datetime.utcnow()
-        print("Adding requester as new subscriber...")
+        app.logger.info("Adding requester as new subscriber...")
         item.subscription_info = str(subscription_info)
 
     item.is_active = is_active
@@ -84,11 +85,11 @@ def subscribe():
 @app.route('/notify', methods=['POST', 'GET'])
 def notify():
     items = Subscriber.query.filter(Subscriber.is_active == True).all()
-    print(f"items: {str(items)}")
-    [print(type(i.is_active), i.is_active) for i in Subscriber.query.all()]
+    app.logger.info(f"items: {str(items)}")
+#    [app.logger.info(type(i.is_active), i.is_active) for i in Subscriber.query.all()]
     count = 0
-    print(f"pushing with private key: {WEBPUSH_VAPID_PRIVATE_KEY}")
-    print(f"pushing with VAPID claims: {vapid_claim_string}")
+    app.logger.info(f"pushing with private key: {WEBPUSH_VAPID_PRIVATE_KEY}")
+    app.logger.info(f"pushing with VAPID claims: {vapid_claim_string}")
     for item in items:
         try:
             webpush(
@@ -99,10 +100,10 @@ def notify():
             )
             count += 1
         except WebPushException as ex:
-            print("i am too lazy to look at the log for webpush failures right now")
+            app.logger.info("i am too lazy to look at the log for webpush failures right now")
             logging.exception("webpush fail")
 
-    print(f"{Subscriber.query.all()}")
+    app.logger.info(f"{Subscriber.query.all()}")
     return "{} notification(s) sent".format(count)
 
 if __name__ == "__main__":
