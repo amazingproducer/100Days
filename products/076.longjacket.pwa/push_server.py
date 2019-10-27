@@ -96,10 +96,14 @@ def notify():
     app.logger.info(f"pushing with VAPID claims: {vapid_claim_string}")
     for item in items:
         try:
-            print(type(json.loads(vapid_claim)), json.loads(vapid_claim),
-                 json.dumps(json.loads(vapid_claim)))
+            subscription_method = json.loads(item.subscription_info)
+            if "'" in item.subscription_info:
+                subscription_method = json.loads(item.subscription_info.replace("\'","\""))
+            app.logger.info(json.loads(item.subscription_info),
+                json.loads(item.subscription_info.replace("\'","\"")),
+                json.loads(item.subscription_info.replace("'",'"')))
             webpush(
-                subscription_info=json.loads(item.subscription_info.replace("\'","\"")),
+                subscription_info=subscription_method,
                 data="Investigate sea monster at: lat:19.759 lng:-154.9845",
                 vapid_private_key=WEBPUSH_VAPID_PRIVATE_KEY,
                 vapid_claims=vapid_claim_string
