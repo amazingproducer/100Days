@@ -47,7 +47,7 @@ function updateBtn() {
   if (Notification.permission === 'denied') {
     pushButton.textContent = 'Push Messaging Blocked.';
     pushButton.disabled = true;
-    updateSubscriptionOnServer(null);
+    updateSubscriptionOnServer(null, false);
     return;
   }
 
@@ -60,15 +60,15 @@ function updateBtn() {
   pushButton.disabled = false;
 }
 
-function updateSubscriptionOnServer(subscription) {
+function updateSubscriptionOnServer(subscription, subscribed) {
   // TODO: Send subscription to application server
-    console.log(JSON.stringify(subscription));
+    console.log('updateSub: '+JSON.stringify(subscription));
     fetch('/api/subscribe', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(subscription)
+	    body: '{\"subscription_info\":'+JSON.stringify(subscription)+',\"is_active\":'+subscribed+'}'
   })
   .then(function(response) {
     if (!response.ok) {
@@ -102,9 +102,9 @@ function subscribeUser() {
     applicationServerKey: applicationServerKey
   })
   .then(function(subscription) {
-    console.log('User is subscribed.');
+    console.log('User is subscribed: '+JSON.stringify(subscription));
 
-    updateSubscriptionOnServer(subscription);
+    updateSubscriptionOnServer(subscription, true);
 
     isSubscribed = true;
 
@@ -127,7 +127,7 @@ function unsubscribeUser() {
     console.log('Error unsubscribing', error);
   })
   .then(function() {
-    updateSubscriptionOnServer(null);
+    updateSubscriptionOnServer(null, false);
 
     console.log('User is unsubscribed.');
     isSubscribed = false;
@@ -151,7 +151,7 @@ function initializeUI() {
   .then(function(subscription) {
     isSubscribed = !(subscription === null);
 
-    updateSubscriptionOnServer(subscription);
+    updateSubscriptionOnServer(subscription, false);
 
     if (isSubscribed) {
       console.log('User IS subscribed.');

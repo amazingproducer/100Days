@@ -5,8 +5,9 @@ import datetime
 from flask import Flask, json, jsonify, request, send_file, send_from_directory
 from pywebpush import webpush, WebPushException
 #from push_subscription_storage import Subscriber
-from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean
+#from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean
 from flask_sqlalchemy import SQLAlchemy
+#Column, Integer, String, Text, DateTime, Boolean
 
 WEBPUSH_VAPID_PRIVATE_KEY = str(os.environ.get("LJ_PUSH_PRIVKEY"))
 vapid_claims = json.load(open('./claim.json'))
@@ -18,13 +19,13 @@ db = SQLAlchemy(app)
 
 
 class Subscriber(db.Model):
-    __tablename__ = 'subscriber'
+    db.__tablename__ = 'subscriber'
 
-    id = db.Column(Integer(), primary_key=True, default=None)
-    created = db.Column(DateTime())
-    modified = db.Column(DateTime())
-    subscription_info = db.Column(Text())
-    is_active = db.Column(Boolean(), default=True)
+    id = db.Column(db.Integer(), primary_key=True, default=None)
+    created = db.Column(db.DateTime())
+    modified = db.Column(db.DateTime())
+    subscription_info = db.Column(db.Text())
+    is_active = db.Column(db.Boolean(), default=True)
 
     @property
     def subscription_info_json(self):
@@ -51,31 +52,35 @@ def index():
 
 @app.route('/api/subscribe', methods=['POST'])
 def subscribe():
-    print("Got request!")
-    if request.json:
-        print(f"{request.json}")
-        subscription_info = request.json.get('subscription_info')
+    print(f"Got request! {request.json.get('subscription_info')}")
+#    if request.json:
+#        print(f"Request received: {request.json}")
+    subinfo = request.json.get('subscription_info')
+    print(f"subinfo is {type(subinfo)}")
+    subscription_info = request.json.get('subscription_info')
+    print(f"Requester's info: {subscription_info}")
     # if is_active=False == unsubscribe
     is_active = request.json.get('is_active')
-
+    print(f"Subscriber info type: {type(Subscriber.query.filter(Subscriber.subscription_info ==  str(subscription_info)))}")
+    print(f"Subscriber info: {db.session.query(Subscriber).filter(Subscriber.subscription_info==str(subscription_info)).first()}")
     # we assume subscription_info shall be the same
-    item = Subscriber.query.filter(Subscriber.subscription_info == subscription_info).first()
-    print(f"{Subscriber.query.filter(Subscriber.subscription_info)}")
-    print(f"{subscription_info}")
+    item = db.session.query(Subscriber).filter(Subscriber.subscription_info==str(subscription_info)).first()
+#    print(f"Subscriber's info: {Subscriber.subscription_info}")
+    print(f"Requester's info: {subscription_info}")
     if not item:
-        print(f"New subscriber: {Subscriber()}")
         item = Subscriber()
         item.created = datetime.datetime.utcnow()
-        item.subscription_info = subscription_info
+        print("Adding requester as new subscriber...")
+        item.subscription_info = str(subscription_info)
 
     item.is_active = is_active
     item.modified = datetime.datetime.utcnow()
     db.session.add(item)
     db.session.commit()
 
-    return jsonify({ id: item.id })
+    return jsonify({ "id": item.id })
 
-@app.route('/notify')
+@app.route('/notify', methods=['POST', 'GET'])
 def notify():
     items = Subscriber.query.filter(Subscriber.is_active == True).all()
     count = 0
