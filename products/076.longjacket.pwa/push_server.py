@@ -2,7 +2,7 @@
 
 import os
 import datetime
-from flask import Flask, json, jsonify, request, send_file, send_from_directory
+from flask import Flask, json, jsonify, request, redirect, send_file, send_from_directory
 from pywebpush import webpush, WebPushException
 #from push_subscription_storage import Subscriber
 #from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean
@@ -10,12 +10,14 @@ from flask_sqlalchemy import SQLAlchemy
 #Column, Integer, String, Text, DateTime, Boolean
 import logging
 
+
 WEBPUSH_VAPID_PRIVATE_KEY = str(os.environ.get("LJ_PUSH_PRIVKEY"))
 vapid_claim = open('./claim.json').read()
 vapid_claim_string = json.load(open('./claim.json'))
 WEBPUSH_VAPID_PUBLIC_KEY ='BNAVJ63X40KbUEzSXqSW1C7Md9lcpj5TJF9Yk2_1hiaobNmk4Zx5HTcZ4wX-E4m_3gGdvUzz5MQROGDo8MiCr2Q'
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///push_subscriptions.db'
+app.config['IMAGE_STORAGE'] = './images'
 db = SQLAlchemy(app)
 
 logging.basicConfig(filename='webservice.log', level=logging.DEBUG)
@@ -86,6 +88,24 @@ def subscribe():
 
     return jsonify({"data": {"success": True }})
 
+@app.route("/imgpost", methods=["GET", "POST"])
+def upload_image():
+
+    if request.method == "POST":
+        print(request.data)
+        if request.files:
+
+            image = request.files["image"]
+
+            image.save(os.path.join(app.config["IMAGE_STORAGE"], image.filename))
+
+            print("Image saved")
+
+            return jsonfiy({"data": {"success": True }})
+
+    return jsonify({"data": {"success": False}})
+
+# notify is currently just for testing
 @app.route('/notify', methods=['POST', 'GET'])
 def notify():
     items = Subscriber.query.filter(Subscriber.is_active == True).all()

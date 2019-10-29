@@ -24,6 +24,7 @@
 const applicationServerPublicKey = 'BNAVJ63X40KbUEzSXqSW1C7Md9lcpj5TJF9Yk2_1hiaobNmk4Zx5HTcZ4wX-E4m_3gGdvUzz5MQROGDo8MiCr2Q';
 
 const pushButton = document.querySelector('.js-push-btn');
+const submitButton = document.querySelector('#filesubmit');
 
 let isSubscribed = false;
 let swRegistration = null;

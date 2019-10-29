@@ -44,8 +44,13 @@ function geoError() {
 	</header>
 	<p>Enable geolocation services on your device and geotagging in your camera settings.</p>
 	<p>
-<input type="file" id="fileinput" accept="image/*" style="display:none" onchange="grabTags(this.files[0])" capture="environment">
-<button id="filequery">Capture Image</button>
+	<form id="fileform" enctype="multipart/form-data">
+<input type="file" id="fileinput" name="image" accept="image/*" style="display:none" onchange="grabTags(this.files[0])" capture="environment">
+<input type="button" id="filequery" value="Capture Image">
+<input type="button" id="filesubmit" value="Submit Captured Image">
+	</form>
+	</p>
+	<p>
 <button disabled class="js-push-btn">Enable Push</button>
 	</p>
 
@@ -58,13 +63,25 @@ function geoError() {
 <script src="./app.js"></script>
 <script>
 const fileQuery = document.getElementById("filequery"),
-  fileInput = document.getElementById("fileinput");
+  fileInput = document.getElementById("fileinput"),
+  fileSubmit = document.getElementById("filesubmit")
+  fileForm = document.getElementById("fileform");
+
+let formData = new FormData(fileForm);
+formData.append("image", fileInput);
 
 filequery.addEventListener("click", function (e) {
   if (fileInput) {
     fileInput.click();
   }
 }, false);
+
+fileSubmit.addEventListener("click", function (e) {
+  if (fileInput) {
+    uploadFile();
+  }
+}, false);
+
 
 //const fileInput = document.getElementById("fileinput").files[0];
 //fileInput.addEventListener("change", grabTags, false);
@@ -78,6 +95,19 @@ function grabTags(file) {
     alert("Image: lat:" + exifLat + " lng:" + exifLong);
     }
 });
+}
+
+async function uploadFile() {
+try {
+  const response = await fetch('./imgpost', {
+    method: 'POST',
+    body: fileForm
+  });
+  const result = await response.json();
+  console.log('Success:', JSON.stringify(result));
+} catch (error) {
+  console.error('Error:', error);
+}
 }
 
 </script>
