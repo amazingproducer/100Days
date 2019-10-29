@@ -44,10 +44,10 @@ function geoError() {
 	</header>
 	<p>Enable geolocation services on your device and geotagging in your camera settings.</p>
 	<p>
-	<form id="fileform" enctype="multipart/form-data">
+	<form id="fileform" action="/imgpost" method="post" enctype="multipart/form-data">
 <input type="file" id="fileinput" name="image" accept="image/*" style="display:none" onchange="grabTags(this.files[0])" capture="environment">
 <input type="button" id="filequery" value="Capture Image">
-<input type="button" id="filesubmit" value="Submit Captured Image">
+<input type="submit" id="filesubmit" value="Submit Captured Image">
 	</form>
 	</p>
 	<p>
@@ -64,11 +64,11 @@ function geoError() {
 <script>
 const fileQuery = document.getElementById("filequery"),
   fileInput = document.getElementById("fileinput"),
-  fileSubmit = document.getElementById("filesubmit")
-  fileForm = document.getElementById("fileform");
+  fileSubmit = document.getElementById("filesubmit");
 
-let formData = new FormData(fileForm);
-formData.append("image", fileInput);
+let fileForm = document.getElementById("fileform");
+
+//let formData = new FormData(fileForm);
 
 filequery.addEventListener("click", function (e) {
   if (fileInput) {
@@ -76,12 +76,15 @@ filequery.addEventListener("click", function (e) {
   }
 }, false);
 
-fileSubmit.addEventListener("click", function (e) {
-  if (fileInput) {
-    uploadFile();
-  }
-}, false);
-
+fileForm.addEventListener("submit", function(e) {
+  e.preventDefault()
+    fetch("/imgpost", {
+      method: "POST",
+      body: new FormData(fileForm)
+  }).then((response) => {
+    if (response.ok) alert("Evidence submitted.")
+  })
+})
 
 //const fileInput = document.getElementById("fileinput").files[0];
 //fileInput.addEventListener("change", grabTags, false);

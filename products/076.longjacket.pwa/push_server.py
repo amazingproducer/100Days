@@ -54,6 +54,10 @@ db.session.commit()
 def flask_root(file='./index.html'):
     return send_file(file)
 
+@app.route('/images/<file>')
+def image_root(file='./index.html'):
+    return send_file('./images/'+file)
+
 @app.route('/')
 def index():
     return send_file('./index.html')
@@ -92,7 +96,7 @@ def subscribe():
 def upload_image():
 
     if request.method == "POST":
-        print(request.data)
+        print(request.files)
         if request.files:
 
             image = request.files["image"]
@@ -101,7 +105,7 @@ def upload_image():
 
             print("Image saved")
 
-            return jsonfiy({"data": {"success": True }})
+            return jsonify({"data": {"success": True }})
 
     return jsonify({"data": {"success": False}})
 
