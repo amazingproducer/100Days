@@ -121,8 +121,8 @@ def upload_image():
             x = request.get_json()
             app.logger.info(f"Got request: {x}")
             item.created = datetime.datetime.utcnow()
-            item.device_location = x['data']['devicelocation']
-            item.exif_location = x['data']['exiflocation']
+            item.device_location = x['devicelocation']
+            item.exif_location = x['exiflocation']
             item.filename = request.files['image'].filename
             db.session.add(item)
             db.session.commit()
