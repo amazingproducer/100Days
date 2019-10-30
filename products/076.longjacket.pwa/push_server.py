@@ -108,14 +108,16 @@ def subscribe():
 
 @app.route("/imgpost", methods=["GET", "POST"])
 def upload_image():
+    app.logger.info(f"POST: {request.form}")
+    app.logger.info(f"POST content length: {request.content_length}")
     if request.method == "POST":
         print(request.files)
         app.logger.info(f"POST content length: {request.content_length}")
         if request.files:
             item = ImagePost()
             item.created = datetime.datetime.utcnow()
-            item.device_location = request.json.get('device_location')
-            item.exif_location = request.json.get('exif_location')
+            item.device_location = request.form['device_location']
+            item.exif_location = request.form['exif_location']
             item.filename = request.files['image'].filename
             db.session.add(item)
             db.session.commit()
