@@ -164,7 +164,6 @@ def notify():
                 data="Investigate sea monster at: lat:19.759 lng:-154.9845",
                 vapid_private_key=WEBPUSH_VAPID_PRIVATE_KEY,
                 vapid_claims=vapid_claim
-                vapid_claims=json.loads("{"sub":"mailto:mail@shamacon.us"})
             )
             count += 1
         except WebPushException as ex:
