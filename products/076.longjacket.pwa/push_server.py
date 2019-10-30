@@ -123,7 +123,7 @@ def upload_image():
             item.created = datetime.datetime.utcnow()
             item.device_location = request.form['devicelocation']
             item.exif_location = request.form['exiflocation']
-            item.filename = request.files['FileStorage']
+            item.filename = request.files['image']
             db.session.add(item)
             db.session.commit()
             image = request.files["image"]
