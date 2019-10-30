@@ -25,6 +25,8 @@ getLocation();
 function geoSuccess(position) {
     var lat = position.coords.latitude;
     var lng = position.coords.longitude;
+    var geo_dev_field = document.getElementById('devicelocation');
+	geo_dev_field.value = lat+","+lng;
     alert("Device: lat:" + lat + " lng:" + lng);
 }
 
@@ -47,6 +49,8 @@ function geoError() {
 	<form id="fileform" action="/imgpost" method="post" enctype="multipart/form-data">
 <input type="file" id="fileinput" name="image" accept="image/*" style="display:none" onchange="grabTags(this.files[0])" capture="environment">
 <input type="button" id="filequery" value="Capture Image">
+<input type="hidden" id="devicelocation">
+<input type="hidden" id="exiflocation">
 <input type="submit" id="filesubmit" value="Submit Captured Image">
 	</form>
 	</p>
@@ -92,6 +96,8 @@ function grabTags(file) {
   EXIF.getData(file,function() {
   var imageLongitude = EXIF.getTag(this,"GPSLongitude");
   var imageLatitude = EXIF.getTag(this,"GPSLatitude");
+  var exif_geo_field = document.getElementById('exiflocation');
+  exif_geo_field.value = imageLatitude+","+imageLongitude;
   if (imageLongitude) {
     var exifLong = toDecimal(imageLongitude);
     var exifLat = toDecimal(imageLatitude);
