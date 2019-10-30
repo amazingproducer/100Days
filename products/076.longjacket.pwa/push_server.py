@@ -15,9 +15,9 @@ import logging
 WEBPUSH_VAPID_PRIVATE_KEY = str(os.environ.get("LJ_PUSH_PRIVKEY"))
 #vapid_claim = open('./claim.json').read()
 #vapid_claim_string = json.load(open('./claim.json'))
-vapid_claim = {"aud": "https://longjacket.shamacon.us",
+vapid_claim = json.dumps({"aud": "https://longjacket.shamacon.us",
               "exp": int(time.time()) +7200,
-              "sub": "mailto:mail@shamacon.us"}
+              "sub": "mailto:mail@shamacon.us"})
 vapid_claim_string = json.dumps(vapid_claim)
 WEBPUSH_VAPID_PUBLIC_KEY ='BNAVJ63X40KbUEzSXqSW1C7Md9lcpj5TJF9Yk2_1hiaobNmk4Zx5HTcZ4wX-E4m_3gGdvUzz5MQROGDo8MiCr2Q'
 app = Flask(__name__)
@@ -137,7 +137,7 @@ def notify():
                 subscription_info=subscription_method,
                 data="Investigate sea monster at: lat:19.759 lng:-154.9845",
                 vapid_private_key=WEBPUSH_VAPID_PRIVATE_KEY,
-                vapid_claims=vapid_claim_string
+                vapid_claims=vapid_claim
             )
             count += 1
         except WebPushException as ex:
