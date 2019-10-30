@@ -26,7 +26,8 @@ app.config['IMAGE_STORAGE'] = './images'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 db = SQLAlchemy(app)
 
-logging.basicConfig(filename='webservice.log', level=logging.DEBUG)
+logging.basicConfig(filename='webservice.log', level=10)
+app.logger.setLevel(logging.DEBUG)
 class ImagePost(db.Model):
     db.__tablename__ = 'image'
     id = db.Column(db.Integer(), primary_key=True, default=None)
