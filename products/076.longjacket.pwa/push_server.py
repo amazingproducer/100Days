@@ -23,6 +23,7 @@ WEBPUSH_VAPID_PUBLIC_KEY ='BNAVJ63X40KbUEzSXqSW1C7Md9lcpj5TJF9Yk2_1hiaobNmk4Zx5H
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///push_subscriptions.db'
 app.config['IMAGE_STORAGE'] = './images'
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 db = SQLAlchemy(app)
 
 logging.basicConfig(filename='webservice.log', level=logging.DEBUG)
