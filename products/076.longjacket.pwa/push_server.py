@@ -119,8 +119,8 @@ def notify():
     app.logger.info(f"pushing with private key: {WEBPUSH_VAPID_PRIVATE_KEY}")
     app.logger.info(f"pushing with VAPID claims: {vapid_claim_string}")
     for item in items:
+        app.logger.info(type(item.subscription_info), item.subscription_info)
         try:
-            app.logger.info(type(item.subscription_info), item.subscription_info)
 #            app.logger.info(type(json.loads(item.subscription_info)),
 #                json.loads(item.subscription_info.replace("\'","\"")),
 #                json.loads(item.subscription_info.replace("'",'"')))
