@@ -119,7 +119,7 @@ def upload_image():
         if request.files:
             item = ImagePost()
             x = request.get_json()
-            app.logger.info(f"Got request: {x}")
+            app.logger.info(f"Got request: {request.__dict__}")
             item.created = datetime.datetime.utcnow()
             item.device_location = request.form['devicelocation']
             item.exif_location = request.form['exiflocation']
