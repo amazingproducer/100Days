@@ -29,7 +29,7 @@ db = SQLAlchemy(app)
 logging.basicConfig(filename='webservice.log', level=10)
 app.logger.setLevel(logging.DEBUG)
 class ImagePost(db.Model):
-    db.__tablename__ = 'image'
+#    db.__tablename__ = 'image'
     id = db.Column(db.Integer(), primary_key=True, default=None)
     created = db.Column(db.DateTime())
     requested_location = db.Column(db.Text())
@@ -38,7 +38,7 @@ class ImagePost(db.Model):
     image_filename = db.Column(db.Text())
 
 class Subscriber(db.Model):
-    db.__tablename__ = 'subscriber'
+#    db.__tablename__ = 'subscriber'
 
     id = db.Column(db.Integer(), primary_key=True, default=None)
     created = db.Column(db.DateTime())
