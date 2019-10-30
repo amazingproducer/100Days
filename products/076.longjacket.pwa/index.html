@@ -72,7 +72,7 @@ const fileQuery = document.getElementById("filequery"),
 
 let fileForm = document.getElementById("fileform");
 
-let fileFormData = new FormData(fileForm);
+//let fileFormData = new FormData(fileForm);
 
 filequery.addEventListener("click", function (e) {
   if (fileInput) {
@@ -82,6 +82,7 @@ filequery.addEventListener("click", function (e) {
 
 fileForm.addEventListener("submit", function(e) {
   e.preventDefault()
+    let fileFormData = new FormData(fileForm);
     fetch("./imgpost", {
       method: "POST",
       body: fileFormData
