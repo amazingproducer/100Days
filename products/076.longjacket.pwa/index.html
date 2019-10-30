@@ -49,8 +49,8 @@ function geoError() {
 	<form id="fileform" action="/imgpost" method="post" enctype="multipart/form-data">
 <input type="file" id="fileinput" name="image" accept="image/*" style="display:none" onchange="grabTags(this.files[0])" capture="environment">
 <input type="button" id="filequery" value="Capture Image">
-<input type="hidden" id="devicelocation">
-<input type="hidden" id="exiflocation">
+<input type="hidden" name="devicelocation" id="devicelocation">
+<input type="hidden" name="exiflocation" id="exiflocation">
 <input type="submit" id="filesubmit" value="Submit Captured Image">
 	</form>
 	</p>
