@@ -130,12 +130,13 @@ def notify():
 #            app.logger.info(type(json.loads(item.subscription_info)),
 #                json.loads(item.subscription_info.replace("\'","\"")),
 #                json.loads(item.subscription_info.replace("'",'"')))
-            if "'" in item.subscription_info:
-                subscription_method = json.loads(item.subscription_info.replace("\'","\""))
-            else:
-                subscription_method = json.loads(item.subscription_info)
+#            if "'" in item.subscription_info:
+#                subscription_method = json.loads(item.subscription_info.replace("\'","\""))
+#            else:
+#                subscription_method = json.loads(item.subscription_info)
             webpush(
-                subscription_info=subscription_method,
+#                subscription_info=subscription_method,
+                subscription_info=json.loads(item.subscription_info)
                 data="Investigate sea monster at: lat:19.759 lng:-154.9845",
                 vapid_private_key=WEBPUSH_VAPID_PRIVATE_KEY,
                 vapid_claims=vapid_claim
