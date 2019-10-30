@@ -122,8 +122,8 @@ def notify():
 #    [app.logger.info(type(i.is_active), i.is_active) for i in Subscriber.query.all()]
     count = 0
     app.logger.info(f"pushing with private key: {WEBPUSH_VAPID_PRIVATE_KEY}")
-    app.logger.info(f"pushing with VAPID claims: {vapid_claim_string}")
     vapid_claim['exp'] = int(time.time() + 7200)
+    app.logger.info(f"pushing with VAPID claims: {vapid_claim}")
     for item in items:
         app.logger.info(type(item.subscription_info), item.subscription_info)
         try:
