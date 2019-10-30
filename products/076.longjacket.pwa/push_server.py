@@ -108,8 +108,10 @@ def subscribe():
 
 @app.route("/imgpost", methods=["GET", "POST"])
 def upload_image():
-    app.logger.info(f"POST: {request.values[0][0]}")
+    app.logger.info(f"POST: {request}")
     app.logger.info(f"POST content length: {request.content_length}")
+    if request.form:
+        app.logger.info(f"POST: {request.form['exiflocation']}")
     if request.method == "POST":
         print(request.files)
         app.logger.info(f"POST content length: {request.content_length}")
