@@ -119,11 +119,11 @@ def upload_image():
         if request.files:
             item = ImagePost()
             x = request.get_json()
-            app.logger.info(f"Got request: {request.__dict__}")
+            app.logger.info(f"Got request: {request.files['image'].filename}")
             item.created = datetime.datetime.utcnow()
             item.device_location = request.form['devicelocation']
             item.exif_location = request.form['exiflocation']
-            item.filename = request.files['file'].filename
+            item.filename = request.files['image'].filename
             db.session.add(item)
             db.session.commit()
             image = request.files["image"]
