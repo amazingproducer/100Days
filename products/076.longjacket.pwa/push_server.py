@@ -111,7 +111,7 @@ def upload_image():
     app.logger.info(f"POST: {request}")
     app.logger.info(f"POST content length: {request.content_length}")
     if request.form:
-        app.logger.info(f"POST: {request.form['exiflocation']}")
+        app.logger.info("POST: form found.")
     if request.method == "POST":
         print(request.files)
         app.logger.info(f"POST content length: {request.content_length}")
