@@ -137,7 +137,7 @@ def notify():
             webpush(
 #                subscription_info=subscription_method,
 #                subscription_info=json.loads(item.subscription_info),
-                subscription_info=jsonify(item.subscription_info),
+                subscription_info=json.loads(str(item.subscription_info)),
                 data="Investigate sea monster at: lat:19.759 lng:-154.9845",
                 vapid_private_key=WEBPUSH_VAPID_PRIVATE_KEY,
                 vapid_claims=vapid_claim
