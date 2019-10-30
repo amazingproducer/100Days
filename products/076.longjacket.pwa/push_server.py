@@ -113,7 +113,7 @@ def upload_image():
 @app.route('/notify', methods=['POST', 'GET'])
 def notify():
     items = Subscriber.query.filter(Subscriber.is_active == True).all()
-    app.logger.info(f"items: {str(items)}")
+    app.logger.info(f"items: {type(items)}:{str(items)}")
 #    [app.logger.info(type(i.is_active), i.is_active) for i in Subscriber.query.all()]
     count = 0
     app.logger.info(f"pushing with private key: {WEBPUSH_VAPID_PRIVATE_KEY}")
@@ -125,7 +125,7 @@ def notify():
 #                json.loads(item.subscription_info.replace("\'","\"")),
 #                json.loads(item.subscription_info.replace("'",'"')))
             if "'" in item.subscription_info:
-                subscription_method = json.loads(item.subscription_info.replace("'",'"'))
+                subscription_method = json.loads(item.subscription_info.replace("\'","\""))
             else:
                 subscription_method = json.loads(item.subscription_info)
             webpush(
