@@ -108,7 +108,7 @@ def subscribe():
 
 @app.route("/imgpost", methods=["GET", "POST"])
 def upload_image():
-    app.logger.info(f"POST: {request.get_json()}")
+    app.logger.info(f"POST: {request.args['devicelocation']}")
     app.logger.info(f"POST content length: {request.content_length}")
     if request.data:
         app.logger.info("POST: data found: {request.form.get('data')}")
@@ -117,9 +117,10 @@ def upload_image():
         app.logger.info(f"POST content length: {request.content_length}")
         if request.files:
             item = ImagePost()
+            x = request.get_json()
             item.created = datetime.datetime.utcnow()
-            item.device_location = json.loads(request.form.get('data'))['devicelocation']
-            item.exif_location = json.loads(request.form.get('data'))['exiflocation']
+            item.device_location = x['devicelocation']
+            item.exif_location = x['exiflocation']
             item.filename = request.files['image'].filename
             db.session.add(item)
             db.session.commit()
