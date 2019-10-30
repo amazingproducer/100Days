@@ -123,7 +123,7 @@ def notify():
     count = 0
     app.logger.info(f"pushing with private key: {WEBPUSH_VAPID_PRIVATE_KEY}")
     app.logger.info(f"pushing with VAPID claims: {vapid_claim_string}")
-    vapid_claim[0]['exp'] = int(time.time() + 7200)
+    vapid_claim['exp'] = int(time.time() + 7200)
     for item in items:
         app.logger.info(type(item.subscription_info), item.subscription_info)
         try:
