@@ -110,6 +110,7 @@ def subscribe():
 def upload_image():
     if request.method == "POST":
         print(request.files)
+        app.logger.info(f"POST content length: {request.content_length}")
         if request.files:
             item = ImagePost()
             item.created = datetime.datetime.utcnow()
