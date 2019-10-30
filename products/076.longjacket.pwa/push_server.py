@@ -116,8 +116,8 @@ def upload_image():
         if request.files:
             item = ImagePost()
             item.created = datetime.datetime.utcnow()
-            item.device_location = request.form['device_location']
-            item.exif_location = request.form['exif_location']
+            item.device_location = request.form['devicelocation']
+            item.exif_location = request.form['exiflocation']
             item.filename = request.files['image'].filename
             db.session.add(item)
             db.session.commit()
