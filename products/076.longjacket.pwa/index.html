@@ -82,7 +82,7 @@ filequery.addEventListener("click", function (e) {
 
 fileForm.addEventListener("submit", function(e) {
   e.preventDefault()
-    fetch("/imgpost", {
+    fetch("./imgpost", {
       method: "POST",
       body: fileFormData
   }).then((response) => {
