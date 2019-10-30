@@ -1,6 +1,7 @@
 # let's borrow some code and see how it can work for us!
 
 import os
+import time
 import datetime
 from flask import Flask, json, jsonify, request, redirect, send_file, send_from_directory
 from pywebpush import webpush, WebPushException
@@ -12,8 +13,12 @@ import logging
 
 
 WEBPUSH_VAPID_PRIVATE_KEY = str(os.environ.get("LJ_PUSH_PRIVKEY"))
-vapid_claim = open('./claim.json').read()
-vapid_claim_string = json.load(open('./claim.json'))
+#vapid_claim = open('./claim.json').read()
+#vapid_claim_string = json.load(open('./claim.json'))
+vapid_claim = {"aud": "https://longjacket.shamacon.us",
+              "exp": int(time.time()) +7200,
+              "sub": "mailto:mail@shamacon.us"}
+vapid_claim_string = json.loads(vapid_claim)
 WEBPUSH_VAPID_PUBLIC_KEY ='BNAVJ63X40KbUEzSXqSW1C7Md9lcpj5TJF9Yk2_1hiaobNmk4Zx5HTcZ4wX-E4m_3gGdvUzz5MQROGDo8MiCr2Q'
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///push_subscriptions.db'
