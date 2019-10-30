@@ -26,6 +26,14 @@ app.config['IMAGE_STORAGE'] = './images'
 db = SQLAlchemy(app)
 
 logging.basicConfig(filename='webservice.log', level=logging.DEBUG)
+class ImagePost(db.Model):
+    db.__tablename__ = 'image'
+    id = db.Column(db.Integer(), primary_key=True, default=None)
+    created = db.Column(db.DateTime())
+    requested_location = db.Column(db.Text())
+    device_location = db.Column(db.Text())
+    exif_location = db.Column(db.Text())
+    image_filename = db.Column(db.Text())
 
 class Subscriber(db.Model):
     db.__tablename__ = 'subscriber'
@@ -99,11 +107,16 @@ def subscribe():
 
 @app.route("/imgpost", methods=["GET", "POST"])
 def upload_image():
-
     if request.method == "POST":
         print(request.files)
         if request.files:
-
+            item = ImagePost()
+            item.created = datetime.datetime.utcnow()
+            item.device_location = request.json.get('device_location')
+            item.exif_location = request.json.get('exif_location')
+            item.filename = request.files['image']
+            db.session.add(item)
+            db.session.commit()
             image = request.files["image"]
 
             image.save(os.path.join(app.config["IMAGE_STORAGE"], image.filename))
