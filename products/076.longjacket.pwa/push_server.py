@@ -13,12 +13,12 @@ import logging
 
 
 WEBPUSH_VAPID_PRIVATE_KEY = str(os.environ.get("LJ_PUSH_PRIVKEY"))
-#vapid_claim = open('./claim.json').read()
-#vapid_claim_string = json.load(open('./claim.json'))
-vapid_claim = json.dumps({"aud": "https://longjacket.shamacon.us",
-              "exp": int(time.time()) +7200,
-              "sub": "mailto:mail@shamacon.us"})
-vapid_claim_string = json.dumps(vapid_claim)
+vapid_claim_string = open('./claim.json').read()
+vapid_claim = json.load(open('./claim.json'))
+#vapid_claim = json.dumps({"aud": "https://longjacket.shamacon.us",
+#              "exp": int(time.time()) +7200,
+#              "sub": "mailto:mail@shamacon.us"})
+#vapid_claim_string = json.dumps(vapid_claim)
 WEBPUSH_VAPID_PUBLIC_KEY ='BNAVJ63X40KbUEzSXqSW1C7Md9lcpj5TJF9Yk2_1hiaobNmk4Zx5HTcZ4wX-E4m_3gGdvUzz5MQROGDo8MiCr2Q'
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///push_subscriptions.db'
@@ -123,6 +123,7 @@ def notify():
     count = 0
     app.logger.info(f"pushing with private key: {WEBPUSH_VAPID_PRIVATE_KEY}")
     app.logger.info(f"pushing with VAPID claims: {vapid_claim_string}")
+    vapid_claim[0]['exp'] = int(time.time() + 7200)
     for item in items:
         app.logger.info(type(item.subscription_info), item.subscription_info)
         try:
