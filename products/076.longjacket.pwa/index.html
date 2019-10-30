@@ -110,7 +110,7 @@ async function uploadFile() {
 try {
   const response = await fetch('./imgpost', {
     method: 'POST',
-    body: fileForm
+    body: fileFormData
   });
   const result = await response.json();
   console.log('Success:', JSON.stringify(result));
