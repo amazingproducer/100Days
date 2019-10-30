@@ -177,4 +177,5 @@ if __name__ == "__main__":
 #    db.drop_all()
 #    db.create_all()
 #    db.session.commit()
-    app.run(host='0.0.0.0', ssl_context='adhoc')
+#    app.run(host='0.0.0.0', ssl_context='adhoc')
+    app.run(host='127.0.0.1')
