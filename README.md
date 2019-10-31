@@ -1,4 +1,5 @@
-2019 Attempt at 100 Days of Coding Challenge
+## 2019 Attempt at 100 Days of Coding Challenge
+### (Successfully completed 30 October, 2019)
 
 My goal is to use this repository to demonstrate progress in programmatic
 problem solving, test-driven development, maintaining a public repository, and
