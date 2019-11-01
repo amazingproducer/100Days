@@ -1,0 +1,12 @@
+bin/
+src/
+pkg/
+lib/
+spec/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.*.sw?
+*.log
+*.db
+
