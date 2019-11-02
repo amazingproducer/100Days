@@ -5,7 +5,7 @@ import os
 import requests
 
 
-deploy_port = int(os.environ.get('PORT', 5000))
+deploy_port = int(os.environ.get('PORT'))
 callback_url = str(os.environ.get('PT_DEV_CALLBACK'))
 
 api = Flask(__name__)
