@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.7.0" />
+<title>flask_api API documentation</title>
+<meta name="description" content="PrimeTools Web API - part of 2019&#39;s 100 Days of Code." />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>flask_api</code></h1>
+</header>
+<section id="section-intro">
+<p>PrimeTools Web API - part of 2019's 100 Days of Code.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;PrimeTools Web API - part of 2019&#39;s 100 Days of Code.&#34;&#34;&#34;
+from flask import Flask, jsonify, json, send_from_directory
+import PrimeTools as pt
+import os
+import requests
+
+
+#deploy_port = int(os.environ.get(&#39;PORT&#39;))
+callback_url = str(os.environ.get(&#39;PT_DEV_CALLBACK&#39;))
+
+api = Flask(__name__)
+
+help_text = &#34;&#34;&#34;
+&lt;h3&gt;PrimeTools Web API:&lt;/h3&gt;
+&lt;table style=&#34;width:100%&#34;&gt;
+  &lt;tr&gt;
+  &lt;th style=&#34;text-align:left&#34;&gt;HTTP Method&lt;/th&gt;
+  &lt;th style=&#34;text-align:left&#34;&gt;Route&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;GET&lt;/td&gt;
+    &lt;td&gt;/api/v1/is_prime/{INTEGER}&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;GET&lt;/td&gt;
+    &lt;td&gt;/api/v1/get_nth/{INTEGER}&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;GET&lt;/td&gt;
+    &lt;td&gt;/api/v1/nearest/{INTEGER}&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;GET&lt;/td&gt;
+    &lt;td&gt;/api/v1/neighbors/{INTEGER}&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;GET&lt;/td&gt;
+    &lt;td&gt;/api/v1/factorize/{INTEGER}&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+&#34;&#34;&#34;
+
+
+def send_response(route, desc, request, result_value, result_type):
+    &#34;&#34;&#34;Reusable function for spitting out the fancy JSON.&#34;&#34;&#34;
+    return jsonify(
+        api_endpoint=route,
+        description=desc,
+        request=request,
+        result_value=result_value,
+        result_type=result_type
+    )
+
+
+@api.route(&#39;/&#39;, methods=[&#39;GET&#39;])
+@api.route(&#39;/api/&#39;, methods=[&#39;GET&#39;])
+@api.route(&#39;/api/v1/&#39;, methods=[&#39;GET&#39;])
+def help():
+    &#34;&#34;&#34;Print the ugly, manually-written route list.&#34;&#34;&#34;
+    return help_text
+
+
+@api.route(&#39;/error_heroku.json&#39;, methods=[&#39;GET&#39;])
+def error_heroku():
+    return jsonify(
+        error=&#34;Operation timed out.&#34;
+    )
+
+
+@api.route(&#39;/api/v1/is_prime/&lt;n&gt;&#39;, methods=[&#39;GET&#39;])
+def get_is_prime(n):
+    &#34;&#34;&#34;
+    Determines the primality of a given natural number.
+
+    &gt;&gt;&gt; pt.is_prime(17)
+    True
+    &#34;&#34;&#34;
+    route = &#34;is_prime&#34;
+    description = &#34;Determines primality of a given integer.&#34;
+    if not str(n).isdigit() or int(n) &lt; 1:
+        return send_response(route, description,  n, &#34;Input must be a natural \
+number.&#34;, &#34;Error&#34;)
+    if int(n) &gt; 1000:
+        report = &#34;```CALLBACK - &#34; + \
+            str(n)+&#34; primality: &#34;+str(pt.is_prime(int(n))) + \
+                &#34;. I am not a ninja.```&#34;
+        requests.post(callback_url, json={
+                      &#34;content&#34;: report, &#34;username&#34;: &#34;tensus&#34;})
+        return send_response(route, description, n, &#34;Available via \
+callback URL.&#34;, &#34;callback&#34;)
+    return send_response(route, description, n, pt.is_prime(int(n)),
+                          &#34;boolean&#34;)
+
+
+@api.route(&#39;/api/v1/get_nth/&lt;n&gt;&#39;, methods=[&#39;GET&#39;])
+def get_nth_prime(n):
+    &#34;&#34;&#34;Given a positive integer n, determine the n-th prime number.&#34;&#34;&#34;
+    route = &#34;get_nth_prime&#34;
+    description = &#34;Given a positive integer n, determine the n-th prime number.&#34;
+    if not str(n).isdigit() or int(n) &lt; 1:
+        return send_response(route, description, n, &#34;Input must be a natural \
+number.&#34;, &#34;Entry&#34;)
+    if int(n) &gt; 1000:
+        report = &#34;```CALLBACK - n-th prime where n=&#34; + \
+            str(n)+&#34;: &#34;+str(pt.get_nth(int(n)))+&#34;.```&#34;
+        requests.post(callback_url, json={
+                      &#34;content&#34;: report, &#34;username&#34;: &#34;tensus&#34;})
+        return send_response(route, description, n, &#34;Available via callback \
+URL.&#34;, &#34;callback&#34;)
+    return send_response(route, description, n, pt.get_nth(int(n)), &#34;integer&#34;)
+
+
+@api.route(&#39;/api/v1/nearest/&lt;n&gt;&#39;, methods=[&#39;GET&#39;])
+def get_nearest_prime(n):
+    &#34;&#34;&#34;Returns the nearest prime number to a given integer.&#34;&#34;&#34;
+    route = &#34;get_nearest&#34;
+    description = &#34;Returns the nearest prime number to a given integer.&#34;
+    if not str(n).isdigit() or int(n) &lt; 1:
+        return send_response(route, description, n, &#34;Input must be a natural \
+number.&#34;, &#34;Error&#34;)
+    return send_response(route, description, n, pt.get_nearest(int(n))[0], &#34;integer&#34;)
+
+@api.route(&#39;/api/v1/neighbors/&lt;n&gt;&#39;, methods = [&#39;GET&#39;])
+def get_prime_neighbors(n):
+    &#34;&#34;&#34;Given an integer n, returns the greatest prime which is less than n and the smallest prime which is greater than n.&#34;&#34;&#34;
+    route=&#34;neighbors&#34;
+    description=&#34;Given an integer n, returns the greatest prime which is \
+less than n and the smallest prime which is greater than n.&#34;
+    if not str(n).isdigit() or int(n) &lt; 1:
+        return send_response(route, description, n, &#34;Input must be a natural \
+number.&#34;, &#34;Error&#34;)
+    if int(n) &lt; 3:
+        return send_response(route, description, n, &#34;Input must be greater \
+than 2.&#34;, &#34;Error&#34;)
+    return send_response(route, description, n, pt.get_neighbors(int(n)),
+&#34;array&#34;)
+
+@api.route(&#39;/api/v1/factorize/&lt;n&gt;&#39;, methods=[&#39;GET&#39;])
+def get_prime_factors(n):
+    &#34;&#34;&#34;Returns the prime factors of a given integer.&#34;&#34;&#34;
+    route = &#34;factorize&#34;
+    description = &#34;Returns the prime factors of a given integer.&#34;
+    if not str(n).isdigit() or int(n) &lt;= 1:
+        return send_response(route, description, n, &#34;Input integer must be \
+greater than one.&#34;, &#34;Error&#34;)
+    return send_response(route, description, n, pt.factorize(int(n)), &#34;array&#34;)
+
+if __name__ == &#39;__main__&#39;:
+#    api.run(host=&#39;127.0.0.1&#39;, port=deploy_port)
+    api.run(host=&#39;127.0.0.1&#39;)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="flask_api.error_heroku"><code class="name flex">
+<span>def <span class="ident">error_heroku</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@api.route(&#39;/error_heroku.json&#39;, methods=[&#39;GET&#39;])
+def error_heroku():
+    return jsonify(
+        error=&#34;Operation timed out.&#34;
+    )</code></pre>
+</details>
+</dd>
+<dt id="flask_api.get_is_prime"><code class="name flex">
+<span>def <span class="ident">get_is_prime</span></span>(<span>n)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Determines the primality of a given natural number.</p>
+<pre><code>&gt;&gt;&gt; pt.is_prime(17)
+True
+</code></pre></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@api.route(&#39;/api/v1/is_prime/&lt;n&gt;&#39;, methods=[&#39;GET&#39;])
+def get_is_prime(n):
+    &#34;&#34;&#34;
+    Determines the primality of a given natural number.
+
+    &gt;&gt;&gt; pt.is_prime(17)
+    True
+    &#34;&#34;&#34;
+    route = &#34;is_prime&#34;
+    description = &#34;Determines primality of a given integer.&#34;
+    if not str(n).isdigit() or int(n) &lt; 1:
+        return send_response(route, description,  n, &#34;Input must be a natural \
+number.&#34;, &#34;Error&#34;)
+    if int(n) &gt; 1000:
+        report = &#34;```CALLBACK - &#34; + \
+            str(n)+&#34; primality: &#34;+str(pt.is_prime(int(n))) + \
+                &#34;. I am not a ninja.```&#34;
+        requests.post(callback_url, json={
+                      &#34;content&#34;: report, &#34;username&#34;: &#34;tensus&#34;})
+        return send_response(route, description, n, &#34;Available via \
+callback URL.&#34;, &#34;callback&#34;)
+    return send_response(route, description, n, pt.is_prime(int(n)),
+                          &#34;boolean&#34;)</code></pre>
+</details>
+</dd>
+<dt id="flask_api.get_nearest_prime"><code class="name flex">
+<span>def <span class="ident">get_nearest_prime</span></span>(<span>n)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Returns the nearest prime number to a given integer.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@api.route(&#39;/api/v1/nearest/&lt;n&gt;&#39;, methods=[&#39;GET&#39;])
+def get_nearest_prime(n):
+    &#34;&#34;&#34;Returns the nearest prime number to a given integer.&#34;&#34;&#34;
+    route = &#34;get_nearest&#34;
+    description = &#34;Returns the nearest prime number to a given integer.&#34;
+    if not str(n).isdigit() or int(n) &lt; 1:
+        return send_response(route, description, n, &#34;Input must be a natural \
+number.&#34;, &#34;Error&#34;)
+    return send_response(route, description, n, pt.get_nearest(int(n))[0], &#34;integer&#34;)</code></pre>
+</details>
+</dd>
+<dt id="flask_api.get_nth_prime"><code class="name flex">
+<span>def <span class="ident">get_nth_prime</span></span>(<span>n)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Given a positive integer n, determine the n-th prime number.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@api.route(&#39;/api/v1/get_nth/&lt;n&gt;&#39;, methods=[&#39;GET&#39;])
+def get_nth_prime(n):
+    &#34;&#34;&#34;Given a positive integer n, determine the n-th prime number.&#34;&#34;&#34;
+    route = &#34;get_nth_prime&#34;
+    description = &#34;Given a positive integer n, determine the n-th prime number.&#34;
+    if not str(n).isdigit() or int(n) &lt; 1:
+        return send_response(route, description, n, &#34;Input must be a natural \
+number.&#34;, &#34;Entry&#34;)
+    if int(n) &gt; 1000:
+        report = &#34;```CALLBACK - n-th prime where n=&#34; + \
+            str(n)+&#34;: &#34;+str(pt.get_nth(int(n)))+&#34;.```&#34;
+        requests.post(callback_url, json={
+                      &#34;content&#34;: report, &#34;username&#34;: &#34;tensus&#34;})
+        return send_response(route, description, n, &#34;Available via callback \
+URL.&#34;, &#34;callback&#34;)
+    return send_response(route, description, n, pt.get_nth(int(n)), &#34;integer&#34;)</code></pre>
+</details>
+</dd>
+<dt id="flask_api.get_prime_factors"><code class="name flex">
+<span>def <span class="ident">get_prime_factors</span></span>(<span>n)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Returns the prime factors of a given integer.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@api.route(&#39;/api/v1/factorize/&lt;n&gt;&#39;, methods=[&#39;GET&#39;])
+def get_prime_factors(n):
+    &#34;&#34;&#34;Returns the prime factors of a given integer.&#34;&#34;&#34;
+    route = &#34;factorize&#34;
+    description = &#34;Returns the prime factors of a given integer.&#34;
+    if not str(n).isdigit() or int(n) &lt;= 1:
+        return send_response(route, description, n, &#34;Input integer must be \
+greater than one.&#34;, &#34;Error&#34;)
+    return send_response(route, description, n, pt.factorize(int(n)), &#34;array&#34;)</code></pre>
+</details>
+</dd>
+<dt id="flask_api.get_prime_neighbors"><code class="name flex">
+<span>def <span class="ident">get_prime_neighbors</span></span>(<span>n)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Given an integer n, returns the greatest prime which is less than n and the smallest prime which is greater than n.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@api.route(&#39;/api/v1/neighbors/&lt;n&gt;&#39;, methods = [&#39;GET&#39;])
+def get_prime_neighbors(n):
+    &#34;&#34;&#34;Given an integer n, returns the greatest prime which is less than n and the smallest prime which is greater than n.&#34;&#34;&#34;
+    route=&#34;neighbors&#34;
+    description=&#34;Given an integer n, returns the greatest prime which is \
+less than n and the smallest prime which is greater than n.&#34;
+    if not str(n).isdigit() or int(n) &lt; 1:
+        return send_response(route, description, n, &#34;Input must be a natural \
+number.&#34;, &#34;Error&#34;)
+    if int(n) &lt; 3:
+        return send_response(route, description, n, &#34;Input must be greater \
+than 2.&#34;, &#34;Error&#34;)
+    return send_response(route, description, n, pt.get_neighbors(int(n)),
+&#34;array&#34;)</code></pre>
+</details>
+</dd>
+<dt id="flask_api.help"><code class="name flex">
+<span>def <span class="ident">help</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Print the ugly, manually-written route list.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@api.route(&#39;/&#39;, methods=[&#39;GET&#39;])
+@api.route(&#39;/api/&#39;, methods=[&#39;GET&#39;])
+@api.route(&#39;/api/v1/&#39;, methods=[&#39;GET&#39;])
+def help():
+    &#34;&#34;&#34;Print the ugly, manually-written route list.&#34;&#34;&#34;
+    return help_text</code></pre>
+</details>
+</dd>
+<dt id="flask_api.send_response"><code class="name flex">
+<span>def <span class="ident">send_response</span></span>(<span>route, desc, request, result_value, result_type)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Reusable function for spitting out the fancy JSON.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def send_response(route, desc, request, result_value, result_type):
+    &#34;&#34;&#34;Reusable function for spitting out the fancy JSON.&#34;&#34;&#34;
+    return jsonify(
+        api_endpoint=route,
+        description=desc,
+        request=request,
+        result_value=result_value,
+        result_type=result_type
+    )</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="flask_api.error_heroku" href="#flask_api.error_heroku">error_heroku</a></code></li>
+<li><code><a title="flask_api.get_is_prime" href="#flask_api.get_is_prime">get_is_prime</a></code></li>
+<li><code><a title="flask_api.get_nearest_prime" href="#flask_api.get_nearest_prime">get_nearest_prime</a></code></li>
+<li><code><a title="flask_api.get_nth_prime" href="#flask_api.get_nth_prime">get_nth_prime</a></code></li>
+<li><code><a title="flask_api.get_prime_factors" href="#flask_api.get_prime_factors">get_prime_factors</a></code></li>
+<li><code><a title="flask_api.get_prime_neighbors" href="#flask_api.get_prime_neighbors">get_prime_neighbors</a></code></li>
+<li><code><a title="flask_api.help" href="#flask_api.help">help</a></code></li>
+<li><code><a title="flask_api.send_response" href="#flask_api.send_response">send_response</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.0</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>
