@@ -146,7 +146,7 @@ greater than one.", "Error")
     return send_response(route, description, n, pt.factorize(int(n)), "array")
 
 if __name__ == '__main__':
-    api.run(host='127.0.0.1', port=deploy_port)
+    api.run(host='0.0.0.0', port=deploy_port)
 
 
 
