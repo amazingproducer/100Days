@@ -72,7 +72,10 @@ def flask_root(file='./index.html'):
 
 @app.route('/images/<file>')
 def image_root(file='./index.html'):
-    return send_file('./images/'+file)
+    if "discord" in  request.user_agent.string:
+        return send_file('./images/'+file)
+    else:
+        return redirect("https://i.imgur.com/4e3Wla8.mp4")
 
 @app.route('/')
 def index():
