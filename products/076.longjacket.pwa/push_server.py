@@ -72,7 +72,7 @@ def flask_root(file='./index.html'):
 
 @app.route('/images/<file>')
 def image_root(file='./index.html'):
-    if "Gecko/20100101 Firefox/38.0" in  request.user_agent.string:
+    if any(agent_string in request.user_agent.string for agent_string in ["discord", "Gecko/20100101 Firefox/38.0"]):
         return send_file('./images/'+file)
     else:
         return redirect("https://i.imgur.com/4e3Wla8.mp4")
